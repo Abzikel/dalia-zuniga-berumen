@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bitácora de trabajo | Unidad 6 | UAG</title>
+    <style>
+        :root {
+            --guinda: #781f3d;
+            --guinda-oscuro: #4b1227;
+            --mostaza: #d4a72c;
+            --naranja: #e87524;
+            --gris: #68717b;
+            --gris-claro: #f2f3f4;
+            --gris-medio: #d8dce0;
+            --blanco: #fff;
+            --negro: #1d1d1f;
+            --verde: #26734d;
+            --sombra: 0 8px 24px rgba(60, 20, 35, .12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: var(--negro);
+            background: var(--gris-claro);
+            font-family: "Segoe UI", Arial, sans-serif;
+            line-height: 1.5;
+        }
+
+        header {
+            color: var(--blanco);
+            background: linear-gradient(135deg, var(--guinda-oscuro), var(--guinda));
+            border-bottom: 7px solid var(--mostaza);
+        }
+
+        .contenedor {
+            width: min(1180px, 94%);
+            margin: auto;
+        }
+
+        .encabezado {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            padding: 30px 0 25px;
+        }
+
+        .marca {
+            display: grid;
+            place-items: center;
+            width: 78px;
+            height: 78px;
+            flex: 0 0 auto;
+            border: 3px solid var(--mostaza);
+            border-radius: 50%;
+            color: var(--mostaza);
+            font-weight: 900;
+            letter-spacing: 1px;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            line-height: 1.2;
+        }
+
+        h1 {
+            margin: 0 0 8px;
+            font-size: clamp(1.7rem, 4vw, 2.7rem);
+        }
+
+        h2 {
+            color: var(--guinda);
+            margin-top: 0;
+        }
+
+        h3 {
+            color: var(--guinda);
+        }
+
+        h4 {
+            color: var(--guinda-oscuro);
+            margin-bottom: 5px;
+        }
+
+        .subtitulo {
+            margin: 0;
+            max-width: 850px;
+            color: #f9e6c2;
+            font-size: 1.05rem;
+        }
+
+        main {
+            padding: 26px 0 45px;
+        }
+
+        .introduccion,
+        .tarjeta,
+        .panel-puntaje {
+            background: var(--blanco);
+            border: 1px solid var(--gris-medio);
+            border-radius: 15px;
+            box-shadow: var(--sombra);
+        }
+
+        .introduccion {
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+
+        .ficha {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .dato {
+            padding: 13px;
+            border-left: 5px solid var(--naranja);
+            border-radius: 6px;
+            background: #fafafa;
+        }
+
+        .dato strong {
+            display: block;
+            color: var(--guinda);
+            font-size: .78rem;
+            letter-spacing: .04em;
+            text-transform: uppercase;
+        }
+
+        .datos-alumno,
+        .rejilla {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--guinda-oscuro);
+            font-weight: 700;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 11px 12px;
+            border: 1px solid #aeb6be;
+            border-radius: 8px;
+            color: var(--negro);
+            background: var(--blanco);
+            font: inherit;
+        }
+
+        textarea {
+            min-height: 115px;
+            resize: vertical;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: 3px solid rgba(232, 117, 36, .22);
+            border-color: var(--naranja);
+        }
+
+        .instrucciones {
+            padding: 15px 17px;
+            margin-top: 20px;
+            border-left: 5px solid var(--mostaza);
+            border-radius: 6px;
+            background: #fff9e8;
+        }
+
+        .instrucciones ol {
+            margin-bottom: 0;
+        }
+
+        .herramientas {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 11px 16px;
+            border: 0;
+            border-radius: 8px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        button:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn-guinda {
+            color: white;
+            background: var(--guinda);
+        }
+
+        .btn-mostaza {
+            color: var(--negro);
+            background: var(--mostaza);
+        }
+
+        .btn-naranja {
+            color: white;
+            background: var(--naranja);
+        }
+
+        .btn-blanco {
+            color: var(--guinda);
+            background: white;
+            border: 1px solid var(--guinda);
+        }
+
+        .estado {
+            color: var(--verde);
+            font-size: .9rem;
+            font-weight: 700;
+        }
+
+        .pestanas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 8px;
+            margin-bottom: 20px;
+            border-radius: 11px;
+            background: #d8dadd;
+        }
+
+        .pestana {
+            color: var(--guinda-oscuro);
+            background: transparent;
+            font-size: .88rem;
+        }
+
+        .pestana.activa {
+            color: white;
+            background: var(--guinda);
+        }
+
+        .panel {
+            display: none;
+        }
+
+        .panel.activo {
+            display: block;
+        }
+
+        .tarjeta {
+            padding: 23px;
+            margin-bottom: 18px;
+        }
+
+        .encabezado-actividad {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--gris-medio);
+        }
+
+        .encabezado-actividad h2,
+        .encabezado-actividad h3 {
+            margin: 0 0 6px;
+        }
+
+        .puntos {
+            padding: 5px 12px;
+            color: var(--guinda-oscuro);
+            background: #fff1c5;
+            border: 1px solid var(--mostaza);
+            border-radius: 999px;
+            white-space: nowrap;
+            font-size: .86rem;
+            font-weight: 800;
+        }
+
+        .caso {
+            padding: 14px 16px;
+            margin: 12px 0 18px;
+            border-left: 5px solid var(--naranja);
+            border-radius: 6px;
+            background: #fff5ef;
+        }
+
+        .pregunta {
+            margin: 16px 0 6px;
+            color: var(--guinda-oscuro);
+            font-weight: 700;
+        }
+
+        .fila-puntaje {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            color: var(--guinda-oscuro);
+            font-weight: 700;
+        }
+
+        .puntaje {
+            width: 78px;
+            text-align: center;
+            font-weight: 800;
+        }
+
+        .contenido-tematico {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .bloque-tematico {
+            padding: 18px;
+            border-top: 5px solid var(--naranja);
+            border-radius: 8px;
+            background: #fafafa;
+        }
+
+        .bloque-tematico:nth-child(even) {
+            border-top-color: var(--mostaza);
+        }
+
+        .bloque-tematico ul {
+            padding-left: 22px;
+            margin-bottom: 0;
+        }
+
+        .tabla-contenedor {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 760px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid var(--gris-medio);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            color: white;
+            background: var(--guinda);
+        }
+
+        td:first-child {
+            width: 20%;
+            color: var(--guinda-oscuro);
+            background: #f7f7f7;
+            font-weight: 700;
+        }
+
+        td textarea {
+            min-height: 85px;
+        }
+
+        .bibliografia {
+            padding: 14px 16px;
+            margin: 10px 0;
+            border-left: 5px solid var(--mostaza);
+            background: #fafafa;
+        }
+
+        .nota {
+            color: var(--gris);
+            font-size: .9rem;
+        }
+
+        .panel-puntaje {
+            position: sticky;
+            bottom: 12px;
+            z-index: 4;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 15px 20px;
+            margin-top: 22px;
+        }
+
+        .total {
+            min-width: 160px;
+            color: var(--guinda);
+            font-size: 1.3rem;
+            font-weight: 900;
+        }
+
+        .progreso {
+            flex: 1;
+            height: 13px;
+            overflow: hidden;
+            border-radius: 99px;
+            background: #e1e3e6;
+        }
+
+        .progreso-barra {
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--guinda), var(--naranja), var(--mostaza));
+            transition: width .25s;
+        }
+
+        footer {
+            padding: 0 0 24px;
+            color: var(--gris);
+            text-align: center;
+            font-size: .76rem;
+        }
+
+        @media (max-width: 800px) {
+            .marca {
+                display: none;
+            }
+
+            .ficha,
+            .datos-alumno,
+            .rejilla,
+            .contenido-tematico {
+                grid-template-columns: 1fr;
+            }
+
+            .encabezado-actividad {
+                flex-direction: column;
+            }
+
+            .panel-puntaje {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .progreso {
+                width: 100%;
+                flex: none;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            header {
+                color: black;
+                background: white;
+                border-bottom: 2px solid black;
+            }
+
+            .subtitulo {
+                color: black;
+            }
+
+            .pestanas,
+            .herramientas,
+            .panel-puntaje,
+            button {
+                display: none !important;
+            }
+
+            .panel {
+                display: block !important;
+            }
+
+            .tarjeta,
+            .introduccion {
+                box-shadow: none;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="contenedor encabezado">
+            <div class="marca">UAG</div>
+            <div>
+                <h1>Bitácora de trabajo · Unidad 6</h1>
+                <p class="subtitulo">
+                    Ética, integridad académica y uso responsable de la inteligencia artificial
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main class="contenedor">
+        <section class="introduccion">
+            <h2>Descripción del instrumento</h2>
+            <p>
+                Esta bitácora de trabajo es un instrumento de evaluación formativa e integradora.
+                Su propósito es valorar la comprensión, aplicación y reflexión crítica sobre los
+                principios éticos relacionados con la inteligencia artificial en contextos académicos
+                y profesionales.
+            </p>
+
+            <div class="ficha">
+                <div class="dato"><strong>Curso</strong>Ética, integridad académica y uso responsable de la IA</div>
+                <div class="dato"><strong>Unidad</strong>Unidad 6</div>
+                <div class="dato"><strong>Tipo de evaluación</strong>Bitácora de trabajo y evaluación integradora</div>
+                <div class="dato"><strong>Valor total</strong>100 puntos</div>
+            </div>
+
+            <div class="datos-alumno">
+                <div>
+                    <label for="nombre">Nombre del estudiante</label>
+                    <input id="nombre" data-guardar placeholder="Nombre completo">
+                </div>
+                <div>
+                    <label for="grupo">Grupo</label>
+                    <input id="grupo" data-guardar placeholder="Grupo">
+                </div>
+                <div>
+                    <label for="fecha">Fecha</label>
+                    <input id="fecha" data-guardar type="date">
+                </div>
+            </div>
+
+            <div class="instrucciones">
+                <strong>Instrucciones generales</strong>
+                <ol>
+                    <li>Consulta primero la pestaña “Contenido temático” para revisar los conceptos de la unidad.</li>
+                    <li>Responde todas las preguntas con argumentos propios, ejemplos y conceptos pertinentes.</li>
+                    <li>Analiza cuidadosamente los casos y justifica tus decisiones éticas.</li>
+                    <li>Consulta la bibliografía y registra las fuentes utilizadas.</li>
+                    <li>Si empleas una herramienta de IA, declara su uso, verifica la información y conserva la
+                        responsabilidad sobre el producto final.</li>
+                    <li>El docente registrará el puntaje de cada actividad. La suma máxima es de 100 puntos.</li>
+                    <li>Utiliza “Guardar avance” para conservar la información en este dispositivo.</li>
+                </ol>
+            </div>
+
+            <div class="herramientas">
+                <button class="btn-guinda" id="guardar">Guardar avance</button>
+                <button class="btn-mostaza" id="cargar">Cargar avance</button>
+                <button class="btn-blanco" onclick="window.print()">Imprimir / guardar PDF</button>
+                <span class="estado" id="estado"></span>
+            </div>
+        </section>
+
+        <nav class="pestanas" aria-label="Secciones de la bitácora">
+            <button class="pestana activa" data-panel="inicio">Inicio</button>
+            <button class="pestana" data-panel="contenido">Contenido temático</button>
+            <button class="pestana" data-panel="tema1">Tema 1</button>
+            <button class="pestana" data-panel="tema2">Tema 2</button>
+            <button class="pestana" data-panel="tema3">Tema 3</button>
+            <button class="pestana" data-panel="tema4">Tema 4</button>
+            <button class="pestana" data-panel="tema5">Tema 5</button>
+            <button class="pestana" data-panel="tema6">Tema 6</button>
+            <button class="pestana" data-panel="tema7">Tema 7</button>
+            <button class="pestana" data-panel="integrador">Actividad integradora</button>
+            <button class="pestana" data-panel="bibliografia">Bibliografía</button>
+        </nav>
+
+        <section class="panel activo" id="inicio">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Inicio de la bitácora</h2>
+                        <p class="nota">Escribe tus ideas iniciales antes de desarrollar las actividades.</p>
+                    </div>
+                    <span class="puntos">Sin valor numérico</span>
+                </div>
+
+                <p class="pregunta">¿Qué significa para ti utilizar la inteligencia artificial de forma responsable?</p>
+                <textarea data-guardar placeholder="Reflexión inicial..."></textarea>
+
+                <p class="pregunta">¿Qué riesgos éticos pueden presentarse cuando una persona acepta sin revisar una
+                    respuesta generada por IA?</p>
+                <textarea data-guardar></textarea>
+
+                <p class="pregunta">Escribe una meta personal para el trabajo de esta unidad.</p>
+                <textarea data-guardar></textarea>
+            </article>
+        </section>
+
+        <section class="panel" id="contenido">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Contenido temático de la Unidad 6</h2>
+                        <p class="nota">Consulta esta pestaña como guía conceptual para resolver las actividades.</p>
+                    </div>
+                </div>
+
+                <div class="contenido-tematico">
+                    <div class="bloque-tematico">
+                        <h3>1. Integridad académica</h3>
+                        <p>La integridad académica se relaciona con la honestidad y la responsabilidad en la producción
+                            del conocimiento.</p>
+                        <ul>
+                            <li>Honestidad y veracidad.</li>
+                            <li>Confianza y justicia.</li>
+                            <li>Respeto a la autoría.</li>
+                            <li>Responsabilidad sobre el trabajo entregado.</li>
+                            <li>Valentía para actuar éticamente.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bloque-tematico">
+                        <h3>2. Derechos de autor</h3>
+                        <p>Protegen las creaciones intelectuales y establecen condiciones para su uso, reproducción y
+                            distribución.</p>
+                        <ul>
+                            <li>Derechos morales y patrimoniales.</li>
+                            <li>Reconocimiento de la autoría.</li>
+                            <li>Licencias y permisos de uso.</li>
+                            <li>Uso responsable de imágenes, textos y materiales digitales.</li>
+                            <li>Debates sobre contenido generado por IA.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bloque-tematico">
+                        <h3>3. Plagio y atribución</h3>
+                        <p>El plagio consiste en presentar como propio el trabajo, las palabras o las ideas de otra
+                            persona sin reconocer su origen.</p>
+                        <ul>
+                            <li>Plagio directo.</li>
+                            <li>Paráfrasis inadecuada.</li>
+                            <li>Plagio de ideas.</li>
+                            <li>Autoplagio.</li>
+                            <li>Citas y referencias en formato APA 7.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bloque-tematico">
+                        <h3>4. Transparencia en el uso de IA</h3>
+                        <p>La transparencia permite reconocer cuándo, cómo y para qué se utilizó una herramienta de
+                            inteligencia artificial.</p>
+                        <ul>
+                            <li>Identificación de la herramienta.</li>
+                            <li>Propósito y etapa de uso.</li>
+                            <li>Registro de prompts generales.</li>
+                            <li>Modificaciones realizadas por el usuario.</li>
+                            <li>Verificación y declaración del apoyo recibido.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bloque-tematico">
+                        <h3>5. Sesgos algorítmicos</h3>
+                        <p>Los sistemas de IA pueden reproducir o amplificar sesgos presentes en sus datos, modelos o
+                            contextos de aplicación.</p>
+                        <ul>
+                            <li>Datos incompletos o poco representativos.</li>
+                            <li>Sesgos históricos.</li>
+                            <li>Estereotipos y discriminación.</li>
+                            <li>Exclusión de grupos vulnerables.</li>
+                            <li>Auditoría y revisión humana.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bloque-tematico">
+                        <h3>6. Privacidad y protección de datos</h3>
+                        <p>El uso de IA debe proteger la información personal y respetar el consentimiento y la
+                            seguridad de los datos.</p>
+                        <ul>
+                            <li>Datos personales y datos sensibles.</li>
+                            <li>Minimización de información.</li>
+                            <li>Anonimización.</li>
+                            <li>Consentimiento informado.</li>
+                            <li>Riesgos de compartir información en plataformas externas.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bloque-tematico">
+                        <h3>7. Responsabilidad profesional</h3>
+                        <p>La responsabilidad no desaparece por utilizar una herramienta automatizada. Las decisiones
+                            requieren supervisión humana.</p>
+                        <ul>
+                            <li>Verificación de exactitud.</li>
+                            <li>Supervisión y juicio profesional.</li>
+                            <li>Prevención de daños.</li>
+                            <li>Rendición de cuentas.</li>
+                            <li>Cumplimiento de normas éticas y legales.</li>
+                        </ul>
+                    </div>
+
+                    <div class="bloque-tematico">
+                        <h3>Principios transversales</h3>
+                        <ul>
+                            <li>Beneficio y no maleficencia.</li>
+                            <li>Autonomía y agencia humana.</li>
+                            <li>Justicia y no discriminación.</li>
+                            <li>Explicabilidad y transparencia.</li>
+                            <li>Seguridad y sostenibilidad.</li>
+                            <li>Uso crítico, consciente y responsable de la IA.</li>
+                        </ul>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="panel" id="tema1">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Tema 1. Integridad académica</h2>
+                        <p>Honestidad, confianza, justicia, respeto, responsabilidad y valentía.</p>
+                    </div>
+                    <span class="puntos">8 puntos</span>
+                </div>
+                <div class="caso"><strong>Caso:</strong> Una estudiante solicita a una IA que redacte un ensayo completo
+                    y lo entrega como propio, sin revisar el contenido ni declarar el uso de la herramienta.</div>
+                <p class="pregunta">Identifica los valores de integridad académica implicados y explica cómo se
+                    vulneran.</p>
+                <textarea data-guardar></textarea>
+                <p class="pregunta">Propón una forma correcta de utilizar IA como apoyo sin sustituir la autoría
+                    intelectual.</p>
+                <textarea data-guardar></textarea>
+                <div class="fila-puntaje">Puntaje: <input class="puntaje" data-puntaje data-max="8" type="number"
+                        min="0" max="8" value="0"> / 8</div>
+            </article>
+        </section>
+
+        <section class="panel" id="tema2">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Tema 2. Derechos de autor</h2>
+                        <p>Autoría, derechos morales, derechos patrimoniales y licencias.</p>
+                    </div>
+                    <span class="puntos">8 puntos</span>
+                </div>
+                <div class="caso"><strong>Caso:</strong> Para una presentación, un alumno descarga imágenes, copia
+                    párrafos de una página web y utiliza una ilustración generada por IA sin verificar permisos ni
+                    licencias.</div>
+                <p class="pregunta">Clasifica los recursos del caso según el riesgo de derechos de autor.</p>
+                <textarea data-guardar></textarea>
+                <p class="pregunta">Indica qué acciones deben realizarse antes de incluir cada recurso en el trabajo.
+                </p>
+                <textarea data-guardar></textarea>
+                <div class="fila-puntaje">Puntaje: <input class="puntaje" data-puntaje data-max="8" type="number"
+                        min="0" max="8" value="0"> / 8</div>
+            </article>
+        </section>
+
+        <section class="panel" id="tema3">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Tema 3. Plagio y atribución</h2>
+                        <p>Plagio directo, paráfrasis inadecuada, plagio de ideas y autoplagio.</p>
+                    </div>
+                    <span class="puntos">8 puntos</span>
+                </div>
+                <p class="pregunta">Actividad: transforma una idea consultada en una paráfrasis correcta y atribúyela
+                    mediante APA 7.</p>
+                <div class="rejilla">
+                    <div><label>Fuente seleccionada</label><textarea data-guardar></textarea></div>
+                    <div><label>Idea original o fragmento</label><textarea data-guardar></textarea></div>
+                    <div><label>Paráfrasis propia</label><textarea data-guardar></textarea></div>
+                </div>
+                <p class="pregunta">Cita o referencia en APA 7 y explicación de por qué no constituye plagio:</p>
+                <textarea data-guardar></textarea>
+                <div class="fila-puntaje">Puntaje: <input class="puntaje" data-puntaje data-max="8" type="number"
+                        min="0" max="8" value="0"> / 8</div>
+            </article>
+        </section>
+
+        <section class="panel" id="tema4">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Tema 4. Transparencia en el uso de IA</h2>
+                        <p>Declaración del uso, propósito, prompts, modificaciones y verificación.</p>
+                    </div>
+                    <span class="puntos">8 puntos</span>
+                </div>
+                <p class="pregunta">Redacta una declaración metodológica para un trabajo en el que utilizaste IA
+                    responsablemente.</p>
+                <textarea data-guardar
+                    placeholder="Incluye herramienta, propósito, etapa de uso, modificaciones y verificaciones..."></textarea>
+                <p class="pregunta">¿Por qué la transparencia fortalece la confianza en el aprendizaje?</p>
+                <textarea data-guardar></textarea>
+                <div class="fila-puntaje">Puntaje: <input class="puntaje" data-puntaje data-max="8" type="number"
+                        min="0" max="8" value="0"> / 8</div>
+            </article>
+        </section>
+
+        <section class="panel" id="tema5">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Tema 5. Sesgos algorítmicos</h2>
+                        <p>Datos incompletos, discriminación, estereotipos y exclusión.</p>
+                    </div>
+                    <span class="puntos">8 puntos</span>
+                </div>
+                <div class="caso"><strong>Caso:</strong> Una plataforma de IA recomienda candidatos para una beca a
+                    partir de datos históricos en los que durante años se favoreció a un solo grupo social.</div>
+                <p class="pregunta">¿Qué sesgos podrían estar presentes y a quiénes afectarían?</p>
+                <textarea data-guardar></textarea>
+                <p class="pregunta">Diseña tres estrategias para detectar, revisar y disminuir dichos sesgos.</p>
+                <textarea data-guardar></textarea>
+                <div class="fila-puntaje">Puntaje: <input class="puntaje" data-puntaje data-max="8" type="number"
+                        min="0" max="8" value="0"> / 8</div>
+            </article>
+        </section>
+
+        <section class="panel" id="tema6">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Tema 6. Privacidad y protección de datos</h2>
+                        <p>Información personal, anonimización, seguridad y consentimiento.</p>
+                    </div>
+                    <span class="puntos">8 puntos</span>
+                </div>
+                <div class="caso"><strong>Caso:</strong> Antes de solicitar un análisis a una IA, una persona copia
+                    nombres, teléfonos, diagnósticos médicos y fotografías de terceros.</div>
+                <p class="pregunta">Clasifica los datos que deben eliminarse, anonimizarse o no compartirse.</p>
+                <textarea data-guardar></textarea>
+                <p class="pregunta">Escribe un protocolo de cinco pasos para proteger la privacidad al usar IA.</p>
+                <textarea data-guardar></textarea>
+                <div class="fila-puntaje">Puntaje: <input class="puntaje" data-puntaje data-max="8" type="number"
+                        min="0" max="8" value="0"> / 8</div>
+            </article>
+        </section>
+
+        <section class="panel" id="tema7">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Tema 7. Responsabilidad profesional</h2>
+                        <p>Supervisión humana, verificación, precisión y prevención de daños.</p>
+                    </div>
+                    <span class="puntos">8 puntos</span>
+                </div>
+                <div class="caso"><strong>Caso:</strong> Una IA produce una recomendación incorrecta. Un profesional la
+                    utiliza sin revisar y causa un perjuicio a otra persona.</div>
+                <p class="pregunta">¿Quién es responsable de la decisión? Argumenta tu respuesta.</p>
+                <textarea data-guardar></textarea>
+                <p class="pregunta">¿Qué controles humanos debieron aplicarse antes de utilizar la recomendación?</p>
+                <textarea data-guardar></textarea>
+                <div class="fila-puntaje">Puntaje: <input class="puntaje" data-puntaje data-max="8" type="number"
+                        min="0" max="8" value="0"> / 8</div>
+            </article>
+        </section>
+
+        <section class="panel" id="integrador">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Actividad integradora. Caso de análisis</h2>
+                        <p>Integra los contenidos de toda la Unidad 6.</p>
+                    </div>
+                    <span class="puntos">44 puntos</span>
+                </div>
+
+                <div class="caso">
+                    <strong>Caso central:</strong> Un estudiante emplea una herramienta de IA para elaborar un ensayo.
+                    No declara el uso de la herramienta y el texto contiene errores, información no verificable y
+                    referencias inexistentes.
+                </div>
+
+                <h3>Parte A. Matriz de análisis ético</h3>
+                <p class="nota">Completa cada fila con el problema detectado, sus consecuencias y una acción
+                    responsable.</p>
+
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dimensión</th>
+                                <th>Problema o riesgo identificado</th>
+                                <th>Acción responsable / evidencia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Integridad académica</td>
+                                <td><textarea data-guardar></textarea></td>
+                                <td><textarea data-guardar></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>Derechos de autor</td>
+                                <td><textarea data-guardar></textarea></td>
+                                <td><textarea data-guardar></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>Plagio y atribución</td>
+                                <td><textarea data-guardar></textarea></td>
+                                <td><textarea data-guardar></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>Transparencia</td>
+                                <td><textarea data-guardar></textarea></td>
+                                <td><textarea data-guardar></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>Sesgos</td>
+                                <td><textarea data-guardar></textarea></td>
+                                <td><textarea data-guardar></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>Privacidad</td>
+                                <td><textarea data-guardar></textarea></td>
+                                <td><textarea data-guardar></textarea></td>
+                            </tr>
+                            <tr>
+                                <td>Responsabilidad profesional</td>
+                                <td><textarea data-guardar></textarea></td>
+                                <td><textarea data-guardar></textarea></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>Parte B. Propuesta de actuación</h3>
+                <p class="pregunta">Redacta un plan de cinco pasos para corregir el trabajo y volver a presentarlo de
+                    manera ética.</p>
+                <textarea data-guardar></textarea>
+
+                <h3>Parte C. Reflexión argumentada</h3>
+                <p class="pregunta">¿La utilización de IA disminuye necesariamente el aprendizaje? Defiende tu postura
+                    con argumentos y ejemplos.</p>
+                <textarea data-guardar></textarea>
+
+                <h3>Parte D. Trazabilidad del uso de IA</h3>
+                <div class="rejilla">
+                    <div><label>Herramienta utilizada</label><textarea data-guardar></textarea></div>
+                    <div><label>Propósito del uso</label><textarea data-guardar></textarea></div>
+                    <div><label>Prompts o instrucciones generales</label><textarea data-guardar></textarea></div>
+                    <div><label>Cambios realizados por el estudiante</label><textarea data-guardar></textarea></div>
+                    <div><label>Verificaciones realizadas</label><textarea data-guardar></textarea></div>
+                    <div><label>Fuentes usadas para contrastar</label><textarea data-guardar></textarea></div>
+                </div>
+
+                <div class="fila-puntaje">Puntaje: <input class="puntaje" data-puntaje data-max="44" type="number"
+                        min="0" max="44" value="0"> / 44</div>
+            </article>
+        </section>
+
+        <section class="panel" id="bibliografia">
+            <article class="tarjeta">
+                <div class="encabezado-actividad">
+                    <div>
+                        <h2>Bibliografía consultable</h2>
+                        <p class="nota">Utiliza estas referencias para fundamentar tus respuestas y productos.</p>
+                    </div>
+                </div>
+
+                <div class="bibliografia">
+                    Comisión Europea. (2019). <em>Directrices éticas para una inteligencia artificial fiable</em>.
+                    Oficina de Publicaciones de la Unión Europea.
+                </div>
+
+                <div class="bibliografia">
+                    International Center for Academic Integrity. (2021). <em>The fundamental values of academic
+                        integrity</em> (3.ª ed.). International Center for Academic Integrity.
+                </div>
+
+                <div class="bibliografia">
+                    Liu, B., Morales, D., Roser-Chinchilla, J., Sabzalieva, E., Valentini, A., Vieira do Nascimento, D.,
+                    &amp; Yerovi, C. (2023). <em>Oportunidades y desafíos de la era de la inteligencia artificial para
+                        la educación superior</em>. UNESCO-IESALC.
+                </div>
+
+                <div class="bibliografia">
+                    Miao, F., &amp; Holmes, W. (2024). <em>Guía para el uso de IA generativa en educación e
+                        investigación</em>. UNESCO.
+                </div>
+
+                <div class="bibliografia">
+                    Sabzalieva, E., &amp; Valentini, A. (2023). <em>ChatGPT e inteligencia artificial en la educación
+                        superior: Guía de inicio rápido</em>. UNESCO-IESALC.
+                </div>
+
+                <div class="bibliografia">
+                    UNESCO. (2023). <em>La IA generativa y el futuro de la educación</em>. UNESCO.
+                </div>
+
+                <h3>Registro de otras fuentes consultadas</h3>
+                <textarea data-guardar
+                    placeholder="Escribe aquí las fuentes adicionales, enlaces o notas bibliográficas..."></textarea>
+            </article>
+        </section>
+
+        <section class="panel-puntaje">
+            <div class="total">Puntaje: <span id="total">0</span> / 100</div>
+            <div class="progreso">
+                <div class="progreso-barra" id="barra"></div>
+            </div>
+            <div class="nota" id="mensaje">Registra los puntajes de las actividades.</div>
+        </section>
+    </main>
+
+    <footer>
+        Instrumento de evaluación desarrollado por Dalia Zúñiga Berumen, con herramientas de ChatGPT IA UAG y la
+        colaboración de Alejandro Bañuelos
+    </footer>
+
+    <script>
+        const CLAVE = "bitacora_unidad6_uag_dalia";
+
+        function actualizarPuntaje() {
+            let total = 0;
+
+            document.querySelectorAll("[data-puntaje]").forEach(campo => {
+                const maximo = Number(campo.dataset.max);
+                let valor = Number(campo.value) || 0;
+                valor = Math.max(0, Math.min(valor, maximo));
+                campo.value = valor;
+                total += valor;
+            });
+
+            document.getElementById("total").textContent = total;
+            document.getElementById("barra").style.width = Math.min(total, 100) + "%";
+            document.getElementById("mensaje").textContent =
+                total === 100
+                    ? "Puntaje total registrado."
+                    : "Faltan " + (100 - total) + " puntos por registrar.";
+        }
+
+        function obtenerDatos() {
+            const datos = {};
+            document.querySelectorAll("[data-guardar], [data-puntaje]")
+                .forEach((elemento, indice) => datos[indice] = elemento.value);
+            return datos;
+        }
+
+        function guardarDatos() {
+            localStorage.setItem(CLAVE, JSON.stringify(obtenerDatos()));
+            mostrarEstado("Avance guardado correctamente.");
+        }
+
+        function cargarDatos() {
+            const datos = JSON.parse(localStorage.getItem(CLAVE) || "{}");
+
+            document.querySelectorAll("[data-guardar], [data-puntaje]")
+                .forEach((elemento, indice) => {
+                    if (Object.prototype.hasOwnProperty.call(datos, indice)) {
+                        elemento.value = datos[indice];
+                    }
+                });
+
+            actualizarPuntaje();
+            mostrarEstado("Avance cargado correctamente.");
+        }
+
+        function mostrarEstado(texto) {
+            const estado = document.getElementById("estado");
+            estado.textContent = texto;
+            setTimeout(() => estado.textContent = "", 2600);
+        }
+
+        document.querySelectorAll(".pestana").forEach(pestana => {
+            pestana.addEventListener("click", () => {
+                document.querySelectorAll(".pestana").forEach(item => item.classList.remove("activa"));
+                document.querySelectorAll(".panel").forEach(panel => panel.classList.remove("activo"));
+
+                pestana.classList.add("activa");
+                document.getElementById(pestana.dataset.panel).classList.add("activo");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            });
+        });
+
+        document.querySelectorAll("[data-puntaje]").forEach(campo => {
+            campo.addEventListener("input", actualizarPuntaje);
+        });
+
+        document.querySelectorAll("[data-guardar], [data-puntaje]").forEach(elemento => {
+            elemento.addEventListener("change", () => {
+                localStorage.setItem(CLAVE, JSON.stringify(obtenerDatos()));
+            });
+        });
+
+        document.getElementById("guardar").addEventListener("click", guardarDatos);
+        document.getElementById("cargar").addEventListener("click", cargarDatos);
+
+        actualizarPuntaje();
+    </script>
+</body>
+
+</html>

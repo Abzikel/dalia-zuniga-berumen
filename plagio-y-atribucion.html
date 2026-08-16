@@ -1,0 +1,1454 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#71132d" />
+    <title>IA Académica | Plagio y atribución</title>
+    <style>
+        :root {
+            --guinda: #71132d;
+            --guinda-2: #961d40;
+            --mostaza: #d49b19;
+            --naranja: #e87527;
+            --gris-900: #252329;
+            --gris-700: #54515a;
+            --gris-500: #8c8991;
+            --gris-200: #e8e5e7;
+            --gris-100: #f7f5f6;
+            --blanco: #ffffff;
+            --fondo: #fbfafb;
+            --sombra: 0 14px 40px rgba(40, 15, 28, .10);
+            --radio: 20px;
+        }
+
+        [data-theme="dark"] {
+            --gris-900: #f7f4f5;
+            --gris-700: #d0cbd0;
+            --gris-500: #aaa3aa;
+            --gris-200: #49434a;
+            --gris-100: #312b31;
+            --blanco: #211e22;
+            --fondo: #19171a;
+            --sombra: 0 14px 40px rgba(0, 0, 0, .28);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: var(--gris-900);
+            background: var(--fondo);
+            line-height: 1.55;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .app-shell {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            padding: 24px 18px;
+            color: #fff;
+            background: linear-gradient(180deg, #5d1027, #71132d 65%, #40101f);
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 20;
+            overflow-y: auto;
+        }
+
+        .brand {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 4px 10px 28px;
+        }
+
+        .brand-mark {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            color: var(--guinda);
+            background: var(--mostaza);
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .brand strong {
+            display: block;
+            font-size: 17px;
+            line-height: 1.1;
+        }
+
+        .brand small {
+            opacity: .72;
+            font-size: 11px;
+        }
+
+        .nav-title {
+            margin: 18px 10px 8px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            opacity: .62;
+            font-weight: 800;
+        }
+
+        .nav-btn {
+            width: 100%;
+            border: 0;
+            color: rgba(255, 255, 255, .8);
+            background: transparent;
+            text-align: left;
+            padding: 12px 13px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin: 3px 0;
+            transition: .2s;
+        }
+
+        .nav-btn:hover,
+        .nav-btn.active {
+            background: rgba(255, 255, 255, .14);
+            color: #fff;
+        }
+
+        .nav-btn.active {
+            box-shadow: inset 3px 0 var(--mostaza);
+        }
+
+        .nav-icon {
+            width: 21px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .main {
+            margin-left: 280px;
+            width: calc(100% - 280px);
+        }
+
+        .topbar {
+            height: 74px;
+            padding: 0 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--gris-200);
+            background: color-mix(in srgb, var(--fondo) 88%, transparent);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .eyebrow {
+            color: var(--guinda);
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 9px;
+            align-items: center;
+        }
+
+        .icon-btn,
+        .profile {
+            border: 1px solid var(--gris-200);
+            background: var(--blanco);
+            color: var(--gris-900);
+            border-radius: 12px;
+            min-width: 40px;
+            height: 40px;
+            padding: 0 12px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .avatar {
+            width: 25px;
+            height: 25px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: var(--mostaza);
+            color: #4a3210;
+        }
+
+        .content {
+            padding: 34px 5% 60px;
+            max-width: 1500px;
+            margin: auto;
+        }
+
+        .page {
+            display: none;
+            animation: fade .25s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: .1;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr .8fr;
+            gap: 25px;
+            align-items: center;
+            padding: 38px;
+            border-radius: 28px;
+            color: #fff;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 90% 20%, rgba(212, 155, 25, .55), transparent 28%),
+                linear-gradient(125deg, #71132d, #a7234b);
+            box-shadow: var(--sombra);
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 4vw, 57px);
+            line-height: 1.04;
+            margin: 12px 0 18px;
+            max-width: 750px;
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, .83);
+            max-width: 680px;
+        }
+
+        .hero-art {
+            min-height: 220px;
+            display: grid;
+            place-items: center;
+        }
+
+        .hero-art svg {
+            width: min(100%, 350px);
+            filter: drop-shadow(0 18px 20px rgba(0, 0, 0, .18));
+        }
+
+        .kicker {
+            display: inline-flex;
+            padding: 6px 11px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .15);
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 11px;
+            padding: 11px 16px;
+            font-weight: 800;
+            background: var(--guinda);
+            color: #fff;
+            transition: .2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08);
+        }
+
+        .btn.secondary {
+            background: var(--mostaza);
+            color: #3d2a0c;
+        }
+
+        .btn.ghost {
+            background: transparent;
+            color: var(--guinda);
+            border: 1px solid currentColor;
+        }
+
+        .btn.light {
+            background: #fff;
+            color: var(--guinda);
+        }
+
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 20px;
+            margin: 40px 0 18px;
+        }
+
+        h2 {
+            font-size: clamp(24px, 3vw, 34px);
+            line-height: 1.15;
+            margin: 0;
+        }
+
+        h3 {
+            margin: 0 0 8px;
+        }
+
+        .muted {
+            color: var(--gris-700);
+        }
+
+        .grid {
+            display: grid;
+            gap: 18px;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .card {
+            background: var(--blanco);
+            border: 1px solid var(--gris-200);
+            border-radius: var(--radio);
+            padding: 22px;
+            box-shadow: var(--sombra);
+        }
+
+        .card h3 {
+            color: var(--guinda);
+        }
+
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 14px;
+            background: color-mix(in srgb, var(--mostaza) 22%, transparent);
+            font-size: 22px;
+        }
+
+        .stat {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat strong {
+            display: block;
+            font-size: 30px;
+            color: var(--guinda);
+        }
+
+        .stat small {
+            color: var(--gris-700);
+        }
+
+        .stat::after {
+            content: "";
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--mostaza);
+            opacity: .15;
+            right: -18px;
+            top: -18px;
+        }
+
+        .progress-line {
+            height: 9px;
+            border-radius: 99px;
+            background: var(--gris-200);
+            overflow: hidden;
+        }
+
+        .progress-line span {
+            height: 100%;
+            display: block;
+            border-radius: inherit;
+            background: linear-gradient(90deg, var(--guinda), var(--naranja));
+            transition: width .4s;
+        }
+
+        .dashboard-chart {
+            height: 180px;
+            display: flex;
+            align-items: end;
+            gap: 15px;
+            padding: 22px 8px 0;
+        }
+
+        .bar-wrap {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            height: 100%;
+            justify-content: end;
+        }
+
+        .bar {
+            width: min(42px, 75%);
+            border-radius: 8px 8px 3px 3px;
+            background: linear-gradient(180deg, var(--mostaza), var(--guinda));
+            min-height: 7px;
+        }
+
+        .bar-wrap small {
+            color: var(--gris-700);
+            font-size: 11px;
+        }
+
+        .module-card {
+            display: flex;
+            gap: 16px;
+            align-items: start;
+        }
+
+        .module-num {
+            min-width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: var(--guinda);
+            color: #fff;
+            font-weight: 900;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 9px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 800;
+            background: var(--gris-100);
+            color: var(--guinda);
+            margin: 3px 3px 0 0;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            border: 1px solid var(--gris-200);
+            background: var(--blanco);
+            color: var(--gris-700);
+            padding: 10px 13px;
+            border-radius: 10px;
+            font-weight: 750;
+        }
+
+        .tab.active {
+            color: #fff;
+            background: var(--guinda);
+            border-color: var(--guinda);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .scenario {
+            border-left: 5px solid var(--naranja);
+        }
+
+        .choice-grid {
+            display: grid;
+            gap: 10px;
+            margin-top: 17px;
+        }
+
+        .choice {
+            text-align: left;
+            border: 1px solid var(--gris-200);
+            border-radius: 12px;
+            padding: 13px;
+            background: var(--blanco);
+            color: var(--gris-900);
+        }
+
+        .choice:hover {
+            border-color: var(--guinda);
+            background: var(--gris-100);
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 16px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #fff5da;
+            color: #573d0a;
+        }
+
+        [data-theme="dark"] .feedback {
+            color: #ffe8a4;
+            background: #483914;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .success {
+            border-left: 4px solid #22945e;
+        }
+
+        .danger {
+            border-left: 4px solid #c43f4c;
+        }
+
+        label {
+            display: block;
+            font-weight: 800;
+            font-size: 13px;
+            margin: 13px 0 6px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid var(--gris-200);
+            border-radius: 11px;
+            padding: 12px;
+            background: var(--blanco);
+            color: var(--gris-900);
+            outline: none;
+        }
+
+        textarea {
+            min-height: 130px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--guinda);
+            box-shadow: 0 0 0 3px rgba(113, 19, 45, .12);
+        }
+
+        .prompt-output {
+            min-height: 200px;
+            white-space: pre-wrap;
+            background: var(--gris-100);
+            border-radius: 13px;
+            padding: 16px;
+            border: 1px dashed var(--gris-200);
+        }
+
+        .accordion {
+            border-bottom: 1px solid var(--gris-200);
+        }
+
+        .accordion button {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: var(--gris-900);
+            padding: 16px 0;
+            text-align: left;
+            font-weight: 850;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .accordion .answer {
+            display: none;
+            padding: 0 0 16px;
+            color: var(--gris-700);
+        }
+
+        .accordion.open .answer {
+            display: block;
+        }
+
+        .notice {
+            padding: 18px;
+            border-radius: 14px;
+            background: color-mix(in srgb, var(--mostaza) 15%, var(--blanco));
+            border: 1px solid color-mix(in srgb, var(--mostaza) 35%, var(--gris-200));
+        }
+
+        .checklist {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        .checklist li {
+            margin: 10px 0;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            color: var(--guinda);
+            font-weight: 900;
+            margin-right: 9px;
+        }
+
+        .download-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .reference {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gris-200);
+        }
+
+        .reference:last-child {
+            border: 0;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 25px 0;
+            border-top: 1px solid var(--gris-200);
+            color: var(--gris-700);
+            font-size: 13px;
+        }
+
+        @media (max-width: 1050px) {
+            .sidebar {
+                width: 225px;
+            }
+
+            .main {
+                margin-left: 225px;
+                width: calc(100% - 225px);
+            }
+
+            .grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 760px) {
+            .sidebar {
+                width: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .content {
+                padding: 25px 18px 45px;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 26px;
+            }
+
+            .hero-art {
+                min-height: 150px;
+            }
+
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .section-head {
+                display: block;
+            }
+
+            .section-head .btn {
+                margin-top: 15px;
+            }
+
+            .profile span {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-mark">IA</div>
+                <div><strong>IA Académica</strong><small>Aprender · Investigar · Comunicar</small></div>
+            </div>
+
+            <div class="nav-title">Ruta de aprendizaje</div>
+            <button class="nav-btn active" data-page="inicio"><span class="nav-icon">⌂</span>Inicio</button>
+            <button class="nav-btn" data-page="aprendizaje"><span class="nav-icon">▦</span>Módulo de
+                aprendizaje</button>
+            <button class="nav-btn" data-page="simulador"><span class="nav-icon">◈</span>Simulador responsable</button>
+            <button class="nav-btn" data-page="prompts"><span class="nav-icon">✦</span>Generador de prompts</button>
+            <button class="nav-btn" data-page="etica"><span class="nav-icon">⚖</span>Ética y pensamiento
+                crítico</button>
+            <button class="nav-btn" data-page="quiz"><span class="nav-icon">✓</span>Cuestionario</button>
+
+            <div class="nav-title">Materiales</div>
+            <button class="nav-btn" data-page="recursos"><span class="nav-icon">▤</span>Recursos académicos</button>
+            <button class="nav-btn" data-page="descargables"><span class="nav-icon">↓</span>Documentos
+                descargables</button>
+            <button class="nav-btn" data-page="proposito"><span class="nav-icon">ⓘ</span>Propósito y uso</button>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <div>
+                    <div class="eyebrow">Asignatura transversal · Licenciatura</div><strong>Inteligencia Artificial para
+                        el aprendizaje y la investigación</strong>
+                </div>
+                <div class="top-actions">
+                    <button class="icon-btn" id="themeBtn" title="Cambiar tema">☾</button>
+                    <div class="profile">
+                        <div class="avatar">E</div><span>Estudiante</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content">
+                <section class="page active" id="inicio">
+                    <div class="hero">
+                        <div>
+                            <span class="kicker">Unidad 6 · Ética e integridad académica</span>
+                            <h1>Plagio y atribución en la era de la IA</h1>
+                            <p>Aprende a utilizar herramientas de inteligencia artificial sin perder el control
+                                intelectual, la honestidad académica ni la responsabilidad sobre tus decisiones.</p>
+                            <button class="btn secondary" onclick="go('aprendizaje')">Comenzar la ruta →</button>
+                        </div>
+                        <div class="hero-art">
+                            <svg viewBox="0 0 360 240" role="img"
+                                aria-label="Ilustración de una estudiante trabajando con inteligencia artificial">
+                                <circle cx="180" cy="120" r="90" fill="#d49b19" opacity=".22" />
+                                <rect x="72" y="70" width="216" height="132" rx="16" fill="#fff" opacity=".95" />
+                                <rect x="91" y="90" width="177" height="91" rx="9" fill="#71132d" />
+                                <circle cx="180" cy="135" r="25" fill="#d49b19" />
+                                <path d="M166 136h28M180 122v27" stroke="#71132d" stroke-width="6"
+                                    stroke-linecap="round" />
+                                <path d="M111 218h138M140 202l-10 16m90-16 10 16" stroke="#fff" stroke-width="7"
+                                    stroke-linecap="round" />
+                                <circle cx="62" cy="47" r="14" fill="#e87527" />
+                                <circle cx="302" cy="57" r="10" fill="#d49b19" />
+                                <path d="M45 112 28 95m287 37 20-18" stroke="#fff" stroke-width="4" opacity=".8" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Tu tablero</div>
+                            <h2>Avanza a tu ritmo</h2>
+                        </div><button class="btn ghost" onclick="resetProgress()">Reiniciar progreso</button>
+                    </div>
+                    <div class="grid grid-4">
+                        <div class="card stat"><strong id="progressValue">0%</strong><small>Progreso general</small>
+                            <div class="progress-line" style="margin-top:14px"><span id="progressBar"
+                                    style="width:0%"></span></div>
+                        </div>
+                        <div class="card stat"><strong id="quizStat">0/5</strong><small>Respuestas correctas</small>
+                        </div>
+                        <div class="card stat"><strong id="decisionsStat">0</strong><small>Decisiones analizadas</small>
+                        </div>
+                        <div class="card stat"><strong id="badgesStat">0</strong><small>Logros obtenidos</small></div>
+                    </div>
+
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Por qué importa</div>
+                            <h2>IA: oportunidades y límites</h2>
+                        </div>
+                    </div>
+                    <div class="grid grid-3">
+                        <article class="card">
+                            <div class="feature-icon">⚡</div>
+                            <h3>¿Qué es la IA?</h3>
+                            <p>Es un conjunto de métodos y sistemas capaces de realizar tareas que normalmente asociamos
+                                con la inteligencia humana, como reconocer patrones, generar lenguaje o apoyar
+                                decisiones.</p>
+                        </article>
+                        <article class="card">
+                            <div class="feature-icon">＋</div>
+                            <h3>Beneficios educativos</h3>
+                            <p>Puede apoyar la lluvia de ideas, la personalización, la revisión de textos, la
+                                organización de información y la exploración de problemas en distintas disciplinas.</p>
+                        </article>
+                        <article class="card">
+                            <div class="feature-icon">!</div>
+                            <h3>Riesgos que debes reconocer</h3>
+                            <p>Puede producir errores, sesgos, referencias inexistentes, respuestas poco
+                                contextualizadas o promover dependencia si sustituye el análisis y la autoría del
+                                estudiante.</p>
+                        </article>
+                    </div>
+
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Actividad detonadora</div>
+                            <h2>¿Puede considerarse plagio?</h2>
+                        </div>
+                    </div>
+                    <div class="card scenario">
+                        <p>Imagina que solicitas a una IA un ensayo sobre cambio climático, copias el resultado, haces
+                            ajustes menores y lo entregas sin mencionar el uso de la herramienta.</p>
+                        <p><strong>Antes de responder:</strong> revisa el módulo, analiza la situación y distingue entre
+                            apoyo tecnológico, autoría, atribución y plagio.</p>
+                        <button class="btn" onclick="go('simulador')">Analizar situación</button>
+                    </div>
+                </section>
+
+                <section class="page" id="aprendizaje">
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Ruta formativa</div>
+                            <h2>Módulo de aprendizaje</h2>
+                            <p class="muted">Siete unidades para integrar IA con rigor metodológico y pensamiento
+                                crítico.</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-2">
+                        <article class="card module-card">
+                            <div class="module-num">1</div>
+                            <div>
+                                <h3>Fundamentos de la IA</h3>
+                                <p>Conceptos básicos, IA generativa, evolución, aplicaciones académicas, beneficios,
+                                    limitaciones y riesgos.</p><span class="tag">Producto: mapa conceptual</span>
+                            </div>
+                        </article>
+                        <article class="card module-card">
+                            <div class="module-num">2</div>
+                            <div>
+                                <h3>Búsqueda y evaluación</h3>
+                                <p>Bases de datos, exploración bibliográfica, evaluación de fuentes, detección de
+                                    información falsa y gestión de referencias.</p><span class="tag">Producto: reporte
+                                    documental</span>
+                            </div>
+                        </article>
+                        <article class="card module-card">
+                            <div class="module-num">3</div>
+                            <div>
+                                <h3>Ingeniería de prompts</h3>
+                                <p>Elementos de una instrucción efectiva, contexto disciplinar, prompts para
+                                    investigación y verificación de resultados.</p><span class="tag">Producto:
+                                    portafolio de prompts</span>
+                            </div>
+                        </article>
+                        <article class="card module-card">
+                            <div class="module-num">4</div>
+                            <div>
+                                <h3>Análisis de información</h3>
+                                <p>Resumen, síntesis, comparación de perspectivas, extracción de datos, matrices de
+                                    análisis y apoyo a decisiones.</p><span class="tag">Producto: análisis
+                                    crítico</span>
+                            </div>
+                        </article>
+                        <article class="card module-card">
+                            <div class="module-num">5</div>
+                            <div>
+                                <h3>Redacción académica</h3>
+                                <p>Planeación de ensayos e informes, revisión lingüística, adecuación del género
+                                    discursivo y trazabilidad del proceso.</p><span class="tag">Producto: documento
+                                    revisado</span>
+                            </div>
+                        </article>
+                        <article class="card module-card">
+                            <div class="module-num">6</div>
+                            <div>
+                                <h3>Ética e integridad</h3>
+                                <p>Plagio, atribución, derechos de autor, transparencia, sesgos, privacidad y
+                                    responsabilidad profesional.</p><span class="tag">Producto: ensayo
+                                    argumentativo</span>
+                            </div>
+                        </article>
+                        <article class="card module-card">
+                            <div class="module-num">7</div>
+                            <div>
+                                <h3>Proyecto integrador</h3>
+                                <p>Aplicación de IA a un problema disciplinar: problema, metodología, resultados,
+                                    informe, presentación y reflexión crítica.</p><span class="tag">Producto: proyecto
+                                    interdisciplinario</span>
+                            </div>
+                        </article>
+                        <article class="card notice">
+                            <h3>Objetivo de aprendizaje</h3>
+                            <p>Al finalizar, distinguirás las diferencias entre plagio, atribución, autoría y uso
+                                legítimo de herramientas de IA para tomar decisiones éticas en contextos académicos y
+                                profesionales.</p><button class="btn secondary" onclick="mark('aprendizaje')">Marcar
+                                módulo como revisado</button>
+                        </article>
+                    </div>
+                </section>
+
+                <section class="page" id="simulador">
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Practica antes de entregar</div>
+                            <h2>Simulador de uso responsable</h2>
+                            <p class="muted">Elige una decisión y recibe retroalimentación inmediata.</p>
+                        </div>
+                    </div>
+                    <div class="card scenario">
+                        <span class="tag">Situación 1 de 3</span>
+                        <h3>Ensayo para una asignatura</h3>
+                        <p>María usa IA para generar un esquema y después desarrolla el contenido con bibliografía
+                            científica. Verifica las afirmaciones y conserva evidencias del proceso.</p>
+                        <div class="choice-grid">
+                            <button class="choice"
+                                onclick="feedback(this, true, 'Decisión adecuada. La IA se utilizó como apoyo, mientras María mantuvo el control intelectual, verificó fuentes y desarrolló el texto.')">A.
+                                Es un uso ético y no necesariamente constituye plagio.</button>
+                            <button class="choice"
+                                onclick="feedback(this, false, 'No necesariamente. El uso de IA no es automáticamente plagio; lo importante es la finalidad, la contribución humana, la verificación y la transparencia.')">B.
+                                Todo uso de IA es plagio.</button>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="card scenario" style="margin-top:18px">
+                        <span class="tag">Situación 2 de 3</span>
+                        <h3>Ensayo generado completamente</h3>
+                        <p>Luis solicita un ensayo de diez cuartillas, lo entrega sin modificaciones, no revisa las
+                            referencias y no reconoce el apoyo de la herramienta.</p>
+                        <div class="choice-grid">
+                            <button class="choice"
+                                onclick="feedback(this, false, 'Existe una alta probabilidad de falta de integridad académica: se delegó la producción intelectual, no hubo verificación ni transparencia.')">A.
+                                Es un uso responsable porque ahorra tiempo.</button>
+                            <button class="choice"
+                                onclick="feedback(this, true, 'Correcto. Presentar contenido generado por IA como trabajo propio, sin revisión ni atribución, vulnera la honestidad académica.')">B.
+                                Es una práctica inadecuada y puede constituir deshonestidad académica.</button>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                    <div class="card scenario" style="margin-top:18px">
+                        <span class="tag">Situación 3 de 3</span>
+                        <h3>Resumen de artículos</h3>
+                        <p>Ana pide a una IA resumir cinco artículos y posteriormente comprueba cada afirmación en los
+                            textos originales.</p>
+                        <div class="choice-grid">
+                            <button class="choice"
+                                onclick="feedback(this, true, 'Correcto. La supervisión crítica y la validación en las fuentes originales son indispensables. También debe citar los artículos consultados.')">A.
+                                Puede ser un apoyo legítimo si verifica y cita las fuentes.</button>
+                            <button class="choice"
+                                onclick="feedback(this, false, 'La IA puede equivocarse o inventar información. Es necesario contrastar los resúmenes con los artículos originales.')">B.
+                                No hace falta leer los artículos porque la IA ya los revisó.</button>
+                        </div>
+                        <div class="feedback"></div>
+                    </div>
+                </section>
+
+                <section class="page" id="prompts">
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Herramientas para pensar mejor</div>
+                            <h2>Generador de prompts académicos</h2>
+                            <p class="muted">Un buen prompt define rol, contexto, tarea, criterios, formato y límites de
+                                verificación.</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <label for="promptType">Tipo de actividad</label>
+                            <select id="promptType">
+                                <option>Elaboración de ensayo</option>
+                                <option>Diseño de proyecto de investigación</option>
+                                <option>Análisis de artículo científico</option>
+                                <option>Construcción de marco teórico</option>
+                                <option>Elaboración de presentación</option>
+                            </select>
+                            <label for="discipline">Carrera o disciplina</label><input id="discipline"
+                                placeholder="Ej. Psicología, Derecho, Biología..." />
+                            <label for="topic">Tema</label><input id="topic"
+                                placeholder="Ej. efectos de la desinformación en jóvenes" />
+                            <label for="requirements">Requisitos o enfoque</label><textarea id="requirements"
+                                placeholder="Incluye extensión, población, método, estilo de citación o producto esperado..."></textarea>
+                            <button class="btn" onclick="generatePrompt()">Generar prompt</button>
+                        </div>
+                        <div class="card">
+                            <h3>Tu prompt académico</h3>
+                            <div class="prompt-output" id="promptOutput">Completa los campos y selecciona “Generar
+                                prompt”.</div>
+                            <div style="margin-top:13px;display:flex;gap:9px;flex-wrap:wrap"><button
+                                    class="btn secondary" onclick="copyPrompt()">Copiar</button><button
+                                    class="btn ghost" onclick="mark('prompts')">Marcar como completado</button></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="page" id="etica">
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Unidad 6</div>
+                            <h2>Ética y pensamiento crítico</h2>
+                        </div>
+                    </div>
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <h3>Plagio y atribución</h3>
+                            <p>El plagio ocurre cuando se presentan ideas, palabras, datos o creaciones ajenas como
+                                propias sin reconocimiento. Puede ser directo, por paráfrasis inadecuada, de ideas o
+                                autoplagio.</p>
+                            <p><strong>Atribuir</strong> significa reconocer el origen de una información, idea, imagen,
+                                dato o recurso. Aporta transparencia, credibilidad y permite verificar el conocimiento.
+                            </p>
+                        </div>
+                        <div class="card">
+                            <h3>La responsabilidad sigue siendo humana</h3>
+                            <ul class="checklist">
+                                <li>Verifica la información y las fuentes.</li>
+                                <li>Revisa sesgos, errores y omisiones.</li>
+                                <li>Decide qué contenido utilizar.</li>
+                                <li>Reconoce el uso de IA cuando corresponda.</li>
+                                <li>Protege datos personales y sensibles.</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h3>Uso ético vs. uso no ético</h3>
+
+                            <div class="notice"><strong>Uso ético:</strong> generar ideas, organizar un esquema o
+                                revisar lenguaje; después investigar, argumentar, redactar y verificar.</div>
+                            <br>
+                            <div class="notice" style="border-color:#d47a83;background:#fff0f1; margin-bottom: 18px;">
+                                <strong>Uso no
+                                    ético:</strong> entregar un texto completo generado por IA como si fuera
+                                exclusivamente propio, sin revisión ni reconocimiento.</div>
+
+                            <!-- Contenedor responsivo del video al final -->
+                            <div
+                                style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; border: 1px solid var(--gris-200);">
+                                <iframe
+                                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                                    src="https://www.youtube.com/embed/wWf0p9XI_zA" title="El uso ético de la IA"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <h3>Declaración de uso de IA</h3>
+                            <p>Cuando la institución lo solicite, puedes incluir una nota metodológica como:</p>
+                            <blockquote>“Para la elaboración inicial de este trabajo se utilizó una herramienta de
+                                inteligencia artificial generativa como apoyo para la organización de ideas y la
+                                revisión lingüística. El análisis, selección de información, argumentación y redacción
+                                final fueron realizados por el autor”.</blockquote>
+                        </div>
+                    </div>
+                    <div class="card" style="margin-top:18px">
+                        <h3>Preguntas para verificar cualquier resultado</h3>
+                        <div class="grid grid-3">
+                            <div><strong>¿De dónde viene?</strong>
+                                <p class="muted">Localiza la fuente original y comprueba que exista.</p>
+                            </div>
+                            <div><strong>¿Es pertinente?</strong>
+                                <p class="muted">Evalúa si responde a tu contexto, población y disciplina.</p>
+                            </div>
+                            <div><strong>¿Puedo defenderlo?</strong>
+                                <p class="muted">Asegúrate de comprenderlo y poder argumentarlo con tus palabras.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="page" id="quiz">
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Comprueba lo aprendido</div>
+                            <h2>Cuestionario interactivo</h2>
+                            <p class="muted">Obtén retroalimentación y suma puntos a tu progreso.</p>
+                        </div>
+                    </div>
+                    <div class="card" id="quizBox"></div>
+                </section>
+
+                <section class="page" id="recursos">
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Para profundizar</div>
+                            <h2>Recursos académicos</h2>
+                            <p class="muted">Bibliografía recomendada a partir de los documentos proporcionados.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="reference"><strong>Comisión Europea. (2019).</strong> <em>Directrices éticas para
+                                una inteligencia artificial fiable.</em> Oficina de Publicaciones de la Unión Europea.
+                            <a href="https://doi.org/10.2759/346720" target="_blank">DOI ↗</a>
+                        </div>
+                        <div class="reference"><strong>International Center for Academic Integrity. (2021).</strong>
+                            <em>The fundamental values of academic integrity</em> (3.ª ed.).
+                        </div>
+                        <div class="reference"><strong>García-Peñalvo, F. J. (2024).</strong> <em>Inteligencia
+                                artificial generativa en la educación superior: Una perspectiva de 360°.</em> <a
+                                href="https://doi.org/10.5281/zenodo.10499827" target="_blank">Repositorio ↗</a></div>
+                        <div class="reference"><strong>Liu, B. et al. (2023).</strong> <em>Oportunidades y desafíos de
+                                la era de la inteligencia artificial para la educación superior.</em> UNESCO-IESALC.
+                        </div>
+                        <div class="reference"><strong>Miao, F., & Holmes, W. (2024).</strong> <em>Guía para el uso de
+                                IA generativa en educación e investigación.</em> UNESCO. <a
+                                href="https://unesdoc.unesco.org/ark:/48223/pf0000389227.locale=es"
+                                target="_blank">Consultar ↗</a></div>
+                        <div class="reference"><strong>Morduchowicz, R. (2023).</strong> <em>La inteligencia artificial:
+                                ¿Necesitamos una nueva educación?</em> UNESCO.</div>
+                        <div class="reference"><strong>Sabzalieva, E., & Valentini, A. (2023).</strong> <em>ChatGPT e
+                                inteligencia artificial en la educación superior: Guía de inicio rápido.</em>
+                            UNESCO-IESALC.</div>
+                        <div class="reference"><strong>UNESCO. (2023).</strong> <em>La IA generativa y el futuro de la
+                                educación.</em> UNESCO.</div>
+                        <div class="reference"><strong>McAdoo, T. (2025, 15 de septiembre).</strong> <em>How to cite
+                                ChatGPT.</em> APA Style. <a href="https://apastyle.apa.org/blog/how-to-cite-chatgpt"
+                                target="_blank">APA Style ↗</a></div>
+                    </div>
+                </section>
+
+                <section class="page" id="descargables">
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Material de consulta</div>
+                            <h2>Documentos descargables</h2>
+                            <p class="muted">Abre cada pestaña para revisar el contenido y descarga una versión de
+                                texto.</p>
+                        </div>
+                    </div>
+                    <div class="tabs">
+                        <button class="tab active" data-tab="cursoTab">Materia completa</button>
+                        <button class="tab" data-tab="temaTab">Plagio y atribución</button>
+                    </div>
+                    <div class="tab-content active" id="cursoTab">
+                        <div class="card download-card">
+                            <div>
+                                <h3>Inteligencia Artificial Aplicada a la Investigación y la Comunicación Académica</h3>
+                                <p class="muted">Justificación, objetivo general, competencias, siete unidades,
+                                    productos y evaluación.</p>
+                            </div><button class="btn" onclick="downloadDoc('curso')">Descargar .txt</button>
+                        </div>
+                        <div class="card" style="margin-top:18px">
+                            <h3>Vista previa</h3>
+                            <p>La asignatura desarrolla competencias transversales para buscar, evaluar, analizar y
+                                comunicar información con IA bajo principios de ética, pensamiento crítico,
+                                alfabetización digital e integridad académica.</p>
+                            <div class="grid grid-3">
+                                <div><strong>7 unidades</strong>
+                                    <p class="muted">De fundamentos a proyecto integrador.</p>
+                                </div>
+                                <div><strong>40%</strong>
+                                    <p class="muted">Actividades por unidad.</p>
+                                </div>
+                                <div><strong>30%</strong>
+                                    <p class="muted">Proyecto integrador final.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content" id="temaTab">
+                        <div class="card download-card">
+                            <div>
+                                <h3>Plagio y atribución</h3>
+                                <p class="muted">Módulo autogestivo de 60 a 90 minutos para nivel licenciatura.</p>
+                            </div><button class="btn" onclick="downloadDoc('tema')">Descargar .txt</button>
+                        </div>
+                        <div class="card" style="margin-top:18px">
+                            <h3>Vista previa</h3>
+                            <p>Objetivo: distinguir plagio, atribución, autoría y uso legítimo de IA para tomar
+                                decisiones éticas en trabajos académicos y profesionales.</p>
+                            <ul class="checklist">
+                                <li>Plagio directo, por paráfrasis, de ideas y autoplagio.</li>
+                                <li>Impacto en la confiabilidad, honestidad, propiedad intelectual y formación
+                                    profesional.</li>
+                                <li>Uso ético y no ético de IA generativa.</li>
+                                <li>Declaración metodológica y trazabilidad.</li>
+                                <li>Ensayo argumentativo de 1000 a 1500 palabras con rúbrica de 100 puntos.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="page" id="proposito">
+                    <div class="section-head">
+                        <div>
+                            <div class="eyebrow">Bienvenida</div>
+                            <h2>Propósito y cómo utilizar este recurso</h2>
+                        </div>
+                    </div>
+                    <div class="grid grid-2">
+                        <div class="card">
+                            <h3>Propósito</h3>
+                            <p>Este recurso didáctico digital busca formar estudiantes capaces de interactuar con la
+                                inteligencia artificial de manera crítica, honesta, transparente y responsable. Está
+                                diseñado para ser útil en ciencias sociales, ingenierías, ciencias biológicas y otras
+                                áreas de licenciatura.</p>
+                            <p>Su eje central es comprender que la IA puede apoyar el aprendizaje, pero no sustituye el
+                                juicio, la creatividad, la argumentación ni la responsabilidad del estudiante.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Cómo utilizarlo</h3>
+                            <ol>
+                                <li>Comienza en <strong>Inicio</strong> para conocer el propósito y revisar tu tablero.
+                                </li>
+                                <li>Estudia el <strong>Módulo de aprendizaje</strong> según tu ritmo.</li>
+                                <li>Practica con el <strong>Simulador</strong> y observa la retroalimentación.</li>
+                                <li>Usa el <strong>Generador de prompts</strong> para diseñar instrucciones
+                                    contextualizadas.</li>
+                                <li>Refuerza conceptos en <strong>Ética</strong> y responde el
+                                    <strong>Cuestionario</strong>.
+                                </li>
+                                <li>Consulta la bibliografía y descarga los documentos cuando los necesites.</li>
+                            </ol>
+                        </div>
+                        <div class="card">
+                            <h3>Accesibilidad y navegación</h3>
+                            <p>La interfaz es responsive, utiliza contraste institucional, botones identificables y modo
+                                claro/oscuro. Puedes navegar desde computadora, tableta o teléfono. El progreso se
+                                conserva localmente en este dispositivo.</p>
+                        </div>
+                        <div class="card">
+                            <h3>Producto final sugerido</h3>
+                            <p>Elabora un ensayo argumentativo titulado <em>¿El uso de inteligencia artificial en
+                                    trabajos académicos constituye una nueva forma de plagio?</em>, con postura propia,
+                                evidencia, contraargumento, conclusión y un anexo de trazabilidad del uso de IA.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <footer>Recurso educativo interactivo · Universidad Autónoma de Guadalajara · Uso académico responsable
+                    · Recurso desarrollado por Dalia Zúñiga Berumen
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const state = JSON.parse(localStorage.getItem("iaAcademicaState") || '{"completed":[],"correct":0,"decisions":0}');
+        const pages = document.querySelectorAll(".page");
+        const navs = document.querySelectorAll(".nav-btn");
+
+        function save() { localStorage.setItem("iaAcademicaState", JSON.stringify(state)); updateDashboard(); }
+        function go(id) {
+            pages.forEach(p => p.classList.toggle("active", p.id === id));
+            navs.forEach(n => n.classList.toggle("active", n.dataset.page === id));
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            updateDashboard();
+        }
+        navs.forEach(n => n.addEventListener("click", () => go(n.dataset.page)));
+
+        function mark(id) {
+            if (!state.completed.includes(id)) state.completed.push(id);
+            save();
+            alert("¡Progreso guardado! Esta sección fue marcada como revisada.");
+        }
+        function updateDashboard() {
+            const progress = Math.min(100, Math.round((state.completed.length / 6) * 100));
+            document.getElementById("progressValue").textContent = progress + "%";
+            document.getElementById("progressBar").style.width = progress + "%";
+            document.getElementById("quizStat").textContent = state.correct + "/5";
+            document.getElementById("decisionsStat").textContent = state.decisions;
+            document.getElementById("badgesStat").textContent = Math.min(3, (progress >= 35 ? 1 : 0) + (state.correct >= 3 ? 1 : 0) + (state.decisions >= 3 ? 1 : 0));
+        }
+        function resetProgress() {
+            if (confirm("¿Quieres reiniciar todo tu progreso?")) {
+                state.completed = []; state.correct = 0; state.decisions = 0; save();
+            }
+        }
+
+        function feedback(button, correct, text) {
+            const box = button.closest(".scenario").querySelector(".feedback");
+            box.innerHTML = (correct ? "✅ <strong>Buena decisión.</strong> " : "⚠️ <strong>Revisa este criterio.</strong> ") + text;
+            box.classList.add("show");
+            if (!button.closest(".scenario").dataset.answered) {
+                state.decisions++;
+                button.closest(".scenario").dataset.answered = "true";
+                save();
+            }
+        }
+
+        const prompts = {
+            "Elaboración de ensayo": "Actúa como tutor de escritura académica. Ayúdame a planear un ensayo sobre [TEMA] para la carrera de [DISCIPLINA]. Propón una pregunta central, una tesis provisional, un esquema argumentativo y posibles contraargumentos. No inventes fuentes: indica qué afirmaciones requieren verificación y sugiere palabras clave para buscar bibliografía académica. Requisitos: [REQUISITOS].",
+            "Diseño de proyecto de investigación": "Actúa como asesor metodológico. Ayúdame a diseñar un proyecto de investigación sobre [TEMA] en [DISCIPLINA]. Formula problema, pregunta, objetivo general, objetivos específicos, justificación, enfoque metodológico, población o unidad de análisis y posibles consideraciones éticas. Presenta alternativas y señala qué elementos debo validar con literatura especializada. Requisitos: [REQUISITOS].",
+            "Análisis de artículo científico": "Analiza el artículo que proporcionaré desde una perspectiva crítica. Identifica pregunta, marco teórico, método, muestra o corpus, resultados, limitaciones, sesgos potenciales y aportación. Diferencia claramente entre lo que dice el artículo y tus inferencias. No inventes datos. Disciplina: [DISCIPLINA]. Tema: [TEMA]. Requisitos: [REQUISITOS].",
+            "Construcción de marco teórico": "Actúa como asistente de revisión bibliográfica. Ayúdame a organizar un marco teórico sobre [TEMA] para [DISCIPLINA]. Propón conceptos, relaciones entre categorías, autores o líneas de investigación que debo buscar y una estructura posible. No proporciones referencias como definitivas si no puedes verificarlas; incluye criterios para evaluar actualidad, pertinencia y calidad de las fuentes. Requisitos: [REQUISITOS].",
+            "Elaboración de presentación": "Ayúdame a diseñar una presentación académica sobre [TEMA] para estudiantes de [DISCIPLINA]. Propón objetivos, secuencia de diapositivas, idea principal de cada una, ejemplos disciplinares y una actividad de cierre. Evita saturar de texto y señala qué datos, imágenes o citas deben tener atribución. Requisitos: [REQUISITOS]."
+        };
+
+        function generatePrompt() {
+            const type = document.getElementById("promptType").value;
+            const discipline = document.getElementById("discipline").value || "[DISCIPLINA]";
+            const topic = document.getElementById("topic").value || "[TEMA]";
+            const requirements = document.getElementById("requirements").value || "[REQUISITOS]";
+            let output = prompts[type].replaceAll("[DISCIPLINA]", discipline).replaceAll("[TEMA]", topic).replaceAll("[REQUISITOS]", requirements);
+            document.getElementById("promptOutput").textContent = output;
+        }
+        function copyPrompt() {
+            navigator.clipboard.writeText(document.getElementById("promptOutput").textContent);
+            alert("Prompt copiado al portapapeles.");
+        }
+
+        const questions = [
+            ["¿Qué es el plagio?", ["Presentar contenido ajeno como propio sin reconocimiento", "Utilizar cualquier herramienta digital", "Parafrasear siempre"], 0, "El plagio oculta la procedencia de ideas, palabras, datos o creaciones."],
+            ["¿Qué debe hacer el estudiante ante una respuesta de IA?", ["Entregarla directamente", "Verificar información, fuentes, sesgos y pertinencia", "Eliminar toda fuente académica"], 1, "La responsabilidad final continúa siendo de la persona usuaria."],
+            ["¿Cuál es un ejemplo de atribución?", ["Reconocer el origen de una idea, dato o recurso", "Copiar sin referencias", "Cambiar algunas palabras sin citar"], 0, "La atribución hace transparente la procedencia del conocimiento."],
+            ["¿Cuál es un uso ético de IA?", ["Solicitar un ensayo completo y entregarlo", "Usarla para ideas, esquema o revisión y desarrollar el trabajo propio", "No revisar sus resultados"], 1, "El uso ético conserva el control intelectual y exige revisión crítica."],
+            ["¿Qué es el autoplagio?", ["Usar una fuente extranjera", "Reutilizar un trabajo propio previo sin autorización o informar su origen", "Citar correctamente"], 1, "El autoplagio también afecta la transparencia y la integridad académica."]
+        ];
+        let quizIndex = 0, quizScore = 0;
+        function renderQuiz() {
+            const q = questions[quizIndex];
+            document.getElementById("quizBox").innerHTML = `
+        <div class="tag">Pregunta ${quizIndex + 1} de ${questions.length}</div>
+        <h3 style="font-size:22px;margin-top:15px">${q[0]}</h3>
+        <div class="choice-grid">${q[1].map((a, i) => `<button class="choice" onclick="answerQuiz(${i})">${String.fromCharCode(65 + i)}. ${a}</button>`).join("")}</div>
+        <div id="quizFeedback" class="feedback"></div>`;
+        }
+        function answerQuiz(choice) {
+            const q = questions[quizIndex], fb = document.getElementById("quizFeedback");
+            const correct = choice === q[2];
+            if (correct) quizScore++;
+            fb.innerHTML = (correct ? "✅ ¡Correcto! " : "⚠️ Aún no. ") + q[3];
+            fb.classList.add("show");
+            document.querySelectorAll("#quizBox .choice").forEach(b => b.disabled = true);
+            setTimeout(() => {
+                quizIndex++;
+                if (quizIndex < questions.length) renderQuiz();
+                else {
+                    state.correct = quizScore; state.completed.push("quiz"); save();
+                    document.getElementById("quizBox").innerHTML = `<div class="notice"><h3>Resultado final: ${quizScore}/${questions.length}</h3><p>${quizScore >= 4 ? "¡Excelente! Distingues los principales criterios de integridad académica." : "Buen inicio. Revisa nuevamente las secciones de ética y atribución para fortalecer tu criterio."}</p><button class="btn" onclick="quizIndex=0;quizScore=0;renderQuiz()">Intentar de nuevo</button></div>`;
+                }
+            }, 1200);
+        }
+
+        const cursoText = `INTELIGENCIA ARTIFICIAL APLICADA A LA INVESTIGACIÓN Y LA COMUNICACIÓN ACADÉMICA
+
+Justificación: La IA generativa transforma la búsqueda de información, el análisis, la producción documental y la comunicación del conocimiento. La asignatura promueve un uso ético, crítico, responsable y contextualizado.
+
+Objetivo general: Aplicar herramientas de IA en investigación, análisis, producción académica y resolución de problemas mediante criterios éticos, metodológicos y disciplinares.
+
+Competencia: Integrar IA en la búsqueda, procesamiento, evaluación y comunicación de información bajo principios de ética, pensamiento crítico y rigor metodológico.
+
+UNIDADES
+1. Fundamentos de IA: conceptos, IA generativa, evolución, aplicaciones, beneficios, limitaciones y riesgos. Producto: mapa conceptual.
+2. Búsqueda, evaluación y gestión de información: bases de datos, fuentes, sesgos y referencias. Producto: reporte documental.
+3. Ingeniería de instrucciones: diseño de prompts, contexto disciplinar y verificación. Producto: portafolio de prompts.
+4. Análisis y procesamiento: síntesis, categorización, matrices y toma de decisiones. Producto: análisis crítico.
+5. Producción de textos: planeación, redacción, corrección y revisión. Producto: documento con evidencia del proceso.
+6. Ética e integridad: derechos de autor, plagio, atribución, transparencia, sesgos, privacidad y responsabilidad. Producto: ensayo argumentativo.
+7. Proyecto integrador: aplicación de IA a un problema disciplinar. Producto: proyecto final interdisciplinario.
+
+EVALUACIÓN: Actividades por unidad 40%; portafolio 20%; participación 10%; proyecto integrador 30%.`;
+        const temaText = `PLAGIO Y ATRIBUCIÓN
+
+Asignatura: Inteligencia Artificial para el Aprendizaje, la Investigación y la Comunicación Académica.
+Unidad 6. Tiempo estimado: 60 a 90 minutos. Nivel: Licenciatura.
+
+OBJETIVO: Distinguir plagio, atribución, autoría y uso legítimo de IA para tomar decisiones éticas.
+
+El plagio presenta ideas, palabras, datos o creaciones ajenas como propias sin reconocimiento. Puede ser directo, por paráfrasis inadecuada, de ideas o autoplagio. Afecta la confiabilidad del conocimiento, la honestidad académica, la propiedad intelectual y la formación profesional.
+
+La IA generativa ofrece oportunidades, pero no elimina la responsabilidad del estudiante. Se debe verificar información, comprobar fuentes, revisar sesgos y reconocer el uso de herramientas cuando la institución lo solicite.
+
+USO ÉTICO: generar ideas, solicitar ejemplos, organizar un esquema o revisar la redacción; después consultar fuentes, desarrollar argumentos, redactar y verificar.
+USO NO ÉTICO: solicitar un ensayo completo, entregarlo sin revisión y ocultar el uso de IA.
+
+ATRIBUCIÓN: reconocer claramente el origen de una información, idea, imagen, dato o recurso. La atribución aporta transparencia, credibilidad y verificabilidad.
+
+NOTA SUGERIDA: “Para la elaboración inicial de este trabajo se utilizó una herramienta de inteligencia artificial generativa como apoyo para la organización de ideas y la revisión lingüística. El análisis, selección de información, argumentación y redacción final fueron realizados por el autor”.
+
+ACTIVIDAD: Analizar casos de uso de IA y determinar si existe plagio.
+
+PRODUCTO FINAL: Ensayo argumentativo de 1000 a 1500 palabras sobre si el uso de IA constituye una nueva forma de plagio, con postura, argumentos, contraargumento, fuentes confiables, reflexión sobre responsabilidad y anexo de trazabilidad.
+
+REFERENCIAS: Comisión Europea (2019); ICAI (2021); McAdoo (2025); Miao y Holmes (2024); Sabzalieva y Valentini (2023); UNESCO (2023).`;
+
+        function downloadDoc(type) {
+            const content = type === "curso" ? cursoText : temaText;
+            const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = type === "curso" ? "materia-ia-academica.txt" : "plagio-y-atribucion.txt";
+            a.click();
+            URL.revokeObjectURL(a.href);
+        }
+
+        document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", () => {
+            document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+            document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+            tab.classList.add("active");
+            document.getElementById(tab.dataset.tab).classList.add("active");
+        }));
+
+        document.querySelectorAll(".accordion button").forEach(b => b.addEventListener("click", () => b.parentElement.classList.toggle("open")));
+        document.getElementById("themeBtn").addEventListener("click", () => {
+            const dark = document.body.dataset.theme === "dark";
+            document.body.dataset.theme = dark ? "light" : "dark";
+            document.getElementById("themeBtn").textContent = dark ? "☾" : "☀";
+        });
+
+        renderQuiz();
+        updateDashboard();
+    </script>
+</body>
+
+</html>
