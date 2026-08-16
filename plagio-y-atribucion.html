@@ -1078,7 +1078,8 @@
                             <div class="notice" style="border-color:#d47a83;background:#fff0f1; margin-bottom: 18px;">
                                 <strong>Uso no
                                     ético:</strong> entregar un texto completo generado por IA como si fuera
-                                exclusivamente propio, sin revisión ni reconocimiento.</div>
+                                exclusivamente propio, sin revisión ni reconocimiento.
+                            </div>
 
                             <!-- Contenedor responsivo del video al final -->
                             <div
@@ -1185,7 +1186,11 @@
                                 <h3>Inteligencia Artificial Aplicada a la Investigación y la Comunicación Académica</h3>
                                 <p class="muted">Justificación, objetivo general, competencias, siete unidades,
                                     productos y evaluación.</p>
-                            </div><button class="btn" onclick="downloadDoc('curso')">Descargar .txt</button>
+                            </div><a href="assets/documentos/inteligencia-artificial-aplicada-a-la-investigacion.docx"
+                                download="Inteligencia Artificial Aplicada a la Investigación y la Comunicación Académica.docx"
+                                class="btn" style="display: inline-flex; align-items: center; justify-content: center;">
+                                Descargar .docx
+                            </a>
                         </div>
                         <div class="card" style="margin-top:18px">
                             <h3>Vista previa</h3>
@@ -1276,7 +1281,8 @@
                 </section>
 
                 <footer>Recurso educativo interactivo · Universidad Autónoma de Guadalajara · Uso académico responsable
-                    · Recurso desarrollado por Dalia Zúñiga Berumen
+                    · Recurso desarrollado por Dalia Zúñiga Berumen, con herramientas de ChatGPT IA UAG y la
+                    colaboración de Alejandro Bañuelos
                 </footer>
             </div>
         </main>
@@ -1380,24 +1386,6 @@
             }, 1200);
         }
 
-        const cursoText = `INTELIGENCIA ARTIFICIAL APLICADA A LA INVESTIGACIÓN Y LA COMUNICACIÓN ACADÉMICA
-
-Justificación: La IA generativa transforma la búsqueda de información, el análisis, la producción documental y la comunicación del conocimiento. La asignatura promueve un uso ético, crítico, responsable y contextualizado.
-
-Objetivo general: Aplicar herramientas de IA en investigación, análisis, producción académica y resolución de problemas mediante criterios éticos, metodológicos y disciplinares.
-
-Competencia: Integrar IA en la búsqueda, procesamiento, evaluación y comunicación de información bajo principios de ética, pensamiento crítico y rigor metodológico.
-
-UNIDADES
-1. Fundamentos de IA: conceptos, IA generativa, evolución, aplicaciones, beneficios, limitaciones y riesgos. Producto: mapa conceptual.
-2. Búsqueda, evaluación y gestión de información: bases de datos, fuentes, sesgos y referencias. Producto: reporte documental.
-3. Ingeniería de instrucciones: diseño de prompts, contexto disciplinar y verificación. Producto: portafolio de prompts.
-4. Análisis y procesamiento: síntesis, categorización, matrices y toma de decisiones. Producto: análisis crítico.
-5. Producción de textos: planeación, redacción, corrección y revisión. Producto: documento con evidencia del proceso.
-6. Ética e integridad: derechos de autor, plagio, atribución, transparencia, sesgos, privacidad y responsabilidad. Producto: ensayo argumentativo.
-7. Proyecto integrador: aplicación de IA a un problema disciplinar. Producto: proyecto final interdisciplinario.
-
-EVALUACIÓN: Actividades por unidad 40%; portafolio 20%; participación 10%; proyecto integrador 30%.`;
         const temaText = `PLAGIO Y ATRIBUCIÓN
 
 Asignatura: Inteligencia Artificial para el Aprendizaje, la Investigación y la Comunicación Académica.
@@ -1423,11 +1411,13 @@ PRODUCTO FINAL: Ensayo argumentativo de 1000 a 1500 palabras sobre si el uso de 
 REFERENCIAS: Comisión Europea (2019); ICAI (2021); McAdoo (2025); Miao y Holmes (2024); Sabzalieva y Valentini (2023); UNESCO (2023).`;
 
         function downloadDoc(type) {
-            const content = type === "curso" ? cursoText : temaText;
+            if (type !== "tema") return;
+
+            const content = temaText;
             const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
             const a = document.createElement("a");
             a.href = URL.createObjectURL(blob);
-            a.download = type === "curso" ? "materia-ia-academica.txt" : "plagio-y-atribucion.txt";
+            a.download = "plagio-y-atribucion.txt";
             a.click();
             URL.revokeObjectURL(a.href);
         }
