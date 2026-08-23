@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Estrategias de aprendizaje para entornos digitales</title>
+
+    <style>
+        :root {
+            --azul: #173f5f;
+            --azul-claro: #20639b;
+            --turquesa: #3caea3;
+            --verde: #5cb85c;
+            --amarillo: #f6c945;
+            --coral: #ed553b;
+            --morado: #8064a2;
+            --fondo: #f4f8fb;
+            --texto: #243447;
+            --gris: #64748b;
+            --blanco: #ffffff;
+            --sombra: 0 12px 28px rgba(23, 63, 95, 0.12);
+            --radio: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--fondo);
+            color: var(--texto);
+            font-family: "Segoe UI", Arial, sans-serif;
+            line-height: 1.45;
+        }
+
+        .infografia {
+            width: min(1180px, 100%);
+            margin: 0 auto;
+            background: var(--fondo);
+            overflow: hidden;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 360px;
+            padding: 58px 7%;
+            color: white;
+            background:
+                linear-gradient(135deg, rgba(23, 63, 95, .98), rgba(32, 99, 155, .9)),
+                radial-gradient(circle at 85% 20%, rgba(60, 174, 163, .8), transparent 30%);
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, .16);
+        }
+
+        .hero::before {
+            width: 360px;
+            height: 360px;
+            right: -100px;
+            top: -140px;
+        }
+
+        .hero::after {
+            width: 220px;
+            height: 220px;
+            right: 100px;
+            bottom: -150px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            padding: 7px 14px;
+            border: 1px solid rgba(255, 255, 255, .35);
+            border-radius: 999px;
+            font-size: .78rem;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            background: rgba(255, 255, 255, .10);
+        }
+
+        h1 {
+            margin: 18px 0 12px;
+            font-size: clamp(2.4rem, 6vw, 4.8rem);
+            line-height: .98;
+            letter-spacing: -0.05em;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 0;
+            font-size: 1.15rem;
+            color: #e7f4fb;
+        }
+
+        .hero-illustration {
+            position: absolute;
+            z-index: 1;
+            right: 7%;
+            bottom: 28px;
+            width: 235px;
+            opacity: .94;
+        }
+
+        .intro {
+            margin: -34px 7% 34px;
+            position: relative;
+            z-index: 3;
+            padding: 25px 30px;
+            border-radius: var(--radio);
+            background: var(--blanco);
+            box-shadow: var(--sombra);
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .intro h2,
+        .section-title h2 {
+            margin: 0 0 8px;
+            color: var(--azul);
+            font-size: 1.65rem;
+        }
+
+        .intro p {
+            margin: 0;
+        }
+
+        .key-message {
+            padding: 20px;
+            border-left: 5px solid var(--amarillo);
+            border-radius: 12px;
+            background: #fff9df;
+            font-weight: 700;
+            color: #654d00;
+        }
+
+        .content {
+            padding: 0 7% 45px;
+        }
+
+        .section-title {
+            margin: 30px 0 20px;
+        }
+
+        .section-title p {
+            margin: 0;
+            color: var(--gris);
+        }
+
+        .strategies {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 22px;
+        }
+
+        .card {
+            position: relative;
+            padding: 25px;
+            border-radius: var(--radio);
+            background: var(--blanco);
+            box-shadow: var(--sombra);
+            overflow: hidden;
+            border-top: 7px solid var(--azul-claro);
+        }
+
+        .card:nth-child(2) {
+            border-color: var(--turquesa);
+        }
+
+        .card:nth-child(3) {
+            border-color: var(--coral);
+        }
+
+        .card:nth-child(4) {
+            border-color: var(--amarillo);
+        }
+
+        .card:nth-child(5) {
+            border-color: var(--verde);
+        }
+
+        .card:nth-child(6) {
+            border-color: var(--morado);
+        }
+
+        .card:nth-child(7) {
+            border-color: var(--azul);
+        }
+
+        .card-header {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .icon {
+            flex: 0 0 55px;
+            width: 55px;
+            height: 55px;
+            display: grid;
+            place-items: center;
+            border-radius: 16px;
+            color: white;
+            font-size: 1.8rem;
+            background: var(--azul-claro);
+        }
+
+        .card:nth-child(2) .icon {
+            background: var(--turquesa);
+        }
+
+        .card:nth-child(3) .icon {
+            background: var(--coral);
+        }
+
+        .card:nth-child(4) .icon {
+            background: var(--amarillo);
+            color: #5b4700;
+        }
+
+        .card:nth-child(5) .icon {
+            background: var(--verde);
+        }
+
+        .card:nth-child(6) .icon {
+            background: var(--morado);
+        }
+
+        .card:nth-child(7) .icon {
+            background: var(--azul);
+        }
+
+        .card h3 {
+            margin: 0;
+            color: var(--azul);
+            font-size: 1.25rem;
+            line-height: 1.15;
+        }
+
+        .label {
+            display: block;
+            margin: 16px 0 5px;
+            color: var(--azul-claro);
+            font-size: .75rem;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .card p {
+            margin: 0;
+            font-size: .94rem;
+        }
+
+        ul {
+            margin: 5px 0 0;
+            padding-left: 19px;
+        }
+
+        li {
+            margin: 4px 0;
+            font-size: .91rem;
+        }
+
+        .example {
+            padding: 12px 14px;
+            border-radius: 11px;
+            background: #eef7fb;
+            font-size: .9rem;
+        }
+
+        .recommendation {
+            padding: 12px 14px;
+            border-radius: 11px;
+            background: #f3f7f3;
+            font-size: .9rem;
+        }
+
+        .source {
+            margin-top: 15px;
+            padding-top: 12px;
+            border-top: 1px solid #e4ebf0;
+            color: var(--gris);
+            font-size: .76rem;
+        }
+
+        .tools {
+            margin-top: 32px;
+            padding: 28px;
+            border-radius: var(--radio);
+            color: white;
+            background: linear-gradient(135deg, var(--azul), #255f81);
+            box-shadow: var(--sombra);
+        }
+
+        .tools h2 {
+            margin-top: 0;
+            font-size: 1.65rem;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .tool {
+            padding: 15px 12px;
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, .1);
+            text-align: center;
+            font-size: .88rem;
+        }
+
+        .tool strong {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 1.45rem;
+        }
+
+        .route {
+            margin-top: 32px;
+            padding: 28px;
+            border-radius: var(--radio);
+            background: white;
+            box-shadow: var(--sombra);
+        }
+
+        .route h2 {
+            margin: 0 0 20px;
+            color: var(--azul);
+            text-align: center;
+        }
+
+        .route-flow {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            align-items: stretch;
+        }
+
+        .step {
+            position: relative;
+            padding: 17px 10px;
+            border-radius: 14px;
+            color: white;
+            background: var(--azul-claro);
+            text-align: center;
+            font-size: .85rem;
+            font-weight: 700;
+        }
+
+        .step:not(:last-child)::after {
+            content: "→";
+            position: absolute;
+            right: -17px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 2;
+            color: var(--azul-claro);
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+
+        .step:nth-child(2) {
+            background: var(--turquesa);
+        }
+
+        .step:nth-child(3) {
+            background: var(--coral);
+        }
+
+        .step:nth-child(4) {
+            background: var(--amarillo);
+            color: #5b4700;
+        }
+
+        .step:nth-child(5) {
+            background: var(--verde);
+        }
+
+        .step:nth-child(6) {
+            background: var(--morado);
+        }
+
+        .justification {
+            margin-top: 32px;
+            padding: 27px;
+            border-radius: var(--radio);
+            background: #e9f5f4;
+            border-left: 8px solid var(--turquesa);
+        }
+
+        .justification h2 {
+            margin-top: 0;
+            color: var(--azul);
+        }
+
+        .dimensions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 13px;
+            margin-top: 18px;
+        }
+
+        .dimension {
+            padding: 15px;
+            border-radius: 13px;
+            background: rgba(255, 255, 255, .72);
+        }
+
+        .dimension strong {
+            display: block;
+            color: var(--azul);
+            margin-bottom: 4px;
+        }
+
+        .conclusion {
+            margin-top: 32px;
+            padding: 32px;
+            border-radius: var(--radio);
+            color: white;
+            text-align: center;
+            background: linear-gradient(135deg, var(--coral), #c93d2d);
+            box-shadow: var(--sombra);
+        }
+
+        .conclusion h2 {
+            margin-top: 0;
+            font-size: 1.7rem;
+        }
+
+        .conclusion p {
+            max-width: 780px;
+            margin: 0 auto;
+            font-size: 1.05rem;
+        }
+
+        .quote {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 18px;
+            border-radius: 999px;
+            color: #5b2300;
+            background: var(--amarillo);
+            font-weight: 800;
+        }
+
+        .references {
+            margin-top: 32px;
+            padding: 27px;
+            border-radius: var(--radio);
+            background: white;
+            box-shadow: var(--sombra);
+        }
+
+        .references h2 {
+            margin-top: 0;
+            color: var(--azul);
+        }
+
+        .references ol {
+            margin: 0;
+            padding-left: 22px;
+        }
+
+        .references li {
+            margin-bottom: 9px;
+            font-size: .82rem;
+            color: #4b5968;
+        }
+
+        footer {
+            padding: 25px 7%;
+            color: #d8e8f1;
+            background: var(--azul);
+            text-align: center;
+            font-size: .8rem;
+        }
+
+        @media (max-width: 850px) {
+            .hero-illustration {
+                right: 4%;
+                width: 170px;
+                opacity: .45;
+            }
+
+            .intro {
+                grid-template-columns: 1fr;
+            }
+
+            .strategies {
+                grid-template-columns: 1fr;
+            }
+
+            .tool-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .route-flow {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .step:not(:last-child)::after {
+                display: none;
+            }
+
+            .dimensions {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .hero {
+                padding: 42px 6%;
+            }
+
+            .hero-illustration {
+                display: none;
+            }
+
+            .intro,
+            .content {
+                margin-left: 5%;
+                margin-right: 5%;
+            }
+
+            .content {
+                padding: 0 0 35px;
+            }
+
+            .tool-grid,
+            .route-flow {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .card,
+            .tools,
+            .route,
+            .justification,
+            .conclusion,
+            .references {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2.75rem;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+
+            .infografia {
+                width: 100%;
+            }
+
+            .card,
+            .intro,
+            .tools,
+            .route,
+            .justification,
+            .conclusion,
+            .references {
+                box-shadow: none;
+                break-inside: avoid;
+            }
+
+            .hero {
+                min-height: 300px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="infografia">
+
+        <header class="hero">
+            <div class="hero-content">
+                <span class="eyebrow">Educación superior · Aprendizaje digital</span>
+                <h1>Estrategias de aprendizaje para entornos digitales</h1>
+                <p>
+                    Aprender en línea implica planificar, interactuar, crear, evaluar
+                    y reflexionar utilizando la tecnología con propósito.
+                </p>
+            </div>
+
+            <svg class="hero-illustration" viewBox="0 0 260 230" role="img"
+                aria-label="Ilustración de aprendizaje digital">
+                <rect x="35" y="30" width="190" height="125" rx="12" fill="#ffffff" opacity=".95" />
+                <rect x="48" y="43" width="164" height="91" rx="6" fill="#dff4f4" />
+                <circle cx="78" cy="73" r="18" fill="#3caea3" />
+                <path d="M69 73l7 7 13-15" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                <rect x="108" y="61" width="75" height="8" rx="4" fill="#173f5f" />
+                <rect x="108" y="78" width="55" height="7" rx="3.5" fill="#80b4c6" />
+                <rect x="60" y="105" width="135" height="8" rx="4" fill="#f6c945" />
+                <path d="M20 170h220l-22 20H42z" fill="#ffffff" opacity=".9" />
+                <circle cx="130" cy="205" r="18" fill="#ed553b" />
+                <path d="M130 194v22M119 205h22" stroke="#fff" stroke-width="5" stroke-linecap="round" />
+            </svg>
+        </header>
+
+        <section class="intro">
+            <div>
+                <h2>¿Por qué son importantes?</h2>
+                <p>
+                    Los entornos digitales amplían el acceso a la información y permiten
+                    nuevas formas de estudiar, colaborar y producir conocimiento. Su
+                    eficacia depende de que el estudiante desarrolle autonomía, pensamiento
+                    crítico, organización y capacidad de reflexión.
+                </p>
+            </div>
+
+            <div class="key-message">
+                La tecnología es un medio: el aprendizaje mejora cuando se acompaña de
+                objetivos claros, interacción significativa y reflexión.
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="section-title">
+                <h2>Siete estrategias para aprender mejor</h2>
+                <p>Selecciona, combina y adapta las estrategias según el objetivo, el contexto y las necesidades del
+                    grupo.</p>
+            </div>
+
+            <section class="strategies">
+
+                <article class="card">
+                    <div class="card-header">
+                        <div class="icon">🧭</div>
+                        <div>
+                            <h3>1. Aprendizaje autodirigido y autorregulado</h3>
+                        </div>
+                    </div>
+
+                    <span class="label">Definición</span>
+                    <p>
+                        Capacidad de establecer metas, planificar actividades, seleccionar
+                        recursos, supervisar el progreso y ajustar las estrategias de estudio.
+                    </p>
+
+                    <span class="label">Beneficios</span>
+                    <ul>
+                        <li>Favorece la autonomía académica.</li>
+                        <li>Fortalece la responsabilidad.</li>
+                        <li>Permite adaptar el ritmo de estudio.</li>
+                        <li>Mejora la resolución de problemas.</li>
+                    </ul>
+
+                    <span class="label">Aplicación</span>
+                    <div class="example">
+                        Definir una meta, consultar un video y una lectura, resolver ejercicios
+                        y comprobar los avances mediante una autoevaluación.
+                    </div>
+
+                    <span class="label">Recomendaciones</span>
+                    <div class="recommendation">
+                        Formular objetivos concretos, dividir las tareas, usar listas de
+                        verificación y revisar periódicamente los avances.
+                    </div>
+
+                    <div class="source">
+                        <strong>Fuente:</strong> Núñez, Solano, González-Pienda y Rosário (2006).
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-header">
+                        <div class="icon">🎬</div>
+                        <div>
+                            <h3>2. Aprendizaje multimedia</h3>
+                        </div>
+                    </div>
+
+                    <span class="label">Definición</span>
+                    <p>
+                        Integración intencional de palabras, imágenes, audio, animaciones y
+                        videos para facilitar la comprensión de conceptos y procesos.
+                    </p>
+
+                    <span class="label">Beneficios</span>
+                    <ul>
+                        <li>Representa fenómenos complejos.</li>
+                        <li>Facilita la comprensión visual.</li>
+                        <li>Aumenta el interés.</li>
+                        <li>Combina explicación, demostración y práctica.</li>
+                    </ul>
+
+                    <span class="label">Aplicación</span>
+                    <div class="example">
+                        Explicar el funcionamiento del corazón mediante una animación breve,
+                        narración, etiquetas visuales y preguntas interactivas.
+                    </div>
+
+                    <span class="label">Recomendaciones</span>
+                    <div class="recommendation">
+                        Evitar elementos decorativos innecesarios, segmentar los videos,
+                        destacar conceptos clave e incluir subtítulos.
+                    </div>
+
+                    <div class="source">
+                        <strong>Fuente:</strong> Mayer (2005).
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-header">
+                        <div class="icon">🤝</div>
+                        <div>
+                            <h3>3. Aprendizaje colaborativo en línea</h3>
+                        </div>
+                    </div>
+
+                    <span class="label">Definición</span>
+                    <p>
+                        Construcción conjunta de conocimientos mediante interacción, diálogo,
+                        negociación de significados y elaboración compartida de productos.
+                    </p>
+
+                    <span class="label">Beneficios</span>
+                    <ul>
+                        <li>Desarrolla la comunicación.</li>
+                        <li>Promueve la argumentación.</li>
+                        <li>Permite contrastar perspectivas.</li>
+                        <li>Fortalece la responsabilidad grupal.</li>
+                    </ul>
+
+                    <span class="label">Aplicación</span>
+                    <div class="example">
+                        Analizar un caso mediante un foro, distribuir responsabilidades,
+                        contrastar fuentes y presentar una conclusión conjunta.
+                    </div>
+
+                    <span class="label">Recomendaciones</span>
+                    <div class="recommendation">
+                        Definir un producto común, asignar roles, establecer normas de
+                        comunicación y evaluar la participación individual.
+                    </div>
+
+                    <div class="source">
+                        <strong>Fuente:</strong> Cabero Almenara y Llorente Cejudo (2007).
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-header">
+                        <div class="icon">🏆</div>
+                        <div>
+                            <h3>4. Gamificación educativa</h3>
+                        </div>
+                    </div>
+
+                    <span class="label">Definición</span>
+                    <p>
+                        Uso planificado de retos, niveles, insignias, puntos, narrativas y
+                        retroalimentación para apoyar objetivos educativos.
+                    </p>
+
+                    <span class="label">Beneficios</span>
+                    <ul>
+                        <li>Incrementa la participación.</li>
+                        <li>Hace visible el progreso.</li>
+                        <li>Ofrece retroalimentación frecuente.</li>
+                        <li>Favorece la perseverancia.</li>
+                    </ul>
+
+                    <span class="label">Aplicación</span>
+                    <div class="example">
+                        Resolver desafíos semanales, obtener insignias por competencias
+                        alcanzadas y recibir retroalimentación inmediata.
+                    </div>
+
+                    <span class="label">Recomendaciones</span>
+                    <div class="recommendation">
+                        Vincular cada reto con un resultado de aprendizaje y evitar que la
+                        competencia sea más importante que la comprensión.
+                    </div>
+
+                    <div class="source">
+                        <strong>Fuente:</strong> Ortiz-Colón, Jordán y Agredal (2018).
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-header">
+                        <div class="icon">🗓️</div>
+                        <div>
+                            <h3>5. Gestión del tiempo y organización</h3>
+                        </div>
+                    </div>
+
+                    <span class="label">Definición</span>
+                    <p>
+                        Planificación sistemática de horarios, prioridades, tareas y descansos
+                        para avanzar de manera constante en el aprendizaje digital.
+                    </p>
+
+                    <span class="label">Beneficios</span>
+                    <ul>
+                        <li>Reduce la procrastinación.</li>
+                        <li>Ayuda a cumplir fechas.</li>
+                        <li>Disminuye la sobrecarga.</li>
+                        <li>Promueve hábitos sostenibles.</li>
+                    </ul>
+
+                    <span class="label">Aplicación</span>
+                    <div class="example">
+                        Organizar la semana en un calendario digital y reservar bloques para
+                        leer, practicar, participar y descansar.
+                    </div>
+
+                    <span class="label">Recomendaciones</span>
+                    <div class="recommendation">
+                        Establecer prioridades, planificar sesiones frecuentes, incluir pausas
+                        y anticipar dificultades técnicas o académicas.
+                    </div>
+
+                    <div class="source">
+                        <strong>Fuente:</strong> García Aretio (2001).
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-header">
+                        <div class="icon">🛠️</div>
+                        <div>
+                            <h3>6. Aprendizaje basado en proyectos</h3>
+                        </div>
+                    </div>
+
+                    <span class="label">Definición</span>
+                    <p>
+                        Metodología en la que el estudiante investiga y responde a un problema
+                        auténtico mediante la elaboración de un producto o solución concreta.
+                    </p>
+
+                    <span class="label">Beneficios</span>
+                    <ul>
+                        <li>Integra conocimientos.</li>
+                        <li>Relaciona la teoría con la realidad.</li>
+                        <li>Desarrolla creatividad y pensamiento crítico.</li>
+                        <li>Genera evidencias de aprendizaje.</li>
+                    </ul>
+
+                    <span class="label">Aplicación</span>
+                    <div class="example">
+                        Diseñar una campaña digital de prevención ambiental: investigar,
+                        analizar, crear materiales y presentar una propuesta.
+                    </div>
+
+                    <span class="label">Recomendaciones</span>
+                    <div class="recommendation">
+                        Partir de una pregunta significativa, definir etapas, utilizar rúbricas
+                        y presentar el producto ante una audiencia.
+                    </div>
+
+                    <div class="source">
+                        <strong>Fuente:</strong> Trujillo Sáez (2015).
+                    </div>
+                </article>
+
+                <article class="card">
+                    <div class="card-header">
+                        <div class="icon">🔎</div>
+                        <div>
+                            <h3>7. Metacognición</h3>
+                        </div>
+                    </div>
+
+                    <span class="label">Definición</span>
+                    <p>
+                        Reflexión consciente sobre lo que se sabe, cómo se aprende, qué
+                        dificultades aparecen y qué decisiones pueden mejorar el desempeño.
+                    </p>
+
+                    <span class="label">Beneficios</span>
+                    <ul>
+                        <li>Identifica fortalezas y necesidades.</li>
+                        <li>Mejora la selección de estrategias.</li>
+                        <li>Favorece la transferencia.</li>
+                        <li>Fortalece la autoevaluación.</li>
+                    </ul>
+
+                    <span class="label">Aplicación</span>
+                    <div class="example">
+                        Responder al finalizar una actividad: ¿qué aprendí?, ¿qué procedimiento
+                        utilicé?, ¿qué fue difícil?, ¿qué mejoraré?
+                    </div>
+
+                    <span class="label">Recomendaciones</span>
+                    <div class="recommendation">
+                        Incorporar bitácoras, autoevaluaciones, explicaciones del procedimiento
+                        y retroalimentación orientada a la mejora.
+                    </div>
+
+                    <div class="source">
+                        <strong>Fuente:</strong> Monereo, Castelló, Clariana, Palma y Pérez Cabaní (2001).
+                    </div>
+                </article>
+
+            </section>
+
+            <section class="tools">
+                <h2>Recursos digitales: elegir con propósito</h2>
+                <p>
+                    Las aplicaciones y plataformas son útiles cuando responden a un objetivo
+                    pedagógico claro y consideran la accesibilidad, la privacidad y el contexto.
+                </p>
+
+                <div class="tool-grid">
+                    <div class="tool">
+                        <strong>💻</strong>
+                        Plataformas de gestión del aprendizaje
+                    </div>
+                    <div class="tool">
+                        <strong>🎥</strong>
+                        Videoconferencias y aulas virtuales
+                    </div>
+                    <div class="tool">
+                        <strong>🧪</strong>
+                        Simuladores y laboratorios virtuales
+                    </div>
+                    <div class="tool">
+                        <strong>📚</strong>
+                        Bibliotecas y repositorios académicos
+                    </div>
+                    <div class="tool">
+                        <strong>📝</strong>
+                        Cuestionarios interactivos
+                    </div>
+                    <div class="tool">
+                        <strong>📅</strong>
+                        Calendarios y gestores de tareas
+                    </div>
+                    <div class="tool">
+                        <strong>👥</strong>
+                        Documentos colaborativos
+                    </div>
+                    <div class="tool">
+                        <strong>🔐</strong>
+                        Recursos seguros y accesibles
+                    </div>
+                </div>
+            </section>
+
+            <section class="route">
+                <h2>Ruta para aprender en entornos digitales</h2>
+
+                <div class="route-flow">
+                    <div class="step">1<br>Planificar</div>
+                    <div class="step">2<br>Explorar</div>
+                    <div class="step">3<br>Interactuar</div>
+                    <div class="step">4<br>Crear</div>
+                    <div class="step">5<br>Evaluar</div>
+                    <div class="step">6<br>Reflexionar</div>
+                </div>
+            </section>
+
+            <section class="justification">
+                <h2>¿Por qué estas estrategias favorecen el aprendizaje?</h2>
+                <p>
+                    Las estrategias seleccionadas representan dimensiones complementarias
+                    del aprendizaje digital y evitan reducirlo al consumo pasivo de contenidos.
+                </p>
+
+                <div class="dimensions">
+                    <div class="dimension">
+                        <strong>🧠 Cognitiva</strong>
+                        Multimedia y metacognición favorecen la comprensión y la reflexión.
+                    </div>
+                    <div class="dimension">
+                        <strong>🧭 Autorregulatoria</strong>
+                        La planificación y la organización permiten sostener el estudio.
+                    </div>
+                    <div class="dimension">
+                        <strong>🤝 Social</strong>
+                        La colaboración desarrolla comunicación y construcción colectiva.
+                    </div>
+                    <div class="dimension">
+                        <strong>🏆 Motivacional</strong>
+                        La gamificación hace visible el progreso y estimula la participación.
+                    </div>
+                    <div class="dimension">
+                        <strong>🛠️ Aplicada</strong>
+                        Los proyectos conectan el conocimiento con problemas auténticos.
+                    </div>
+                    <div class="dimension">
+                        <strong>💡 Tecnológica</strong>
+                        La selección crítica de recursos promueve un uso pertinente y seguro.
+                    </div>
+                </div>
+            </section>
+
+            <section class="conclusion">
+                <h2>Conclusión</h2>
+                <p>
+                    Aprender en entornos digitales requiere participación activa y decisiones
+                    conscientes. La autonomía orienta el proceso, la colaboración lo enriquece,
+                    los recursos multimedia lo apoyan, los proyectos lo conectan con la realidad
+                    y la metacognición permite mejorarlo.
+                </p>
+                <span class="quote">
+                    Aprender digitalmente es utilizar la tecnología con propósito, criterio y reflexión.
+                </span>
+            </section>
+
+            <section class="references">
+                <h2>Fuentes bibliográficas · APA 7</h2>
+                <ol>
+                    <li>Cabero Almenara, J., &amp; Llorente Cejudo, M. C. (2007). La interacción en el aprendizaje en
+                        red: uso de herramientas, elementos de análisis y posibilidades educativas. <em>RIED. Revista
+                            Iberoamericana de Educación a Distancia, 10</em>(2), 97–123. <a
+                            href="https://revistas.uned.es/index.php/ried/article/view/995" target="_blank"
+                            rel="noopener noreferrer">https://revistas.uned.es/index.php/ried/article/view/995</a></li>
+                    <li>García Aretio, L. (2001). <em>La educación a distancia: de la teoría a la práctica</em>. Ariel.
+                        <a href="https://www.scielo.org.mx/scielo.php?script=sci_arttext&pid=S0185-26982000000200007"
+                            target="_blank"
+                            rel="noopener noreferrer">https://www.scielo.org.mx/scielo.php?script=sci_arttext&pid=S0185-26982000000200007</a>
+                    </li>
+                    <li>Mayer, R. E. (2005). La teoría cognitiva del aprendizaje multimedia. En R. E. Mayer (Ed.),
+                        <em>The Cambridge handbook of multimedia learning</em>. Cambridge University Press. <a
+                            href="https://www.scirp.org/reference/referencespapers?referenceid=1944077" target="_blank"
+                            rel="noopener noreferrer">https://www.scirp.org/reference/referencespapers?referenceid=1944077</a>
+                    </li>
+                    <li>Monereo, C., Castelló, M., Clariana, M., Palma, M., &amp; Pérez Cabaní, M. L. (2001).
+                        <em>Estrategias de enseñanza y aprendizaje: formación del profesorado y aplicación en la
+                            escuela</em>. Graó. <a
+                            href="https://www.researchgate.net/publication/270158776_Estrategias_de_ensenanza_y_aprendizaje_Formacion_del_profesorado_y_aplicacion_en_la_escuela"
+                            target="_blank"
+                            rel="noopener noreferrer">https://www.researchgate.net/publication/270158776_Estrategias_de_ensenanza_y_aprendizaje_Formacion_del_profesorado_y_aplicacion_en_la_escuela</a>
+                    </li>
+                    <li>Núñez, J. C., Solano, P., González-Pienda, J. A., &amp; Rosário, P. (2006). El aprendizaje
+                        autorregulado como medio y meta de la educación. <em>Papeles del Psicólogo, 27</em>(3), 139–146.
+                        <a href="https://dialnet.unirioja.es/servlet/articulo?codigo=2124459" target="_blank"
+                            rel="noopener noreferrer">https://dialnet.unirioja.es/servlet/articulo?codigo=2124459</a>
+                    </li>
+                    <li>Ortiz-Colón, A. M., Jordán, J., &amp; Agredal, M. (2018). Gamificación en educación: una
+                        panorámica sobre el estado de la cuestión. <em>Educar, 54</em>(1), 1–17. <a
+                            href="https://dialnet.unirioja.es/servlet/articulo?codigo=7315128" target="_blank"
+                            rel="noopener noreferrer">https://dialnet.unirioja.es/servlet/articulo?codigo=7315128</a>
+                    </li>
+                    <li>Trujillo Sáez, F. (2015). <em>Aprendizaje basado en proyectos: infantil, primaria y
+                            secundaria</em>. Ministerio de Educación, Cultura y Deporte. <a
+                            href="https://digibug.ugr.es/handle/10481/83725" target="_blank"
+                            rel="noopener noreferrer">https://digibug.ugr.es/handle/10481/83725</a></li>
+                </ol>
+            </section>
+        </section>
+
+        <footer>
+            Infografía académica · Estrategias de aprendizaje para entornos digitales · Infografía desarrollada por
+            Dalia Zúñiga Berumen, con herramientas de ChatGPT IA UAG y la
+            colaboración de Alejandro Bañuelos
+        </footer>
+
+    </main>
+</body>
+
+</html>
