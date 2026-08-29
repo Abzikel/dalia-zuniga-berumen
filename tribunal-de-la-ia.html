@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Tribunal de la IA</title>
+    <style>
+        :root {
+            --bg: #061221;
+            --panel: #0c2139;
+            --panel2: #102d4b;
+            --cyan: #55e8ff;
+            --cyan2: #a5f6ff;
+            --text: #f4f9ff;
+            --muted: #9bb0c5;
+            --line: rgba(85, 232, 255, .25);
+            --green: #62e3a4;
+            --yellow: #ffd166;
+            --red: #ff7188;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background:
+                radial-gradient(circle at 15% 5%, rgba(85, 232, 255, .15), transparent 28%),
+                radial-gradient(circle at 85% 20%, rgba(94, 75, 255, .14), transparent 30%),
+                linear-gradient(135deg, #030912, var(--bg) 55%, #091b31);
+        }
+
+        body:before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: .1;
+            background-image: linear-gradient(rgba(85, 232, 255, .2) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(85, 232, 255, .2) 1px, transparent 1px);
+            background-size: 44px 44px;
+            mask-image: linear-gradient(#000, transparent 80%);
+        }
+
+        button,
+        select,
+        textarea {
+            font: inherit
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 12px 30px;
+            min-height: 74px;
+            background: rgba(3, 11, 22, .92);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(18px);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 250px
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--cyan);
+            border-radius: 9px;
+            color: var(--cyan);
+            font-size: 1.4rem;
+            box-shadow: 0 0 22px #55e8ff33
+        }
+
+        .brand strong {
+            display: block;
+            font-size: .78rem;
+            letter-spacing: .1em
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            font-size: .66rem
+        }
+
+        nav {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center
+        }
+
+        .btn,
+        .tab {
+            padding: 11px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            font-weight: 800;
+            transition: .2s
+        }
+
+        .btn {
+            color: var(--bg);
+            background: var(--cyan);
+            border-color: transparent
+        }
+
+        .btn:hover,
+        .tab:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.08)
+        }
+
+        .btn.alt,
+        .tab {
+            color: var(--cyan2);
+            background: transparent
+        }
+
+        .btn.yellow {
+            color: var(--bg);
+            background: var(--yellow)
+        }
+
+        .tab.active {
+            color: var(--bg);
+            background: var(--cyan)
+        }
+
+        .hud {
+            display: none;
+            align-items: center;
+            gap: 13px;
+            color: var(--muted);
+            font-size: .75rem
+        }
+
+        .hud strong {
+            color: var(--cyan2)
+        }
+
+        .progress {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 160px
+        }
+
+        .track {
+            height: 7px;
+            flex: 1;
+            background: #193450;
+            border-radius: 10px;
+            overflow: hidden
+        }
+
+        .bar {
+            height: 100%;
+            width: 0;
+            background: linear-gradient(90deg, var(--cyan), #7586ff);
+            box-shadow: 0 0 12px var(--cyan);
+            transition: .4s
+        }
+
+        main {
+            position: relative;
+            z-index: 1;
+            width: min(1180px, calc(100% - 34px));
+            margin: auto;
+            padding: 45px 0 80px
+        }
+
+        .screen {
+            display: none;
+            animation: up .35s ease
+        }
+
+        .screen.active {
+            display: block
+        }
+
+        @keyframes up {
+            from {
+                opacity: 0;
+                transform: translateY(12px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        .eyebrow {
+            color: var(--cyan);
+            font-size: .7rem;
+            font-weight: 900;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            margin-bottom: 13px
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            margin-top: 0
+        }
+
+        h1 {
+            font-size: clamp(2.8rem, 7vw, 6rem);
+            line-height: .92;
+            letter-spacing: -.06em;
+            margin-bottom: 24px
+        }
+
+        h1 span {
+            color: var(--cyan)
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            letter-spacing: -.05em;
+            margin-bottom: 14px
+        }
+
+        p,
+        li {
+            line-height: 1.7
+        }
+
+        .lead {
+            max-width: 760px;
+            color: var(--muted);
+            font-size: 1.06rem
+        }
+
+        .panel,
+        .hero-card,
+        .case {
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: linear-gradient(145deg, #0f2a47d9, #051526ed);
+            box-shadow: 0 20px 55px #0005
+        }
+
+        .panel,
+        .hero-card {
+            padding: 27px
+        }
+
+        .hero {
+            min-height: 650px;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 60px;
+            align-items: center
+        }
+
+        .hero-card {
+            min-height: 390px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden
+        }
+
+        .seal {
+            width: 130px;
+            height: 130px;
+            border: 1px solid var(--cyan);
+            outline: 11px double #55e8ff25;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            margin: 15px auto 28px;
+            color: var(--cyan2);
+            font-size: 3.4rem;
+            box-shadow: 0 0 48px #55e8ff30
+        }
+
+        .character {
+            border-left: 3px solid var(--cyan);
+            padding: 12px 15px;
+            background: #55e8ff0d;
+            color: var(--muted)
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 23px
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 25px 0
+        }
+
+        .stat {
+            padding: 18px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: #091e35aa
+        }
+
+        .stat b {
+            display: block;
+            color: var(--cyan);
+            font-size: 1.8rem
+        }
+
+        .stat small {
+            color: var(--muted)
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px
+        }
+
+        .case {
+            padding: 21px;
+            min-height: 205px;
+            display: flex;
+            flex-direction: column
+        }
+
+        .case.locked {
+            opacity: .45;
+            filter: grayscale(.5)
+        }
+
+        .case.done {
+            border-color: #62e3a466
+        }
+
+        .case .num {
+            color: var(--cyan);
+            font-size: .7rem;
+            font-weight: 900;
+            letter-spacing: .15em
+        }
+
+        .case h3 {
+            margin: 10px 0;
+            font-size: 1.08rem
+        }
+
+        .case p {
+            flex: 1;
+            color: var(--muted);
+            font-size: .87rem
+        }
+
+        .case small {
+            color: var(--green);
+            font-weight: 800
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: .7fr 1.3fr;
+            gap: 20px
+        }
+
+        .sticky {
+            position: sticky;
+            top: 100px
+        }
+
+        .evidence,
+        .option {
+            padding: 13px 15px;
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            color: var(--muted);
+            background: #ffffff08;
+            transition: .2s
+        }
+
+        .evidence {
+            cursor: pointer;
+            margin: 9px 0
+        }
+
+        .evidence:hover,
+        .option:hover,
+        .option.selected {
+            border-color: var(--cyan);
+            background: #55e8ff12;
+            color: var(--text)
+        }
+
+        .options {
+            display: grid;
+            gap: 10px;
+            margin: 18px 0
+        }
+
+        .option {
+            display: flex;
+            gap: 10px;
+            cursor: pointer
+        }
+
+        .option input {
+            accent-color: var(--cyan);
+            margin-top: 4px
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 17px;
+            padding: 15px;
+            border-left: 3px solid var(--green);
+            border-radius: 8px;
+            background: #62e3a412;
+            color: var(--muted);
+            line-height: 1.6
+        }
+
+        .feedback.show {
+            display: block
+        }
+
+        .feedback.error {
+            border-color: var(--red);
+            background: #ff718812
+        }
+
+        .mini {
+            color: var(--cyan2);
+            font-size: .7rem;
+            font-weight: 900;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            margin: 24px 0 9px
+        }
+
+        select,
+        textarea {
+            color: var(--text);
+            background: #102d4b;
+            border: 1px solid var(--line);
+            border-radius: 7px;
+            padding: 8px;
+            outline: none
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 140px;
+            resize: vertical
+        }
+
+        .drag {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px
+        }
+
+        .drop {
+            min-height: 150px;
+            border: 1px dashed #55e8ff66;
+            border-radius: 10px;
+            padding: 14px;
+            background: #55e8ff08
+        }
+
+        .chip {
+            display: inline-block;
+            padding: 8px 10px;
+            margin: 4px 3px 0 0;
+            background: #123b67;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            font-size: .75rem;
+            cursor: pointer
+        }
+
+        .chip.active {
+            outline: 2px solid var(--cyan)
+        }
+
+        .info {
+            padding: clamp(22px, 4vw, 48px);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            background: #071a2ddd;
+            box-shadow: 0 20px 55px #0005
+        }
+
+        .info h2 {
+            font-size: 1.8rem;
+            color: var(--cyan2);
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 9px;
+            margin-top: 42px
+        }
+
+        .info h3 {
+            color: var(--cyan);
+            margin-top: 28px
+        }
+
+        .info p,
+        .info li {
+            color: var(--muted)
+        }
+
+        .info strong {
+            color: var(--text)
+        }
+
+        .info table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0
+        }
+
+        .info th,
+        .info td {
+            border: 1px solid var(--line);
+            padding: 11px;
+            text-align: left;
+            vertical-align: top
+        }
+
+        .info th {
+            color: var(--cyan2);
+            background: #55e8ff12
+        }
+
+        .info td {
+            color: var(--muted)
+        }
+
+        .quote,
+        .formula {
+            padding: 17px 20px;
+            border-left: 3px solid var(--cyan);
+            background: #55e8ff0b;
+            color: var(--muted);
+            line-height: 1.7
+        }
+
+        .results {
+            text-align: center;
+            max-width: 900px;
+            margin: auto
+        }
+
+        .big {
+            font-size: clamp(4rem, 10vw, 7rem);
+            line-height: 1;
+            color: var(--cyan);
+            font-weight: 950
+        }
+
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 11px;
+            margin: 25px 0
+        }
+
+        .badge {
+            padding: 13px 16px;
+            color: var(--yellow);
+            background: #ffd16612;
+            border: 1px solid #ffd16666;
+            border-radius: 10px;
+            font-weight: 800
+        }
+
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line);
+            color: var(--muted);
+            font-size: .82rem;
+            text-align: center
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 50;
+            background: #000b;
+            align-items: center;
+            justify-content: center;
+            padding: 20px
+        }
+
+        .modal.show {
+            display: flex
+        }
+
+        .modalbox {
+            max-width: 600px;
+            padding: 27px;
+            border: 1px solid var(--cyan);
+            border-radius: 15px;
+            background: #0b213b
+        }
+
+        .toast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 60;
+            padding: 14px 17px;
+            border-radius: 9px;
+            background: var(--cyan);
+            color: var(--bg);
+            font-weight: 850;
+            transform: translateY(120px);
+            transition: .3s
+        }
+
+        .toast.show {
+            transform: none
+        }
+
+        @media(max-width:900px) {
+            header {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 13px 17px
+            }
+
+            nav {
+                justify-content: flex-start;
+                overflow: auto;
+                width: 100%
+            }
+
+            .hud {
+                width: 100%;
+                justify-content: space-between
+            }
+
+            .hero,
+            .layout {
+                grid-template-columns: 1fr
+            }
+
+            .sticky {
+                position: static
+            }
+
+            .grid {
+                grid-template-columns: repeat(2, 1fr)
+            }
+        }
+
+        @media(max-width:570px) {
+            main {
+                width: calc(100% - 24px);
+                padding-top: 28px
+            }
+
+            .grid,
+            .stats,
+            .drag {
+                grid-template-columns: 1fr
+            }
+
+            .panel,
+            .hero-card,
+            .info {
+                padding: 21px
+            }
+
+            h1 {
+                font-size: 3.3rem
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: #111;
+                font-family: Georgia, serif
+            }
+
+            body:before,
+            header,
+            main>.screen:not(#info),
+            .print-actions,
+            .footer {
+                display: none !important
+            }
+
+            main {
+                width: 100%;
+                padding: 0
+            }
+
+            #info {
+                display: block !important
+            }
+
+            .info {
+                padding: 0;
+                border: 0;
+                box-shadow: none;
+                background: white
+            }
+
+            .info p,
+            .info li,
+            .info td {
+                color: #111
+            }
+
+            .info h2,
+            .info h3,
+            .info strong {
+                color: #111
+            }
+
+            .info th,
+            .info td {
+                border-color: #777
+            }
+
+            .quote,
+            .formula {
+                color: #111;
+                background: #f4f4f4;
+                border-color: #555
+            }
+
+            @page {
+                size: A4;
+                margin: 1.6cm
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="brand">
+            <div class="logo">⚖</div>
+            <div>
+                <strong>EL TRIBUNAL DE LA IA</strong>
+                <small>Tribunal Internacional de Integridad Académica e Inteligencia Artificial</small>
+            </div>
+        </div>
+
+        <nav>
+            <button class="tab active" data-screen="home" onclick="go('home')">Inicio</button>
+            <button class="tab" data-screen="game" onclick="go('game')">Juego</button>
+            <button class="tab" data-screen="info" onclick="go('info')">Teoría y documento</button>
+            <button class="btn yellow" onclick="pdf()">Descargar PDF</button>
+        </nav>
+
+        <div class="hud" id="hud">
+            <span>REPUTACIÓN <strong id="rep">0</strong></span>
+            <span>PUNTOS <strong id="points">0</strong></span>
+            <div class="progress">
+                <div class="track">
+                    <div class="bar" id="bar"></div>
+                </div><strong id="percent">0%</strong>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="screen active" id="home">
+            <div class="hero">
+                <div>
+                    <div class="eyebrow">Año 2035 · Expediente de incorporación TIIA-01</div>
+                    <h1>El Tribunal<br><span>de la IA</span></h1>
+                    <p class="lead">
+                        El uso masivo de la inteligencia artificial ha revolucionado la creación de textos,
+                        imágenes, investigaciones y productos científicos. Sin embargo, también ha generado
+                        conflictos relacionados con los derechos de autor, la propiedad intelectual y la integridad
+                        académica.
+                    </p>
+                    <p class="lead">
+                        Has sido seleccionado para integrarte al Tribunal Internacional de Integridad Académica
+                        e Inteligencia Artificial. Resuelve cinco expedientes críticos y alcanza el rango de
+                        Magistrado Supremo de Integridad Académica.
+                    </p>
+                    <div class="row">
+                        <button class="btn" onclick="start()">Aceptar nombramiento</button>
+                        <button class="btn alt"
+                            onclick="modal('Protocolo de incorporación','Consulta primero la pestaña «Teoría y documento» para revisar el material académico completo. Después resuelve los expedientes y emite tu fallo final.')">Leer
+                            protocolo</button>
+                        <button class="btn alt" onclick="go('info')">Consultar teoría</button>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <div>
+                        <div class="seal">⚖</div>
+                        <h3>Nombramiento provisional</h3>
+                        <p class="lead">Una decisión incorrecta podría afectar a autores, investigadores, universidades
+                            y comunidades científicas enteras.</p>
+                    </div>
+                    <div class="character"><strong>Presidenta del Tribunal</strong><br>«La integridad no consiste en
+                        temer a la tecnología, sino en hacer visibles nuestras decisiones».</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="screen" id="game">
+            <div class="eyebrow">Sala central del Tribunal</div>
+            <h2>Selecciona un expediente</h2>
+            <p class="lead">Consulta la teoría cuando lo necesites, analiza las evidencias y fundamenta cada decisión.
+            </p>
+            <div class="stats">
+                <div class="stat"><b id="dashPoints">0</b><small>Puntos acumulados</small></div>
+                <div class="stat"><b id="dashSolved">0/5</b><small>Expedientes resueltos</small></div>
+                <div class="stat"><b id="rank">Novato</b><small>Rango actual</small></div>
+            </div>
+            <div class="grid" id="cases"></div>
+        </section>
+
+        <section class="screen" id="caseScreen">
+            <div class="layout">
+                <aside class="panel sticky">
+                    <div class="eyebrow" id="caseNo">Expediente</div>
+                    <h2 id="caseTitle"></h2>
+                    <p id="caseObjective" class="lead"></p>
+                    <div class="character" id="caseCharacter"></div>
+                    <button class="btn alt" style="width:100%;margin-top:20px" onclick="go('game')">← Volver a
+                        expedientes</button>
+                </aside>
+                <article class="panel" id="caseContent"></article>
+            </div>
+        </section>
+
+        <section class="screen" id="final">
+            <div class="eyebrow">Gran juicio final · Expediente TIIA-06</div>
+            <h2>El caso del investigador fantasma</h2>
+            <p class="lead">Integra todos los contenidos, identifica las infracciones, emite un fallo y redacta una
+                resolución.</p>
+            <div class="layout">
+                <div class="panel">
+                    <div class="mini">Hechos probados</div>
+                    <ul>
+                        <li>Utilizó IA para redactar capítulos completos.</li>
+                        <li>Incorporó imágenes generadas.</li>
+                        <li>No declaró el uso de herramientas.</li>
+                        <li>Utilizó contenido sin verificar fuentes.</li>
+                    </ul>
+                    <div class="quote">«La responsabilidad intelectual y ética no puede transferirse a una herramienta
+                        algorítmica».</div>
+                </div>
+                <div class="panel">
+                    <div class="mini">Paso 1 y 2 · Identificación y clasificación</div>
+                    <div class="options" id="finalChecks">
+                        <label class="option"><input type="checkbox" value="ia"> Uso sustitutivo de IA en la
+                            redacción</label>
+                        <label class="option"><input type="checkbox" value="images"> Uso de imágenes generadas sin
+                            declaración</label>
+                        <label class="option"><input type="checkbox" value="transparency"> Falta de transparencia sobre
+                            el uso de IA</label>
+                        <label class="option"><input type="checkbox" value="sources"> Falta de verificación y
+                            trazabilidad de fuentes</label>
+                        <label class="option"><input type="checkbox" value="none"> Ninguna conducta problemática</label>
+                    </div>
+                    <div class="mini">Paso 3 · Emitir un fallo</div>
+                    <div class="options">
+                        <label class="option"><input type="radio" name="verdict" value="responsible"> Responsabilidad
+                            académica acreditada</label>
+                        <label class="option"><input type="radio" name="verdict" value="partial"> Responsabilidad
+                            parcial: requiere correcciones</label>
+                        <label class="option"><input type="radio" name="verdict" value="clear"> No existe
+                            infracción</label>
+                    </div>
+                    <div class="mini">Paso 4 · Redactar una resolución</div>
+                    <textarea id="resolution"
+                        placeholder="Expón los hechos, las infracciones y las medidas correctivas..."></textarea>
+                    <div class="row"><button class="btn" onclick="finalize()">Emitir resolución</button></div>
+                    <div class="feedback" id="finalFeedback"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="screen" id="results">
+            <div class="results">
+                <div class="eyebrow">Resolución definitiva del Tribunal</div>
+                <div class="seal">⚖</div>
+                <h2 id="resultTitle"></h2>
+                <div class="big" id="finalPoints">0</div>
+                <p class="lead" style="margin:15px auto">puntos de integridad judicial</p>
+                <div class="stats">
+                    <div class="stat"><b id="resultSolved">0/5</b><small>Expedientes resueltos</small></div>
+                    <div class="stat"><b id="resultRank">—</b><small>Nivel alcanzado</small></div>
+                    <div class="stat"><b id="resultRep">0</b><small>Reputación judicial</small></div>
+                </div>
+                <h3>Insignias obtenidas</h3>
+                <div class="badges" id="badges"></div>
+                <div class="panel" style="text-align:left">
+                    <div class="eyebrow">Evidencia de aprendizaje</div>
+                    <h3>Dictamen Final de Integridad Académica</h3>
+                    <p class="lead">
+                        Conserva tus argumentos sobre la autoría de la IA, los derechos morales y patrimoniales,
+                        la transparencia, el entrenamiento algorítmico y las buenas prácticas de atribución.
+                    </p>
+                </div>
+                <div class="row" style="justify-content:center">
+                    <button class="btn" onclick="go('home')">Volver al inicio del juego</button>
+                    <button class="btn alt" onclick="go('info')">Consultar la teoría</button>
+                </div>
+                <div class="footer">Gamificación desarrollada por Dalia Zúñiga Berumen con herramientas de IA UAG
+                    ChatGpt y la colaboración de Alejandro Bañuelos</div>
+            </div>
+        </section>
+
+        <section class="screen" id="info">
+            <div class="print-actions"
+                style="display:flex;justify-content:space-between;gap:15px;align-items:end;margin-bottom:25px">
+                <div>
+                    <div class="eyebrow">Documento académico de consulta</div>
+                    <h2>Unidad 6 · Derechos de autor</h2>
+                </div>
+                <button class="btn yellow" onclick="pdf()">Descargar PDF</button>
+            </div>
+
+            <article class="info" id="document">
+                <h1 style="font-size:clamp(2.5rem,6vw,5rem)">Unidad 6 — Tema 2: Derechos de autor</h1>
+
+                <h2>Datos generales</h2>
+                <p><strong>Asignatura:</strong> Inteligencia Artificial para el Aprendizaje, la Investigación y la
+                    Comunicación Académica.</p>
+                <p><strong>Unidad 6:</strong> Ética, integridad académica y uso responsable de la IA.</p>
+                <p><strong>Tema:</strong> Derechos de autor.</p>
+                <p><strong>Tipo de recurso didáctico digital:</strong> Módulo autogestivo interactivo (lectura
+                    multimedia).</p>
+                <p><strong>Tiempo estimado:</strong> 60 a 90 minutos.</p>
+                <p><strong>Modalidad:</strong> En línea, síncrona o asíncrona.</p>
+                <p><strong>Nivel:</strong> Licenciatura.</p>
+
+                <h2>Objetivos de aprendizaje</h2>
+                <p><strong>Objetivo de aprendizaje general:</strong> Al finalizar la lección, el estudiante evaluará de
+                    manera crítica las implicaciones legales y éticas de los derechos de autor en el marco de la
+                    inteligencia artificial, diferenciando los alcances de la autoría humana frente al contenido
+                    generado de manera automatizada para asegurar el respeto por la propiedad intelectual en contextos
+                    académicos.</p>
+                <p><strong>Objetivos de aprendizaje específicos:</strong></p>
+                <ul>
+                    <li>Diferenciar claramente entre los derechos morales e intelectuales y los derechos patrimoniales
+                        de explotación, reconociendo su vigencia en entornos de aprendizaje digital.</li>
+                    <li>Analizar críticamente los dilemas éticos y jurídicos actuales relativos a la autoría de textos e
+                        imágenes generados mediante modelos algorítmicos y el uso de materiales protegidos para su
+                        entrenamiento.</li>
+                    <li>Implementar buenas prácticas en la atribución de fuentes, el uso de licencias abiertas y la
+                        transparencia sobre la intervención tecnológica en el proceso de investigación y redacción
+                        académica.</li>
+                </ul>
+
+                <h2>Competencia específica</h2>
+                <p>Evalúa críticamente el uso de recursos y contenidos digitales y tecnológicos en la producción de
+                    textos y proyectos científicos, aplicando principios de transparencia, atribución legítima, respeto
+                    por los derechos morales y patrimoniales de las obras originales y asumiendo la responsabilidad
+                    intelectual como autor humano frente al soporte algorítmico.</p>
+
+                <h2>Apertura: Situación detonadora</h2>
+                <p>Imagina que estás elaborando el cartel científico para presentar tus avances de investigación en un
+                    congreso nacional de tu disciplina. Para ilustrar la portada y los diagramas conceptuales del
+                    cartel, decides utilizar un generador de imágenes basado en inteligencia artificial (como DALL-E 2),
+                    empleando instrucciones específicas para recrear un diseño representativo al estilo artístico de una
+                    obra protegida o una corriente intelectual histórica.</p>
+                <p>El sistema algorítmico te entrega una imagen de excelente calidad técnica y visual en cuestión de
+                    segundos. Decides guardar la imagen y colocarla en el centro de tu cartel, firmándola únicamente con
+                    tu nombre y el de tu institución, sin añadir ningún tipo de aclaración o referencia sobre el uso de
+                    la herramienta generativa de IA.</p>
+
+                <h3>Pregunta para reflexionar</h3>
+                <p>¿Vulnera esta práctica los derechos morales o patrimoniales de creación artística y científica
+                    originales, o representa un uso legítimo de la tecnología generativa?</p>
+                <ul>
+                    <li>Representa una creación original tuya, por lo que tienes la autoría absoluta de la imagen.</li>
+                    <li>No, puesto que simula una autoría humana exclusiva sobre un producto automatizado y plantea
+                        interrogantes legales sobre el material original protegido que el algoritmo utilizó en su base
+                        de datos de entrenamiento.</li>
+                    <li>El uso de cualquier herramienta de IA elimina de manera predeterminada la necesidad de declarar
+                        la procedencia o el soporte tecnológico utilizado.</li>
+                </ul>
+
+                <h2>1. Conceptos fundamentales de los Derechos de Autor</h2>
+                <p>Los derechos de autor son el conjunto de normas y principios éticos y jurídicos que protegen las
+                    obras originales producto de la creación intelectual e individual de los seres humanos. Legal y
+                    metodológicamente, estos derechos se dividen en dos vertientes esenciales que garantizan la
+                    integridad de la producción del conocimiento:</p>
+                <table>
+                    <tr>
+                        <th>Derechos Morales</th>
+                        <th>Derechos Patrimoniales</th>
+                    </tr>
+                    <tr>
+                        <td>• Reconocimiento de autoría.<br>• Protección de la integridad de la obra.<br>• Inalienables
+                            e intransferibles.</td>
+                        <td>• Reproducción de la obra.<br>• Distribución de copias.<br>• Comunicación pública.<br>•
+                            Transformación y traducción.</td>
+                    </tr>
+                </table>
+                <p>El respeto por estas prerrogativas no solo salvaguarda el esfuerzo intelectual individual, sino que
+                    constituye el pilar para la construcción de una comunidad científica justa, transparente y basada en
+                    la confianza y reciprocidad mutua.</p>
+
+                <h2>2. El dilema de la autoría y la Inteligencia Artificial</h2>
+                <p>El desarrollo de la IA generativa de acceso público ha modificado de raíz las concepciones
+                    tradicionales sobre la autoría intelectual. Herramientas capaces de procesar lenguaje natural e
+                    instrucciones complejas producen resúmenes, textos argumentativos completos e imágenes en tiempos
+                    mínimos, lo que plantea la interrogante ética de a quién le pertenece el contenido generado.</p>
+                <h3>¿La IA puede ser considerada autora de un trabajo?</h3>
+                <p>No. La autoría de un texto o investigación científica está indisolublemente vinculada con la
+                    originalidad humana y, sobre todo, con la responsabilidad legal y científica del contenido
+                    publicado. De acuerdo con debates académicos internacionales:</p>
+                <p>Un algoritmo informático o modelo de lenguaje extenso (MLE) carece de personalidad jurídica,
+                    conciencia moral y responsabilidad civil, por lo cual es técnicamente incapaz de asumir las
+                    consecuencias de afirmaciones falsas, sesgos o imprecisiones presentes en la producción científica.
+                </p>
+                <p>Como señalan Hosseini, Rasmussen y Resnik (2023), los autores humanos que utilicen sistemas
+                    inteligentes en su producción deben aceptar la entera y absoluta responsabilidad por la exactitud de
+                    los hechos declarados y de las citas textuales incorporadas en su obra.</p>
+                <h3>Políticas editoriales de la comunidad científica</h3>
+                <p>Las directrices de las editoriales académicas más influyentes a nivel global han respondido de forma
+                    rigurosa y unánime ante este desafío:</p>
+                <p><strong>Science (Thorp, 2023):</strong> Actualizó sus políticas editoriales de manera restrictiva,
+                    estableciendo que ningún texto redactado por ChatGPT (o cualquier otro sistema algorítmico
+                    equivalente) es admisible en una postulación científica, debido a que el software no puede
+                    certificar de manera honesta la originalidad requerida ni asumir la responsabilidad ética y legal
+                    del manuscrito.</p>
+                <p><strong>Springer Nature, Taylor &amp; Francis y Elsevier:</strong> Han consensuado que las
+                    tecnologías de inteligencia artificial generativa no cumplen los requisitos indispensables para
+                    recibir el estado o estatus de (co)autor. El uso de estas plataformas es lícito únicamente como
+                    apoyo metodológico o técnico, y debe declararse con absoluta transparencia en la sección de
+                    Metodología o en los agradecimientos, conservando el anexo técnico de trazabilidad de los procesos.
+                </p>
+
+                <h2>3. Propiedad intelectual y el entrenamiento de los modelos de IA</h2>
+                <p>Un aspecto de creciente controversia jurídica y ética radica en el origen de los recursos que
+                    alimentan la inteligencia artificial generativa.</p>
+                <h3>El uso de materiales de entrenamiento sin consentimiento</h3>
+                <p>Los algoritmos de aprendizaje profundo (deep learning) requieren del procesamiento masivo de datos de
+                    entrada para extraer las reglas estadísticas que les permiten generar nuevos contenidos. Este
+                    "combustible" de datos es extraído masivamente de Internet e incluye, de forma sistemática:</p>
+                <ul>
+                    <li>Artículos de investigación académica.</li>
+                    <li>Patentes industriales e invenciones.</li>
+                    <li>Libros, obras artísticas, fotografías y recursos audiovisuales protegidos por derechos
+                        patrimoniales y licencias de distribución.</li>
+                </ul>
+                <p>Esta recopilación automatizada se efectúa en gran medida sin la autorización previa, compensación
+                    económica o reconocimiento de los derechos de autor morales de los creadores originales, lo que ha
+                    desencadenado litigios internacionales y llamados urgentes a la regulación tecnológica.</p>
+                <p>De acuerdo con la UNESCO (Miao y Holmes, 2024), las instituciones de educación superior enfrentan el
+                    deber ineludible de promover activamente una sólida cultura de respeto por la propiedad intelectual,
+                    fomentando el reconocimiento explícito del esfuerzo de la creación intelectual e intelectual humana
+                    frente a las dinámicas comerciales de automatización de los sistemas inteligentes.</p>
+
+                <h2>4. Directrices de transparencia y gobernanza ética</h2>
+                <table>
+                    <tr>
+                        <th>Principio</th>
+                        <th>Aplicación</th>
+                    </tr>
+                    <tr>
+                        <td>Transparencia</td>
+                        <td>Informar con claridad el uso y alcance de la IA.</td>
+                    </tr>
+                    <tr>
+                        <td>Trazabilidad</td>
+                        <td>Garantizar la documentación del proceso de datos.</td>
+                    </tr>
+                    <tr>
+                        <td>Supervisión Humana</td>
+                        <td>Salvaguardar que el control final es humano.</td>
+                    </tr>
+                </table>
+                <h3>Atribución y lineamientos según la APA (McAdoo, 2025)</h3>
+                <p>En el terreno académico, la American Psychological Association (APA) establece que los investigadores
+                    deben declarar con total exactitud de qué manera y en qué etapas de su investigación integraron
+                    herramientas de inteligencia artificial generativa.</p>
+                <p>Para cumplir con esta disposición, se recomienda incluir en los trabajos universitarios declaraciones
+                    metodológicas precisas, por ejemplo:</p>
+                <div class="quote">“Para la estructuración del esquema argumentativo y la corrección de claridad
+                    sintáctica del presente manuscrito se utilizó el modelo lingüístico [Nombre del Modelo de IA]. La
+                    selección bibliográfica, el contraste cruzado de las evidencias científicas, la argumentación lógica
+                    y la redacción del texto definitivo fueron desarrollados de forma exclusiva y crítica por el autor
+                    humano, quien asume la total responsabilidad ética del contenido intelectual aquí presentado”.</div>
+
+                <h2>5. Diferencia entre uso ético y no ético frente a los derechos de autor</h2>
+                <h3>Uso ético</h3>
+                <p>Un investigador científico emplea un sistema de procesamiento lingüístico de IA para traducir sus
+                    manuscritos originales hacia otros idiomas, facilitando que sus avances científicos alcancen
+                    plataformas académicas internacionales y superando barreras de accesibilidad idiomática. Durante el
+                    proceso, el investigador declara explícitamente el soporte de traducción de la IA, utiliza
+                    únicamente imágenes y bases de datos con licencias de distribución abiertas (Creative Commons o
+                    Acceso Abierto) y cita adecuadamente a todos los autores humanos que sustentan sus contrastes
+                    metodológicos.</p>
+                <p><strong>Resultado:</strong> Fomento del acceso abierto, respeto por los derechos morales e integridad
+                    del proceso de comunicación académica.</p>
+                <h3>Uso no ético</h3>
+                <p>Un estudiante de posgrado emplea un modelo generativo para redactar el marco teórico completo de su
+                    proyecto de investigación, utilizando la herramienta para simular una revisión literaria que el
+                    estudiante no realizó de forma directa. Al presentar el trabajo, incorpora diagramas y fragmentos
+                    generados por el algoritmo, atribuyéndoselos de forma exclusiva y omitiendo declarar el uso de la
+                    herramienta o ignorando si las ideas del modelo corresponden a patentes o publicaciones de otros
+                    autores que fueron procesadas sin atribución legítima.</p>
+                <p><strong>Resultado:</strong> Apropiación indebida de propiedad intelectual, simulación de autoría
+                    intelectual y riesgo latente de violación de derechos de autor patrimoniales y de deshonestidad
+                    científica.</p>
+
+                <h2>6. Buenas prácticas para la protección de los derechos de autor</h2>
+                <p>Al colaborar con inteligencia artificial en tus procesos de investigación, asume el compromiso de
+                    cumplir con las siguientes directrices operativas:</p>
+                <ul>
+                    <li><strong>Citación rigurosa de fuentes primarias:</strong> La IA generativa puede proponer ideas
+                        interesantes o resúmenes preliminares, pero no constituye una fuente académica válida por sí
+                        misma. Debes localizar siempre las fuentes científicas primarias y citarlas directamente bajo
+                        normativas APA 7 para validar toda afirmación intelectual.</li>
+                    <li><strong>Uso de licencias libres y acceso abierto:</strong> Al recopilar datos para tus análisis
+                        con IA, verifica que los conjuntos de datos de origen se encuentren liberados bajo licencias de
+                        Acceso Abierto (Open Access) que posibiliten legítimamente su transformación y comunicación.
+                    </li>
+                    <li><strong>Declaración obligatoria de soporte de IA:</strong> Siempre que utilices algoritmos
+                        generativos para la estructuración de ideas, la síntesis o la depuración lingüística,
+                        documéntalo en una nota técnica o anexo de trazabilidad académica detallando la herramienta y
+                        los prompts empleados.</li>
+                    <li><strong>Rechazo absoluto de la simulación de autoría:</strong> No utilices la IA para evadir el
+                        esfuerzo crítico de la redacción ni te atribuyas como creación humana exclusiva un producto
+                        intelectual, textual o artístico generado por procesos algorítmicos automatizados.</li>
+                </ul>
+
+                <h2>Reflexión final</h2>
+                <p>El respeto por los derechos de autor y la propiedad intelectual en la era de la inteligencia
+                    artificial, es fundamental para resguardar la honestidad de los procesos de educación superior y la
+                    investigación. De acuerdo con Sabzalieva y Valentini (2023), la tecnología representa un recurso de
+                    innegable valor para dinamizar el aprendizaje y optimizar tareas de apoyo, pero la creatividad
+                    conceptual, el rigor crítico y la responsabilidad ética del conocimiento continúan siendo
+                    prerrogativas exclusivas de las personas.</p>
+
+                <h2>Referencias</h2>
+                <ol>
+                    <li>Comisión Europea. (2019). <em>Directrices éticas para una inteligencia artificial fiable</em>.
+                        Oficina de Publicaciones de la Unión Europea. https://doi.org/10.2759/346720</li>
+                    <li>Hosseini, M., Rasmussen, L. M., &amp; Resnik, D. B. (2023). Using AI to write scholarly
+                        publications. <em>Accountability in Research, 30</em>(0), 1-9.
+                        https://doi.org/10.1080/08989621.2023.2168535</li>
+                    <li>Liu, B., Morales, D., Roser-Chinchilla, J., Sabzalieva, E., Valentini, A., Vieira do Nascimento,
+                        D., &amp; Yerovi, C. (2023). <em>Oportunidades y desafíos de la era de la inteligencia
+                            artificial para la educación superior</em>. UNESCO-IESALC.
+                        https://unesdoc.unesco.org/ark:/48223/pf0000386670_spa</li>
+                    <li>McAdoo, T. (2025, 15 de septiembre). <em>How to cite ChatGPT</em>. APA Style.
+                        https://apastyle.apa.org/blog/how-to-cite-chatgpt</li>
+                    <li>Miao, F., &amp; Holmes, W. (2024). <em>Guía para el uso de IA generativa en educación e
+                            investigación</em>. UNESCO. https://unesdoc.unesco.org/ark:/48223/pf000038922</li>
+                    <li>Thorp, H. H. (2023). ChatGPT is fun, but not an author. <em>Science, 379</em>(6630), 313-313.
+                        https://doi.org/10.1126/science.adg7879</li>
+                </ol>
+
+                <div class="footer">Gamificación desarrollada por Dalia Zúñiga Berumen con herramientas de IA UAG
+                    ChatGpt y la colaboración de Alejandro Bañuelos</div>
+            </article>
+        </section>
+    </main>
+
+    <div class="modal" id="modalBox">
+        <div class="modalbox">
+            <div class="eyebrow">Documento del Tribunal</div>
+            <h3 id="modalTitle"></h3>
+            <p id="modalText" class="lead"></p>
+            <button class="btn alt" onclick="closeModal()">Cerrar</button>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+
+    <script>
+        const state = { points: 0, rep: 0, solved: [], badges: [], current: null };
+        const data = [
+            { id: 1, title: "Derechos Morales vs Derechos Patrimoniales", objective: "Diferenciar ambos conceptos.", character: "<strong>Perito en Propiedad Intelectual</strong><br>La obra fue reproducida sin autorización y sufrió modificaciones sustanciales.", points: 100, badge: "🏅 Custodio de la Autoría" },
+            { id: 2, title: "¿Puede la IA ser autora?", objective: "Analizar la autoría en contextos de IA.", character: "<strong>Fiscal de Integridad Académica</strong><br>CHATGPT aparece como coautor oficial de un artículo científico.", points: 200, badge: "🏅 Defensor de los Derechos Morales" },
+            { id: 3, title: "El caso de las imágenes generadas por IA", objective: "Analizar transparencia, trazabilidad y declaración.", character: "<strong>Sistema IA Jurídico</strong><br>Una imagen generada se incorporó a un cartel sin declarar el uso de IA.", points: 300, badge: "🏅 Auditor de la IA" },
+            { id: 4, title: "El caso del entrenamiento algorítmico", objective: "Comprender los dilemas de los datos usados para entrenar modelos.", character: "<strong>Perito en Propiedad Intelectual</strong><br>Se utilizaron obras protegidas sin consentimiento.", points: 300, badge: "🏅 Analista de Datos y Derechos" },
+            { id: 5, title: "Transparencia y APA", objective: "Aplicar buenas prácticas de declaración del uso de IA.", character: "<strong>Presidenta del Tribunal</strong><br>La asistencia tecnológica puede ser legítima, pero debe declararse.", points: 300, badge: "🏅 Experto en Transparencia Académica" }
+        ];
+        let seal = "", selectedChip = null, placed = {};
+
+        function go(id) {
+            document.querySelectorAll(".screen").forEach(x => x.classList.remove("active"));
+            document.getElementById(id).classList.add("active");
+            document.querySelectorAll(".tab").forEach(x => x.classList.toggle("active", x.dataset.screen === id));
+            if (id === "game") { document.getElementById("hud").style.display = "flex"; renderCases() }
+            updateHUD(); scrollTo({ top: 0, behavior: "smooth" });
+        }
+        function start() { document.getElementById("hud").style.display = "flex"; go("game") }
+        function updateHUD() {
+            document.getElementById("points").textContent = state.points;
+            document.getElementById("rep").textContent = state.rep;
+            let p = state.solved.length === 5 ? 100 : state.solved.length * 20;
+            document.getElementById("bar").style.width = p + "%";
+            document.getElementById("percent").textContent = p + "%";
+        }
+        function rank() {
+            if (state.points >= 1500) return "Magistrado Supremo";
+            if (state.points >= 1000) return "Juez Especializado";
+            if (state.points >= 600) return "Juez en Formación";
+            if (state.points >= 300) return "Analista";
+            return "Novato";
+        }
+        function renderCases() {
+            document.getElementById("dashPoints").textContent = state.points;
+            document.getElementById("dashSolved").textContent = state.solved.length + "/5";
+            document.getElementById("rank").textContent = rank();
+            let html = data.map((c, i) => {
+                let unlocked = i === 0 || state.solved.includes(data[i - 1].id), done = state.solved.includes(c.id);
+                return `<div class="case ${!unlocked ? "locked" : ""} ${done ? "done" : ""}">
+   <div class="num">Expediente ${c.id}</div><h3>${c.title}</h3><p>${c.objective}</p>
+   <small>${done ? "✓ Resuelto" : unlocked ? "Disponible · " + c.points + " puntos" : "🔒 Bloqueado"}</small>
+   ${unlocked && !done ? `<button class="btn" style="margin-top:14px" onclick="openCase(${c.id})">Abrir expediente</button>` : ""}
+  </div>`;
+            }).join("");
+            if (state.solved.length === 5) html += `<div class="case" style="border-color:#ffd16666">
+  <div class="num" style="color:var(--yellow)">Audiencia extraordinaria</div><h3>Gran juicio final</h3>
+  <p>Integra todos los contenidos y determina la responsabilidad del investigador fantasma.</p>
+  <button class="btn yellow" onclick="go('final')">Entrar al juicio</button></div>`;
+            document.getElementById("cases").innerHTML = html;
+        }
+        function openCase(id) {
+            let c = data.find(x => x.id === id); state.current = id;
+            document.getElementById("caseNo").textContent = "Expediente " + id;
+            document.getElementById("caseTitle").textContent = c.title;
+            document.getElementById("caseObjective").textContent = c.objective;
+            document.getElementById("caseCharacter").innerHTML = c.character;
+            document.getElementById("caseContent").innerHTML = markup(id);
+            go("caseScreen");
+        }
+        function markup(id) {
+            if (id === 1) return `<div class="eyebrow">Análisis de evidencias</div>
+ <h3>Una editorial reproduce un libro académico sin autorización del autor y modifica partes del texto original.</h3>
+ <div class="mini">Evidencias</div>
+ <div class="evidence" onclick="modal('Documento A · Contrato editorial','El contrato no contiene autorización válida para reproducir ni transformar la obra fuera de los límites pactados.')">▣ Documento A · Contrato editorial</div>
+ <div class="evidence" onclick="modal('Documento B · Declaración del autor','El autor afirma que no autorizó la reproducción ni la modificación de fragmentos sustanciales.')">▣ Documento B · Declaración del autor</div>
+ <div class="evidence" onclick="modal('Documento C · Texto modificado','La comparación evidencia alteraciones de contenido, estilo y estructura.')">▣ Documento C · Texto modificado</div>
+ <div class="mini">Pregunta</div><p>¿Qué derechos fueron vulnerados?</p>
+ ${opts(["A) Solo derechos patrimoniales", "B) Solo derechos morales", "C) Derechos morales y patrimoniales", "D) Ninguno"], ["a", "b", "c", "d"])}
+ <button class="btn" onclick="submitCase(1)">Emitir decisión · +100</button><div class="feedback" id="feedback"></div>`;
+            if (id === 2) return `<div class="eyebrow">Autoría académica</div><h3>Una revista científica recibe un artículo en el que CHATGPT aparece como coautor oficial.</h3><p>¿Debe aceptarse esta solicitud?</p>
+ ${opts(["A) Sí", "B) No", "C) Depende de la universidad", "D) Depende del área disciplinar"], ["a", "b", "c", "d"])}
+ <div class="mini">Minijuego · Sello digital</div><button class="btn alt" onclick="seal='APROBADO';document.getElementById('sealText').textContent='APROBADO'">APROBADO</button>
+ <button class="btn alt" onclick="seal='RECHAZADO';document.getElementById('sealText').textContent='RECHAZADO'">RECHAZADO</button>
+ <p id="sealText" class="lead">Ningún sello seleccionado.</p><button class="btn" onclick="submitCase(2)">Emitir decisión · +200</button><div class="feedback" id="feedback"></div>`;
+            if (id === 3) return `<div class="eyebrow">Auditoría científica</div><h3>Un investigador genera una imagen mediante IA, la coloca en un cartel científico, firma únicamente con su nombre y no declara el uso de IA.</h3><div class="mini">¿Existe una conducta ética adecuada?</div>
+ ${opts(["Sí", "No"], ["yes", "no"], "mainAnswer")}
+ <div class="mini">¿Qué principios fueron ignorados?</div><div class="options" id="principles">
+ ${check("transparency", "Transparencia")}${check("traceability", "Trazabilidad")}${check("supervision", "Supervisión humana")}${check("declaration", "Declaración del uso de IA")}
+ </div><button class="btn" onclick="submitCase(3)">Generar informe · +300</button><div class="feedback" id="feedback"></div>`;
+            if (id === 4) return `<div class="eyebrow">Clasificación de pruebas</div><h3>Clasifica cada elemento según el riesgo para los derechos de autor.</h3><p>Selecciona una prueba y después un contenedor.</p>
+ <div id="chips">${chip("photo", "Fotografías con copyright")}${chip("articles", "Artículos protegidos")}${chip("cc", "Obras con licencia Creative Commons")}${chip("books", "Libros comerciales")}${chip("open", "Bases de datos abiertas")}</div>
+ <div class="drag"><div class="drop" onclick="place('legitimate')"><h4>Uso legítimo</h4><div id="legitimate"></div></div><div class="drop" onclick="place('risk')"><h4>Posible vulneración</h4><div id="risk"></div></div></div>
+ <button class="btn" onclick="submitCase(4)">Validar clasificación · +300</button><div class="feedback" id="feedback"></div>`;
+            return `<div class="eyebrow">Declaración y buenas prácticas</div><h3>Completa la declaración de uso de IA.</h3><div class="formula">Para la elaboración de ${select("b1", ["esquemas", "fuentes verificadas", "resultados experimentales"])} se utilizó ${select("b2", ["una herramienta de inteligencia artificial", "un autor humano", "software sin identificar"])}. El análisis, la interpretación y la responsabilidad final corresponden exclusivamente al ${select("b3", ["estudiante", "algoritmo", "editor"])}.</div>
+ <button class="btn" onclick="submitCase(5)" style="margin-top:20px">Validar declaración · +300</button><div class="feedback" id="feedback"></div>`;
+        }
+        function opts(labels, values, name = "answer") { return `<div class="options">${labels.map((x, i) => `<label class="option"><input type="radio" name="${name}" value="${values[i]}">${x}</label>`).join("")}</div>` }
+        function check(v, t) { return `<label class="option"><input type="checkbox" value="${v}">${t}</label>` }
+        function chip(v, t) { return `<span class="chip" data-v="${v}" onclick="selectedChip=this;document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));this.classList.add('active')">${t}</span>` }
+        function select(id, arr) { return `<select id="${id}"><option value="">selecciona...</option>${arr.map(x => `<option value="${x}">${x}</option>`).join("")}</select>` }
+        function place(zone) { if (!selectedChip) return; let v = selectedChip.dataset.v; placed[v] = zone; let x = selectedChip.cloneNode(true); x.classList.remove("active"); x.onclick = null; document.getElementById(zone).appendChild(x); selectedChip.remove(); selectedChip = null }
+        function submitCase(id) {
+            if (state.solved.includes(id)) return;
+            let ok = false, detail = "";
+            if (id === 1) { ok = document.querySelector('input[name="answer"]:checked')?.value === "c"; detail = ok ? "Correcto. La reproducción sin autorización afecta los derechos patrimoniales y la modificación indebida afecta los derechos morales." : "Debes identificar ambas dimensiones: derechos morales y patrimoniales." }
+            if (id === 2) { ok = document.querySelector('input[name="answer"]:checked')?.value === "b" && seal === "RECHAZADO"; detail = ok ? "Correcto. La IA no posee personalidad jurídica ni responsabilidad científica o ética." : "La solicitud debe rechazarse: la IA no puede asumir la autoría de una publicación." }
+            if (id === 3) { let a = document.querySelector('input[name="mainAnswer"]:checked')?.value; let s = [...document.querySelectorAll("#principles input:checked")].map(x => x.value).sort(); ok = a === "no" && JSON.stringify(s) === JSON.stringify(["declaration", "traceability", "transparency"]); detail = ok ? "Correcto. Se ignoraron transparencia, trazabilidad y declaración del uso de IA." : "La respuesta esperada es: No; transparencia, trazabilidad y declaración del uso de IA." }
+            if (id === 4) { let e = { photo: "risk", articles: "risk", cc: "legitimate", books: "risk", open: "legitimate" }; ok = Object.keys(e).every(x => placed[x] === e[x]) && Object.keys(e).length === Object.keys(placed).length; detail = ok ? "Clasificación correcta." : "Revisa la clasificación de las obras protegidas, las licencias Creative Commons y las bases abiertas." }
+            if (id === 5) { ok = document.getElementById("b1").value === "esquemas" && document.getElementById("b2").value === "una herramienta de inteligencia artificial" && document.getElementById("b3").value === "estudiante"; detail = ok ? "Correcto. La declaración identifica la herramienta y conserva la responsabilidad final en el estudiante." : "La formulación correcta identifica los esquemas, una herramienta de IA y al estudiante como responsable final." }
+            let f = document.getElementById("feedback"); f.className = "feedback show " + (ok ? "" : "error"); f.innerHTML = `<strong>${ok ? "Decisión validada" : "Decisión susceptible de revisión"}</strong><br>${detail}`;
+            if (ok) { let c = data[id - 1]; state.points += c.points; state.rep += 20; state.solved.push(id); state.badges.push(c.badge); toast("+" + c.points + " puntos · Insignia obtenida"); setTimeout(() => go("game"), 1700) } else { state.rep = Math.max(0, state.rep - 5); toast("La reputación judicial ha disminuido") }
+            updateHUD();
+        }
+        function finalize() {
+            let s = [...document.querySelectorAll("#finalChecks input:checked")].map(x => x.value), v = document.querySelector('input[name="verdict"]:checked')?.value, t = document.getElementById("resolution").value.trim(), e = ["ia", "images", "transparency", "sources"], ok = e.every(x => s.includes(x)) && !s.includes("none") && v === "responsible" && t.length >= 40, f = document.getElementById("finalFeedback");
+            if (!ok) { f.className = "feedback show error"; f.innerHTML = "<strong>Resolución incompleta.</strong><br>Identifica las cuatro infracciones, selecciona responsabilidad académica acreditada y redacta una resolución de al menos 40 caracteres."; state.rep = Math.max(0, state.rep - 10); updateHUD(); return }
+            state.points += 500; state.rep += 30; state.badges.push("🏅 Magistrado Supremo de Integridad Académica"); toast("+500 puntos · Gran juicio final resuelto"); setTimeout(results, 1200);
+        }
+        function results() {
+            let r = rank(); document.getElementById("resultTitle").textContent = r; document.getElementById("finalPoints").textContent = state.points; document.getElementById("resultSolved").textContent = state.solved.length + "/5"; document.getElementById("resultRank").textContent = r; document.getElementById("resultRep").textContent = state.rep; document.getElementById("badges").innerHTML = [...new Set(state.badges)].map(x => `<span class="badge">${x}</span>`).join(""); go("results")
+        }
+        function pdf() { go("info"); setTimeout(() => window.print(), 300) }
+        function modal(t, x) { document.getElementById("modalTitle").textContent = t; document.getElementById("modalText").textContent = x; document.getElementById("modalBox").classList.add("show") }
+        function closeModal() { document.getElementById("modalBox").classList.remove("show") }
+        function toast(x) { let t = document.getElementById("toast"); t.textContent = x; t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2200) }
+        document.addEventListener("click", e => { if (e.target.id === "modalBox") closeModal(); if (e.target.matches(".option")) { if (e.target.querySelector('input[type=radio]')) e.target.parentElement.querySelectorAll(".option").forEach(x => x.classList.remove("selected")); e.target.classList.toggle("selected") } })
+    </script>
+</body>
+
+</html>
