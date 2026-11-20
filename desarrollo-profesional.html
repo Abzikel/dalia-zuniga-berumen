@@ -1,0 +1,2338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ruta DI | Autoevaluación y desarrollo profesional</title>
+  <style>
+    :root {
+      --azul-oscuro: #132b45;
+      --azul: #1e6091;
+      --azul-claro: #e8f2f9;
+      --dorado: #c99435;
+      --crema: #f8f6f1;
+      --blanco: #ffffff;
+      --texto: #263545;
+      --gris: #66788a;
+      --borde: #d8e0e7;
+      --verde: #187355;
+      --verde-claro: #e4f4ed;
+      --naranja: #b86216;
+      --naranja-claro: #fff0e1;
+      --rojo: #af3e3e;
+      --sombra: 0 12px 28px rgba(19, 43, 69, 0.1);
+      --radio: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--texto);
+      background: var(--crema);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .app {
+      display: grid;
+      min-height: 100vh;
+      grid-template-columns: 270px 1fr;
+    }
+
+    /* Barra lateral */
+
+    .sidebar {
+      position: sticky;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      padding: 28px 18px;
+      color: var(--blanco);
+      background: linear-gradient(160deg, #10263d 0%, #1d527d 100%);
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 0 10px 25px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    }
+
+    .brand-symbol {
+      display: grid;
+      width: 43px;
+      height: 43px;
+      place-items: center;
+      color: var(--azul-oscuro);
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-weight: 700;
+      background: #f2c96b;
+      border-radius: 11px;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      display: block;
+      margin-top: 4px;
+      color: #c4d7e8;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .nav-title {
+      display: block;
+      padding: 28px 12px 9px;
+      color: #bcd0e2;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .nav-button {
+      display: flex;
+      width: 100%;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      margin-bottom: 5px;
+      color: #dbe8f4;
+      text-align: left;
+      background: transparent;
+      border: 0;
+      border-radius: 10px;
+      transition: background 0.2s ease;
+    }
+
+    .nav-button:hover,
+    .nav-button.active {
+      color: var(--blanco);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .nav-icon {
+      width: 22px;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .profile-mini {
+      padding: 15px;
+      margin-top: auto;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 13px;
+    }
+
+    .profile-mini strong,
+    .profile-mini span {
+      display: block;
+    }
+
+    .profile-mini strong {
+      font-size: 13px;
+    }
+
+    .profile-mini span {
+      margin-top: 4px;
+      color: #c6d8e8;
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    /* Contenido */
+
+    main {
+      width: 100%;
+      max-width: 1450px;
+      padding: 38px 44px 60px;
+      margin: 0 auto;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    .top-header {
+      display: flex;
+      gap: 25px;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--azul);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      color: var(--azul-oscuro);
+    }
+
+    h1,
+    h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.1;
+    }
+
+    h1 {
+      font-size: clamp(30px, 3.5vw, 42px);
+    }
+
+    h2 {
+      font-size: clamp(26px, 3vw, 35px);
+    }
+
+    .intro {
+      max-width: 820px;
+      margin: 12px 0 0;
+      color: var(--gris);
+      line-height: 1.6;
+    }
+
+    .saved-state {
+      padding: 10px 13px;
+      color: var(--verde);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      background: var(--verde-claro);
+      border-radius: 9px;
+    }
+
+    .card {
+      background: var(--blanco);
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+      box-shadow: 0 4px 14px rgba(19, 43, 69, 0.035);
+    }
+
+    .button {
+      padding: 10px 15px;
+      color: var(--blanco);
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--azul);
+      border: 1px solid var(--azul);
+      border-radius: 9px;
+      transition: all 0.2s ease;
+    }
+
+    .button:hover {
+      background: #174f7a;
+      border-color: #174f7a;
+    }
+
+    .button.secondary {
+      color: var(--azul);
+      background: var(--blanco);
+      border-color: #a9c9e1;
+    }
+
+    .button.secondary:hover {
+      background: var(--azul-claro);
+    }
+
+    .button.warning {
+      color: var(--naranja);
+      background: #fff;
+      border-color: #e7bf9b;
+    }
+
+    .button.danger {
+      color: var(--rojo);
+      background: #fff;
+      border-color: #e6b6b6;
+    }
+
+    /* Panorama */
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 20px;
+    }
+
+    .identity-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+      align-items: center;
+      padding: 27px;
+    }
+
+    .initials {
+      display: grid;
+      width: 82px;
+      height: 82px;
+      place-items: center;
+      color: #fff;
+      font-family: Georgia, serif;
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--azul), var(--azul-oscuro));
+      border: 4px solid #dcecf8;
+      border-radius: 50%;
+    }
+
+    .identity-card h3 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 22px;
+    }
+
+    .identity-card p {
+      margin: 7px 0 13px;
+      color: var(--gris);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      color: #17654e;
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--verde-claro);
+      border-radius: 100px;
+    }
+
+    .readiness-card {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 17px;
+      align-items: center;
+      padding: 25px;
+    }
+
+    .score-circle {
+      display: grid;
+      width: 138px;
+      height: 138px;
+      place-items: center;
+      background: conic-gradient(var(--azul) calc(var(--score) * 1%), #e4eaf0 0);
+      border-radius: 50%;
+    }
+
+    .score-circle::before {
+      grid-area: 1 / 1;
+      width: 112px;
+      height: 112px;
+      content: "";
+      background: white;
+      border-radius: 50%;
+    }
+
+    .score-value {
+      z-index: 1;
+      grid-area: 1 / 1;
+      color: var(--azul-oscuro);
+      font-size: 31px;
+      font-weight: 800;
+    }
+
+    .score-value small {
+      font-size: 13px;
+    }
+
+    .readiness-card h3 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 22px;
+    }
+
+    .readiness-card p {
+      margin: 9px 0 0;
+      color: var(--gris);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .stat-card {
+      padding: 20px;
+    }
+
+    .stat-number {
+      color: var(--azul-oscuro);
+      font-family: Georgia, serif;
+      font-size: 34px;
+      font-weight: 700;
+    }
+
+    .stat-card p {
+      margin: 3px 0 0;
+      color: var(--gris);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .section-heading {
+      display: flex;
+      gap: 16px;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin: 36px 0 16px;
+    }
+
+    .section-heading h2 {
+      font-size: 25px;
+    }
+
+    .section-heading p {
+      margin: 5px 0 0;
+      color: var(--gris);
+      font-size: 13px;
+    }
+
+    .strength-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .strength-card {
+      padding: 20px;
+      border-top: 4px solid var(--dorado);
+    }
+
+    .strength-icon {
+      display: grid;
+      width: 40px;
+      height: 40px;
+      place-items: center;
+      margin-bottom: 13px;
+      font-size: 19px;
+      background: #fff3db;
+      border-radius: 10px;
+    }
+
+    .strength-card h4 {
+      margin: 0 0 7px;
+      font-size: 15px;
+    }
+
+    .strength-card p {
+      margin: 0;
+      color: var(--gris);
+      font-size: 13px;
+      line-height: 1.52;
+    }
+
+    .priority-list {
+      overflow: hidden;
+    }
+
+    .priority-row {
+      display: grid;
+      grid-template-columns: 35px 1fr auto;
+      gap: 13px;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--borde);
+    }
+
+    .priority-row:last-child {
+      border-bottom: 0;
+    }
+
+    .priority-number {
+      display: grid;
+      width: 28px;
+      height: 28px;
+      place-items: center;
+      color: var(--azul);
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--azul-claro);
+      border-radius: 50%;
+    }
+
+    .priority-row strong,
+    .priority-row span {
+      display: block;
+    }
+
+    .priority-row strong {
+      font-size: 14px;
+    }
+
+    .priority-row span {
+      margin-top: 3px;
+      color: var(--gris);
+      font-size: 12px;
+    }
+
+    .priority-label {
+      padding: 6px 9px;
+      color: #9b4c12;
+      font-size: 10px;
+      font-weight: 800;
+      background: var(--naranja-claro);
+      border-radius: 100px;
+    }
+
+    /* Autoevaluación */
+
+    .scale-guide {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      padding: 15px;
+      margin-bottom: 18px;
+      background: #edf5fb;
+      border: 1px solid #d5e7f5;
+      border-radius: 13px;
+    }
+
+    .scale-guide div {
+      padding: 7px;
+      text-align: center;
+      border-right: 1px solid #d4e1ec;
+    }
+
+    .scale-guide div:last-child {
+      border-right: 0;
+    }
+
+    .scale-guide strong,
+    .scale-guide span {
+      display: block;
+    }
+
+    .scale-guide strong {
+      color: var(--azul-oscuro);
+      font-size: 12px;
+    }
+
+    .scale-guide span {
+      margin-top: 3px;
+      color: var(--gris);
+      font-size: 11px;
+      line-height: 1.35;
+    }
+
+    .assessment-progress {
+      padding: 20px 22px;
+      margin-bottom: 20px;
+    }
+
+    .assessment-progress-top {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      color: var(--gris);
+      font-size: 12px;
+    }
+
+    .progress-track {
+      height: 10px;
+      overflow: hidden;
+      background: #e6ebf0;
+      border-radius: 20px;
+    }
+
+    .progress-bar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--azul), #49a0d4);
+      border-radius: 20px;
+      transition: width 0.25s ease;
+    }
+
+    .category-card {
+      margin-bottom: 17px;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--borde);
+      border-radius: var(--radio);
+    }
+
+    .category-header {
+      display: flex;
+      gap: 13px;
+      align-items: center;
+      padding: 18px 21px;
+      background: #fbfcfd;
+      border-bottom: 1px solid var(--borde);
+    }
+
+    .category-symbol {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      font-size: 18px;
+      background: var(--azul-claro);
+      border-radius: 10px;
+    }
+
+    .category-header h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .category-header p {
+      margin: 4px 0 0;
+      color: var(--gris);
+      font-size: 12px;
+    }
+
+    .skill-row {
+      display: grid;
+      grid-template-columns: minmax(250px, 1.35fr) minmax(260px, 1fr) 115px;
+      gap: 22px;
+      align-items: center;
+      padding: 17px 21px;
+      border-bottom: 1px solid #e8edf1;
+    }
+
+    .skill-row:last-child {
+      border-bottom: 0;
+    }
+
+    .skill-name strong,
+    .skill-name span {
+      display: block;
+    }
+
+    .skill-name strong {
+      font-size: 14px;
+    }
+
+    .skill-name span {
+      margin-top: 4px;
+      color: var(--gris);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .rating-options {
+      display: flex;
+      gap: 7px;
+    }
+
+    .rating-option {
+      display: grid;
+      flex: 1;
+      min-width: 39px;
+      height: 37px;
+      place-items: center;
+      color: var(--gris);
+      font-size: 13px;
+      font-weight: 800;
+      background: #f1f4f6;
+      border: 1px solid transparent;
+      border-radius: 8px;
+    }
+
+    .rating-option:hover {
+      color: var(--azul);
+      background: var(--azul-claro);
+    }
+
+    .rating-option.selected {
+      color: #fff;
+      background: var(--azul);
+      border-color: var(--azul);
+    }
+
+    .level-result {
+      justify-self: end;
+      min-width: 105px;
+      padding: 7px 8px;
+      color: #88500e;
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+      background: #fff1d7;
+      border-radius: 100px;
+    }
+
+    .level-result.level-1 {
+      color: #994141;
+      background: #fceaea;
+    }
+
+    .level-result.level-3,
+    .level-result.level-4 {
+      color: #17654e;
+      background: var(--verde-claro);
+    }
+
+    .reflection-card {
+      padding: 22px;
+      margin-top: 23px;
+    }
+
+    .reflection-card label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--azul-oscuro);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      color: var(--texto);
+      line-height: 1.5;
+      background: #fff;
+      border: 1px solid var(--borde);
+      border-radius: 9px;
+      outline-color: var(--azul);
+    }
+
+    textarea {
+      min-height: 115px;
+      resize: vertical;
+    }
+
+    .assessment-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 18px;
+    }
+
+    /* Resultados */
+
+    .result-summary {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 28px;
+      align-items: center;
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .result-summary h3 {
+      margin: 0 0 8px;
+      font-family: Georgia, serif;
+      font-size: 24px;
+    }
+
+    .result-summary p {
+      margin: 0;
+      color: var(--gris);
+      line-height: 1.55;
+    }
+
+    .result-bars {
+      padding: 24px;
+    }
+
+    .result-bars h3 {
+      margin: 0 0 21px;
+      font-family: Georgia, serif;
+      font-size: 21px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 220px 1fr 48px;
+      gap: 15px;
+      align-items: center;
+      margin: 15px 0;
+    }
+
+    .bar-row span {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .bar-track {
+      height: 12px;
+      overflow: hidden;
+      background: #e9eef2;
+      border-radius: 20px;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--azul), #52a6d7);
+      border-radius: 20px;
+      transition: width 0.3s ease;
+    }
+
+    .bar-score {
+      color: var(--azul-oscuro);
+      font-size: 13px;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .recommendations {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .recommendation {
+      padding: 20px;
+      border-top: 4px solid var(--naranja);
+    }
+
+    .recommendation h4 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+
+    .recommendation p {
+      margin: 0;
+      color: var(--gris);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    /* Plan */
+
+    .goal-card {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 25px;
+      align-items: center;
+      padding: 27px;
+      color: #fff;
+      background: linear-gradient(115deg, #173d62, #24699f);
+      border-radius: var(--radio);
+    }
+
+    .goal-card h3 {
+      margin: 0 0 8px;
+      color: #fff;
+      font-family: Georgia, serif;
+      font-size: 25px;
+    }
+
+    .goal-card p {
+      max-width: 760px;
+      margin: 0;
+      color: #dceafa;
+      line-height: 1.55;
+    }
+
+    .hours-label {
+      padding: 12px 15px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+      background: rgba(255, 255, 255, 0.14);
+      border-radius: 9px;
+    }
+
+    .phase-card {
+      display: grid;
+      grid-template-columns: 56px 1fr 120px;
+      gap: 19px;
+      align-items: start;
+      padding: 22px;
+      margin-bottom: 14px;
+    }
+
+    .phase-number {
+      display: grid;
+      width: 52px;
+      height: 52px;
+      place-items: center;
+      color: var(--azul);
+      font-family: Georgia, serif;
+      font-size: 22px;
+      font-weight: 700;
+      background: var(--azul-claro);
+      border-radius: 50%;
+    }
+
+    .phase-card h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .phase-duration {
+      margin: 4px 0 10px;
+      color: var(--azul);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .phase-card p {
+      margin: 0 0 11px;
+      color: var(--gris);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .phase-card ul {
+      padding-left: 17px;
+      margin: 0;
+      color: #42576d;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .phase-status {
+      width: 100%;
+      padding: 7px;
+      color: var(--gris);
+      font-size: 10px;
+      font-weight: 800;
+      text-align: center;
+      background: #f0f3f6;
+      border-radius: 100px;
+    }
+
+    .phase-status.current {
+      color: #94540d;
+      background: #fff0d6;
+    }
+
+    /* Portafolio */
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .portfolio-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 17px;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .portfolio-item:hover {
+      border-color: #9ec3df;
+      transform: translateY(-2px);
+    }
+
+    .portfolio-check {
+      display: grid;
+      flex: 0 0 auto;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      color: white;
+      font-size: 13px;
+      background: #c4ced7;
+      border-radius: 50%;
+    }
+
+    .portfolio-item.done .portfolio-check {
+      background: var(--verde);
+    }
+
+    .portfolio-item strong,
+    .portfolio-item span {
+      display: block;
+    }
+
+    .portfolio-item strong {
+      font-size: 14px;
+    }
+
+    .portfolio-item span {
+      margin-top: 4px;
+      color: var(--gris);
+      font-size: 12px;
+      line-height: 1.42;
+    }
+
+    .quote-card {
+      padding: 25px;
+      margin-top: 24px;
+      background: #fffdf8;
+      border-color: #eadbbd;
+    }
+
+    .quote-card blockquote {
+      padding-left: 18px;
+      margin: 12px 0 0;
+      color: #485b6e;
+      font-family: Georgia, serif;
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.55;
+      border-left: 4px solid var(--dorado);
+    }
+
+    /* Perfil */
+
+    .profile-form {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 17px;
+      padding: 25px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--azul-oscuro);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .method-card {
+      margin-top: 22px;
+      padding: 23px;
+    }
+
+    .method-card h3 {
+      margin: 0;
+      font-family: Georgia, serif;
+      font-size: 22px;
+    }
+
+    .method-card ol {
+      padding-left: 20px;
+      margin: 15px 0 0;
+      color: #475b70;
+      line-height: 1.6;
+    }
+
+    .method-card li {
+      margin-bottom: 9px;
+    }
+
+    .method-card strong {
+      color: var(--azul-oscuro);
+    }
+
+    /* Mensajes */
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 20;
+      padding: 13px 16px;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--azul);
+      border-radius: 10px;
+      box-shadow: var(--sombra);
+      opacity: 0;
+      transform: translateY(12px);
+      transition: all 0.25s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 1100px) {
+      .app {
+        grid-template-columns: 230px 1fr;
+      }
+
+      main {
+        padding: 30px 25px 50px;
+      }
+
+      .skill-row {
+        grid-template-columns: 1fr;
+        gap: 9px;
+      }
+
+      .level-result {
+        justify-self: start;
+      }
+
+      .strength-grid,
+      .recommendations {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .app {
+        display: block;
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+        padding: 17px;
+      }
+
+      .brand {
+        padding-bottom: 15px;
+      }
+
+      .sidebar nav {
+        display: flex;
+        gap: 5px;
+        margin-top: 15px;
+        overflow-x: auto;
+      }
+
+      .nav-title,
+      .profile-mini,
+      .nav-button:not(.active) .nav-label-text {
+        display: none;
+      }
+
+      .nav-button {
+        width: auto;
+        padding: 10px 13px;
+        margin: 0;
+        white-space: nowrap;
+      }
+
+      main {
+        padding: 26px 16px 45px;
+      }
+
+      .top-header,
+      .goal-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-grid,
+      .strength-grid,
+      .recommendations,
+      .portfolio-grid,
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .identity-card,
+      .readiness-card,
+      .result-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .score-circle {
+        margin: auto;
+      }
+
+      .scale-guide {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .scale-guide div:nth-child(2) {
+        border-right: 0;
+      }
+
+      .phase-card {
+        grid-template-columns: 52px 1fr;
+      }
+
+      .phase-status {
+        grid-column: 2;
+      }
+
+      .profile-form {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .bar-row {
+        grid-template-columns: 1fr 45px;
+      }
+
+      .bar-track {
+        grid-column: 1 / -1;
+        grid-row: 2;
+      }
+    }
+
+    .app-footer {
+      margin-top: 44px;
+      padding-top: 20px;
+      border-top: 1px solid var(--borde);
+      color: var(--gris);
+      font-size: 13px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-symbol">DI</div>
+        <div>
+          <p class="brand-title">Ruta DI</p>
+          <span class="brand-subtitle">Perfil profesional</span>
+        </div>
+      </div>
+
+      <nav aria-label="Navegación principal">
+        <span class="nav-title">Desarrollo profesional</span>
+
+        <button class="nav-button active" data-view="inicio">
+          <span class="nav-icon">⌂</span>
+          <span class="nav-label-text">Panorama</span>
+        </button>
+
+        <button class="nav-button" data-view="autoevaluacion">
+          <span class="nav-icon">◉</span>
+          <span class="nav-label-text">Autoevaluación</span>
+        </button>
+
+        <button class="nav-button" data-view="resultados">
+          <span class="nav-icon">▤</span>
+          <span class="nav-label-text">Resultados</span>
+        </button>
+
+        <button class="nav-button" data-view="plan">
+          <span class="nav-icon">↗</span>
+          <span class="nav-label-text">Plan de desarrollo</span>
+        </button>
+
+        <button class="nav-button" data-view="portafolio">
+          <span class="nav-icon">▣</span>
+          <span class="nav-label-text">Portafolio</span>
+        </button>
+
+        <button class="nav-button" data-view="perfil">
+          <span class="nav-icon">◌</span>
+          <span class="nav-label-text">Mi perfil</span>
+        </button>
+      </nav>
+
+      <div class="profile-mini">
+        <strong id="sidebarName">Dalia del Rosario Zúñiga</strong>
+        <span>Meta: diseñadora instruccional junior</span>
+      </div>
+    </aside>
+
+    <main>
+      <!-- PANORAMA -->
+      <section class="view active" id="inicio">
+        <header class="top-header">
+          <div>
+            <p class="eyebrow">Desarrollo del perfil profesional</p>
+            <h1>Transición hacia el diseño instruccional</h1>
+            <p class="intro">
+              Esta aplicación convierte la autoevaluación en una ruta de desarrollo profesional.
+              Parte de las fortalezas consolidadas y orienta la construcción de evidencias para
+              desempeñarte como diseñadora instruccional junior.
+            </p>
+          </div>
+          <div class="saved-state">● Progreso guardado</div>
+        </header>
+
+        <div class="hero-grid">
+          <article class="card identity-card">
+            <div class="initials" id="profileInitials">DZ</div>
+            <div>
+              <h3 id="dashboardName">Dalia del Rosario Zúñiga Berumen</h3>
+              <p>
+                Licenciada en Letras · Maestría en Tecnología Educativa · Correctora de estilo
+                en Programas en Línea de la UAG.
+              </p>
+              <span class="badge">Profesional en transición avanzada</span>
+            </div>
+          </article>
+
+          <article class="card readiness-card">
+            <div class="score-circle" id="mainScoreCircle" style="--score: 66;">
+              <div class="score-value">
+                <span id="mainScore">66</span><small>/100</small>
+              </div>
+            </div>
+
+            <div>
+              <h3>Índice de preparación</h3>
+              <p id="mainScoreText">
+                Tu perfil cuenta con una base sólida en comunicación, edición, recursos digitales,
+                LMS e inteligencia artificial. La prioridad consiste en integrar estas capacidades
+                en proyectos instruccionales completos.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div class="stats-grid">
+          <article class="card stat-card">
+            <div class="stat-number" id="strengthCounter">8</div>
+            <p>competencias consolidadas</p>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-number" id="developmentCounter">10</div>
+            <p>competencias por consolidar</p>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-number">9</div>
+            <p>meses del plan de desarrollo</p>
+          </article>
+
+          <article class="card stat-card">
+            <div class="stat-number" id="portfolioCounter">3</div>
+            <p>evidencias iniciales registradas</p>
+          </article>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <h2>Fortalezas consolidadas</h2>
+            <p>Capacidades que diferencian tu punto de partida dentro del campo del diseño instruccional.</p>
+          </div>
+        </div>
+
+        <div class="strength-grid">
+          <article class="card strength-card">
+            <div class="strength-icon">✎</div>
+            <h4>Redacción y edición avanzadas</h4>
+            <p>Claridad, precisión, cohesión, consistencia editorial y mejora de materiales educativos.</p>
+          </article>
+
+          <article class="card strength-card">
+            <div class="strength-icon">⌕</div>
+            <h4>Investigación y síntesis</h4>
+            <p>Localización, contraste y jerarquización de información especializada para públicos diversos.</p>
+          </article>
+
+          <article class="card strength-card">
+            <div class="strength-icon">◫</div>
+            <h4>Recursos digitales y LMS</h4>
+            <p>Experiencia en recursos didácticos digitales e implementación básica de cursos en LMS.</p>
+          </article>
+
+          <article class="card strength-card">
+            <div class="strength-icon">✦</div>
+            <h4>Inteligencia artificial</h4>
+            <p>Uso crítico, ético y supervisado de IA para búsqueda, organización, redacción y revisión.</p>
+          </article>
+
+          <article class="card strength-card">
+            <div class="strength-icon">◎</div>
+            <h4>Comunicación con especialistas</h4>
+            <p>Experiencia en entrevistas, reportajes y diálogo con personas expertas en distintos campos.</p>
+          </article>
+
+          <article class="card strength-card">
+            <div class="strength-icon">↔</div>
+            <h4>Conocimiento institucional</h4>
+            <p>Comprensión del flujo entre planeamiento, corrección, Multimedia y montaje en Canvas.</p>
+          </article>
+        </div>
+
+        <div class="section-heading">
+          <div>
+            <h2>Prioridades de desarrollo</h2>
+            <p>Áreas que requieren práctica supervisada y evidencias concretas.</p>
+          </div>
+
+          <button class="button secondary" type="button" onclick="showView('autoevaluacion')">
+            Actualizar valoración
+          </button>
+        </div>
+
+        <div class="card priority-list" id="priorityList"></div>
+      </section>
+
+      <!-- AUTOEVALUACIÓN -->
+      <section class="view" id="autoevaluacion">
+        <header class="top-header">
+          <div>
+            <p class="eyebrow">Diagnóstico personal</p>
+            <h1>Autoevaluación de habilidades y competencias</h1>
+            <p class="intro">
+              Valora tu nivel actual con base en evidencias verificables: productos realizados,
+              experiencia profesional, participación en proyectos y capacidad para justificar decisiones.
+            </p>
+          </div>
+
+          <button class="button" type="button" id="saveAssessmentButton">
+            Guardar autoevaluación
+          </button>
+        </header>
+
+        <div class="scale-guide">
+          <div>
+            <strong>Nivel 1</strong>
+            <span>Conocimiento</span>
+          </div>
+          <div>
+            <strong>Nivel 2</strong>
+            <span>Aplicación guiada</span>
+          </div>
+          <div>
+            <strong>Nivel 3</strong>
+            <span>Aplicación autónoma</span>
+          </div>
+          <div>
+            <strong>Nivel 4</strong>
+            <span>Transferencia</span>
+          </div>
+        </div>
+
+        <article class="card assessment-progress">
+          <div class="assessment-progress-top">
+            <span>Competencias valoradas</span>
+            <strong id="assessmentProgressText">0 de 18</strong>
+          </div>
+          <div class="progress-track">
+            <div class="progress-bar" id="assessmentProgressBar"></div>
+          </div>
+        </article>
+
+        <div id="assessmentCategories"></div>
+
+        <article class="card reflection-card">
+          <label for="assessmentReflection">Reflexión sobre mi proceso de desarrollo</label>
+          <textarea id="assessmentReflection" placeholder="Registra evidencias, logros, dificultades, dudas o condiciones que deban considerarse en tu plan de desarrollo."></textarea>
+
+          <div class="assessment-actions">
+            <button class="button danger" type="button" id="resetAssessmentButton">
+              Restablecer valoración
+            </button>
+            <button class="button" type="button" id="saveAssessmentButtonBottom">
+              Guardar y actualizar resultados
+            </button>
+          </div>
+        </article>
+      </section>
+
+      <!-- RESULTADOS -->
+      <section class="view" id="resultados">
+        <header class="top-header">
+          <div>
+            <p class="eyebrow">Lectura del diagnóstico</p>
+            <h1>Resultados y recomendaciones</h1>
+            <p class="intro">
+              La valoración identifica el nivel de preparación actual y ayuda a priorizar las competencias
+              que deben convertirse en acciones concretas dentro del proyecto profesional.
+            </p>
+          </div>
+
+          <button class="button secondary" type="button" onclick="showView('autoevaluacion')">
+            Modificar autoevaluación
+          </button>
+        </header>
+
+        <article class="card result-summary">
+          <div class="score-circle" id="resultScoreCircle" style="--score: 66;">
+            <div class="score-value">
+              <span id="resultScore">66</span><small>/100</small>
+            </div>
+          </div>
+
+          <div>
+            <h3 id="resultTitle">Profesional en transición avanzada</h3>
+            <p id="resultDescription">
+              El perfil refleja una preparación académica y tecnológica intermedia, con fortalezas
+              claras en comunicación, edición, investigación, IA y recursos digitales. La principal
+              brecha consiste en demostrar la integración de estas capacidades en un proyecto
+              instruccional completo.
+            </p>
+          </div>
+        </article>
+
+        <article class="card result-bars">
+          <h3>Desarrollo por dimensión</h3>
+          <div id="resultBars"></div>
+        </article>
+
+        <div class="section-heading">
+          <div>
+            <h2>Siguientes acciones recomendadas</h2>
+            <p>Estas recomendaciones se ajustan de forma automática a la valoración registrada.</p>
+          </div>
+        </div>
+
+        <div class="recommendations" id="recommendationList"></div>
+      </section>
+
+      <!-- PLAN -->
+      <section class="view" id="plan">
+        <header class="top-header">
+          <div>
+            <p class="eyebrow">Ruta de aprendizaje situada</p>
+            <h1>Plan de desarrollo personal</h1>
+            <p class="intro">
+              El plan elimina la repetición de aprendizajes introductorios y concentra el esfuerzo
+              en la integración, demostración y mejora de competencias en un proyecto real o piloto.
+            </p>
+          </div>
+
+          <button class="button secondary" type="button" onclick="window.print()">
+            Imprimir plan
+          </button>
+        </header>
+
+        <article class="goal-card">
+          <div>
+            <h3>Objetivo general</h3>
+            <p>
+              Consolidar, durante nueve meses, las competencias necesarias para desempeñarme como
+              diseñadora instruccional junior mediante la participación supervisada en un proyecto,
+              la profundización en alineación, evaluación, accesibilidad, Canvas y gestión, y la
+              construcción de un portafolio profesional.
+            </p>
+          </div>
+
+          <div class="hours-label">≈ 4 horas semanales</div>
+        </article>
+
+        <div class="section-heading">
+          <div>
+            <h2>Fases de desarrollo</h2>
+            <p>Marca cada fase conforme avances en la producción de evidencias.</p>
+          </div>
+        </div>
+
+        <div id="phaseList"></div>
+      </section>
+
+      <!-- PORTAFOLIO -->
+      <section class="view" id="portafolio">
+        <header class="top-header">
+          <div>
+            <p class="eyebrow">Evidencias de desempeño</p>
+            <h1>Portafolio profesional</h1>
+            <p class="intro">
+              El portafolio demostrará que puedes analizar, diseñar, implementar y mejorar una
+              experiencia de aprendizaje, no solo revisar la calidad editorial de sus componentes.
+            </p>
+          </div>
+
+          <div class="saved-state" id="portfolioStatus">Selecciona una evidencia para actualizarla</div>
+        </header>
+
+        <div class="portfolio-grid" id="portfolioList"></div>
+
+        <article class="card quote-card">
+          <p class="eyebrow">Criterio de cierre</p>
+          <blockquote>
+            La meta no consiste en empezar desde cero, sino en integrar conocimientos ya adquiridos
+            en decisiones pedagógicas observables, justificadas y transferibles a proyectos reales.
+          </blockquote>
+        </article>
+      </section>
+
+      <!-- PERFIL -->
+      <section class="view" id="perfil">
+        <header class="top-header">
+          <div>
+            <p class="eyebrow">Información de referencia</p>
+            <h1>Mi perfil profesional</h1>
+            <p class="intro">
+              Actualiza los datos que aparecerán en el tablero y utiliza esta sección como síntesis
+              de tu trayectoria hacia el diseño instruccional.
+            </p>
+          </div>
+        </header>
+
+        <form class="card profile-form" id="profileForm">
+          <div class="field">
+            <label for="fullName">Nombre completo</label>
+            <input type="text" id="fullName" value="Dalia del Rosario Zúñiga Berumen">
+          </div>
+
+          <div class="field">
+            <label for="currentRole">Puesto actual</label>
+            <input type="text" id="currentRole" value="Correctora de estilo">
+          </div>
+
+          <div class="field">
+            <label for="organization">Área o institución</label>
+            <input type="text" id="organization" value="Programas en Línea, UAG">
+          </div>
+
+          <div class="field">
+            <label for="professionalGoal">Meta profesional</label>
+            <input type="text" id="professionalGoal" value="Diseñadora instruccional junior">
+          </div>
+
+          <div class="field full">
+            <label for="profileSummary">Síntesis del perfil</label>
+            <textarea id="profileSummary">Profesional de la comunicación y la edición, con formación de posgrado en Tecnología Educativa, experiencia en recursos digitales, plataformas LMS e inteligencia artificial y conocimiento inicial del flujo institucional de diseño instruccional.</textarea>
+          </div>
+
+          <div class="field full">
+            <button class="button" type="submit">Guardar perfil</button>
+          </div>
+        </form>
+
+        <article class="card method-card">
+          <h3>Cómo utilizar la aplicación</h3>
+          <ol>
+            <li><strong>Valora las competencias</strong> a partir de evidencias reales, no solo del conocimiento teórico.</li>
+            <li><strong>Identifica las prioridades</strong> que aparecen en el panorama y los resultados.</li>
+            <li><strong>Desarrolla productos verificables</strong>: matrices, actividades, rúbricas, storyboards, configuraciones e informes.</li>
+            <li><strong>Solicita retroalimentación profesional</strong> a una diseñadora instruccional o persona responsable del área.</li>
+            <li><strong>Actualiza la autoevaluación</strong> al concluir cada fase para registrar avances y redefinir necesidades.</li>
+          </ol>
+        </article>
+      </section>
+
+      <footer class="app-footer">
+        Plan desarrollado con el uso de herramientas de IA UAG, y el apoyo en el montaje de Alejandro Bañuelos
+      </footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast">Cambios guardados correctamente.</div>
+
+  <script>
+    const competencies = [
+      {
+        category: "Competencias pedagógicas",
+        symbol: "◈",
+        description: "Análisis, alineación, diseño, evaluación y mejora de experiencias de aprendizaje.",
+        items: [
+          {
+            name: "Aplicación integral de modelos de diseño instruccional",
+            description: "Seleccionar, adaptar y documentar un proceso de diseño para un proyecto real.",
+            value: 2
+          },
+          {
+            name: "Resultados de aprendizaje y alineación instruccional",
+            description: "Relacionar resultados, contenidos, actividades, recursos y evaluación.",
+            value: 2
+          },
+          {
+            name: "Diseño de evaluaciones auténticas",
+            description: "Crear evidencias, criterios y rúbricas pertinentes al desempeño esperado.",
+            value: 2
+          },
+          {
+            name: "Diseño completo de experiencias de aprendizaje",
+            description: "Integrar audiencia, secuencia, actividades, recursos y evaluación en una unidad.",
+            value: 2
+          },
+          {
+            name: "Evaluación de la efectividad del diseño",
+            description: "Mejorar una propuesta a partir de resultados, observaciones y evidencia de uso.",
+            value: 1
+          }
+        ]
+      },
+      {
+        category: "Competencias tecnológicas",
+        symbol: "⌘",
+        description: "Uso pedagógico de LMS, accesibilidad, recursos digitales, datos e inteligencia artificial.",
+        items: [
+          {
+            name: "Configuración pedagógica avanzada en Canvas",
+            description: "Diseñar rutas, requisitos, rúbricas, evaluaciones y mecanismos de seguimiento.",
+            value: 2
+          },
+          {
+            name: "Accesibilidad educativa y digital",
+            description: "Aplicar criterios de acceso en documentos, Canvas y recursos multimedia.",
+            value: 1
+          },
+          {
+            name: "Analítica del aprendizaje",
+            description: "Interpretar datos del LMS para detectar dificultades y orientar mejoras.",
+            value: 1
+          },
+          {
+            name: "Diseño de recursos didácticos digitales",
+            description: "Seleccionar formatos y revisar la pertinencia pedagógica de los recursos.",
+            value: 3
+          },
+          {
+            name: "Integración ética y crítica de IA",
+            description: "Documentar usos, verificar resultados y proteger información sensible.",
+            value: 4
+          }
+        ]
+      },
+      {
+        category: "Competencias comunicativas y de gestión",
+        symbol: "✎",
+        description: "Comunicación profesional, coordinación interdisciplinaria y aseguramiento de la calidad.",
+        items: [
+          {
+            name: "Redacción, edición y corrección avanzadas",
+            description: "Garantizar claridad, precisión, coherencia y consistencia editorial.",
+            value: 4
+          },
+          {
+            name: "Investigación, síntesis y verificación",
+            description: "Localizar, contrastar y adaptar información especializada.",
+            value: 4
+          },
+          {
+            name: "Comunicación con especialistas",
+            description: "Formular preguntas, negociar cambios y traducir necesidades entre áreas.",
+            value: 3
+          },
+          {
+            name: "Gestión de proyectos instruccionales",
+            description: "Planear entregables, responsables, riesgos, revisiones y versiones.",
+            value: 2
+          },
+          {
+            name: "Liderazgo y consultoría pedagógica",
+            description: "Argumentar recomendaciones y acompañar al experto disciplinar.",
+            value: 2
+          },
+          {
+            name: "Conocimiento del proceso institucional",
+            description: "Comprender la relación entre planeamiento, corrección, Multimedia y Canvas.",
+            value: 3
+          }
+        ]
+      }
+    ];
+
+    const phases = [
+      {
+        title: "Diagnóstico aplicado y alineación instruccional",
+        duration: "Meses 1 y 2",
+        status: "En curso",
+        description: "Aplicar conocimientos previos al análisis de materiales reales y ampliar la revisión textual hacia la coherencia pedagógica.",
+        actions: [
+          "Seleccionar una unidad desarrollada o en proceso, con las autorizaciones correspondientes.",
+          "Comparar planeamiento, cronograma, contenidos, actividades, evaluación y recursos.",
+          "Elaborar una matriz de alineación instruccional.",
+          "Revisar hallazgos con una diseñadora instruccional del área."
+        ]
+      },
+      {
+        title: "Evaluación y diseño de actividades auténticas",
+        duration: "Meses 3 y 4",
+        status: "Pendiente",
+        description: "Diseñar actividades que permitan practicar desempeños y obtener evidencias válidas de aprendizaje.",
+        actions: [
+          "Diseñar actividades formativas y sumativas para tres resultados de aprendizaje.",
+          "Elaborar instrucciones con propósito, procedimiento, producto y criterios.",
+          "Construir una rúbrica analítica con cuatro niveles de desempeño.",
+          "Solicitar revisión experta y ajustar la propuesta."
+        ]
+      },
+      {
+        title: "Profundización en Canvas y accesibilidad",
+        duration: "Meses 5 y 6",
+        status: "Pendiente",
+        description: "Fortalecer el uso pedagógico de Canvas y eliminar barreras de acceso en recursos y actividades.",
+        actions: [
+          "Configurar módulos, requisitos, tareas, cuestionarios, grupos y rúbricas.",
+          "Revisar el recorrido desde la vista de estudiante.",
+          "Aplicar una lista de verificación de accesibilidad.",
+          "Realizar una prueba de navegación con tres usuarios."
+        ]
+      },
+      {
+        title: "Diseño y coordinación de recursos multimedia",
+        duration: "Mes 7",
+        status: "Pendiente",
+        description: "Coordinar recursos de distintos formatos y justificar cada decisión desde su función pedagógica.",
+        actions: [
+          "Seleccionar dos contenidos que requieran tratamientos diferentes.",
+          "Elaborar dos storyboards completos.",
+          "Solicitar una revisión de viabilidad al área de Multimedia.",
+          "Verificar que la adaptación conserve la intención educativa y la exactitud del contenido."
+        ]
+      },
+      {
+        title: "Gestión del proyecto y consultoría con expertos",
+        duration: "Mes 8",
+        status: "Pendiente",
+        description: "Fortalecer la coordinación, documentación y argumentación pedagógica dentro de un equipo interdisciplinario.",
+        actions: [
+          "Elaborar un cronograma, una matriz de riesgos y un control de versiones.",
+          "Participar en una reunión real o simulada con un experto en contenido.",
+          "Presentar recomendaciones sustentadas en resultados de aprendizaje.",
+          "Registrar acuerdos, responsables, pendientes e impacto de los cambios."
+        ]
+      },
+      {
+        title: "Integración de IA y proyecto final",
+        duration: "Mes 9",
+        status: "Pendiente",
+        description: "Integrar los productos en una unidad final y documentar un uso ético, pedagógico y supervisado de IA.",
+        actions: [
+          "Definir tres usos acotados de IA dentro del proyecto.",
+          "Registrar instrucciones, resultados, errores e intervención humana.",
+          "Realizar una revisión experta o prueba piloto.",
+          "Preparar la versión mejorada y el estudio de caso para el portafolio."
+        ]
+      }
+    ];
+
+    const portfolioItems = [
+      ["Análisis documentado de necesidades y estudiantes", "Diagnóstico contextual y caracterización de la audiencia.", true],
+      ["Justificación del modelo de diseño", "Argumentación del proceso elegido para el proyecto.", false],
+      ["Matriz de alineación instruccional", "Relación entre resultados, contenidos, actividades y evidencias.", true],
+      ["Unidad de aprendizaje diseñada o rediseñada", "Propuesta completa de complejidad básica o media.", false],
+      ["Tres actividades con instrucciones completas", "Propósito, procedimiento, producto, criterios y retroalimentación.", false],
+      ["Evaluación auténtica y rúbrica", "Instrumento orientado a evidencias de desempeño.", false],
+      ["Dos storyboards para recursos diferentes", "Especificaciones pedagógicas y técnicas para Multimedia.", false],
+      ["Unidad funcional configurada en Canvas", "Módulos, requisitos, tareas, rúbricas y recorrido de estudiante.", false],
+      ["Informe de accesibilidad y calidad", "Verificación de barreras, navegación y consistencia.", false],
+      ["Plan de proyecto y matriz de riesgos", "Entregables, responsables, dependencias y control de cambios.", false],
+      ["Protocolo de uso responsable de IA", "Propósito, límites, privacidad y validación humana.", true],
+      ["Informe de prueba piloto y versión mejorada", "Evidencias de validación y ajustes implementados.", false]
+    ];
+
+    const storageKey = "rutaDIProfesional";
+
+    let appState = JSON.parse(localStorage.getItem(storageKey)) || {
+      ratings: {},
+      reflection: "",
+      profile: {},
+      portfolio: portfolioItems.map(item => item[2]),
+      phases: phases.map((phase, index) => index === 0 ? "En curso" : "Pendiente")
+    };
+
+    function flattenSkills() {
+      return competencies.flatMap((group, groupIndex) =>
+        group.items.map((item, itemIndex) => {
+          const id = `${groupIndex}-${itemIndex}`;
+          return {
+            id,
+            category: group.category,
+            name: item.name,
+            description: item.description,
+            value: appState.ratings[id] || item.value
+          };
+        })
+      );
+    }
+
+    function getLevel(value) {
+      const levels = {
+        1: "Conocimiento",
+        2: "Aplicación guiada",
+        3: "Aplicación autónoma",
+        4: "Transferencia"
+      };
+
+      return levels[value];
+    }
+
+    function saveState(message = true) {
+      localStorage.setItem(storageKey, JSON.stringify(appState));
+
+      if (message) {
+        showToast("Cambios guardados correctamente.");
+      }
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2400);
+    }
+
+    function showView(viewId) {
+      document.querySelectorAll(".view").forEach(view => {
+        view.classList.remove("active");
+      });
+
+      document.querySelectorAll(".nav-button").forEach(button => {
+        button.classList.remove("active");
+      });
+
+      document.getElementById(viewId).classList.add("active");
+
+      const selectedButton = document.querySelector(`[data-view="${viewId}"]`);
+      if (selectedButton) {
+        selectedButton.classList.add("active");
+      }
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+      if (viewId === "resultados") {
+        renderResults();
+      }
+    }
+
+    function renderAssessment() {
+      const container = document.getElementById("assessmentCategories");
+
+      container.innerHTML = competencies.map((group, groupIndex) => {
+        const itemsHtml = group.items.map((item, itemIndex) => {
+          const id = `${groupIndex}-${itemIndex}`;
+          const currentValue = appState.ratings[id] || item.value;
+
+          return `
+            <div class="skill-row">
+              <div class="skill-name">
+                <strong>${item.name}</strong>
+                <span>${item.description}</span>
+              </div>
+
+              <div class="rating-options" role="group" aria-label="${item.name}">
+                ${[1, 2, 3, 4].map(value => `
+                  <button
+                    class="rating-option ${currentValue === value ? "selected" : ""}"
+                    type="button"
+                    data-rating-id="${id}"
+                    data-rating-value="${value}"
+                    aria-label="${getLevel(value)}"
+                  >${value}</button>
+                `).join("")}
+              </div>
+
+              <span class="level-result level-${currentValue}" id="level-${id}">
+                ${getLevel(currentValue)}
+              </span>
+            </div>
+          `;
+        }).join("");
+
+        return `
+          <article class="category-card">
+            <header class="category-header">
+              <div class="category-symbol">${group.symbol}</div>
+              <div>
+                <h3>${group.category}</h3>
+                <p>${group.description}</p>
+              </div>
+            </header>
+            ${itemsHtml}
+          </article>
+        `;
+      }).join("");
+
+      document.querySelectorAll("[data-rating-id]").forEach(button => {
+        button.addEventListener("click", () => {
+          const id = button.dataset.ratingId;
+          const value = Number(button.dataset.ratingValue);
+
+          appState.ratings[id] = value;
+
+          document.querySelectorAll(`[data-rating-id="${id}"]`).forEach(option => {
+            option.classList.toggle("selected", Number(option.dataset.ratingValue) === value);
+          });
+
+          const level = document.getElementById(`level-${id}`);
+          level.textContent = getLevel(value);
+          level.className = `level-result level-${value}`;
+
+          updateAssessmentProgress();
+          updateDashboard();
+        });
+      });
+
+      document.getElementById("assessmentReflection").value = appState.reflection || "";
+      updateAssessmentProgress();
+    }
+
+    function updateAssessmentProgress() {
+      const skills = flattenSkills();
+      const customRatings = Object.keys(appState.ratings).length;
+      const percentage = Math.round((customRatings / skills.length) * 100);
+
+      document.getElementById("assessmentProgressText").textContent = `${customRatings} de ${skills.length}`;
+      document.getElementById("assessmentProgressBar").style.width = `${percentage}%`;
+    }
+
+    function getGlobalScore() {
+      const skills = flattenSkills();
+      const total = skills.reduce((sum, skill) => sum + skill.value, 0);
+      const average = total / skills.length;
+
+      return Math.round((average / 4) * 100);
+    }
+
+    function getCategoryAverages() {
+      return competencies.map((group, groupIndex) => {
+        const values = group.items.map((item, itemIndex) => {
+          const id = `${groupIndex}-${itemIndex}`;
+          return appState.ratings[id] || item.value;
+        });
+
+        const average = values.reduce((sum, value) => sum + value, 0) / values.length;
+
+        return {
+          name: group.category,
+          average,
+          score: Math.round((average / 4) * 100)
+        };
+      });
+    }
+
+    function updateDashboard() {
+      const skills = flattenSkills();
+      const score = getGlobalScore();
+      const strengths = skills.filter(skill => skill.value >= 3).length;
+      const development = skills.filter(skill => skill.value < 3).length;
+      const completedPortfolio = appState.portfolio.filter(Boolean).length;
+
+      document.getElementById("mainScore").textContent = score;
+      document.getElementById("mainScoreCircle").style.setProperty("--score", score);
+      document.getElementById("strengthCounter").textContent = strengths;
+      document.getElementById("developmentCounter").textContent = development;
+      document.getElementById("portfolioCounter").textContent = completedPortfolio;
+
+      let scoreText = "";
+
+      if (score >= 80) {
+        scoreText = "El perfil muestra un nivel sólido de preparación para asumir proyectos de diseño instruccional de complejidad básica o media, con supervisión institucional.";
+      } else if (score >= 65) {
+        scoreText = "Tu perfil cuenta con una base sólida en comunicación, edición, recursos digitales, LMS e inteligencia artificial. La prioridad consiste en integrar estas capacidades en proyectos instruccionales completos.";
+      } else {
+        scoreText = "El diagnóstico muestra áreas prioritarias de fortalecimiento. La práctica guiada, la retroalimentación profesional y la producción de evidencias permitirán avanzar hacia mayor autonomía.";
+      }
+
+      document.getElementById("mainScoreText").textContent = scoreText;
+
+      const priorities = skills
+        .filter(skill => skill.value < 3)
+        .sort((a, b) => a.value - b.value)
+        .slice(0, 5);
+
+      const priorityList = document.getElementById("priorityList");
+
+      if (priorities.length === 0) {
+        priorityList.innerHTML = `
+          <div class="priority-row">
+            <div class="priority-number">✓</div>
+            <div>
+              <strong>Competencias consolidadas</strong>
+              <span>Has alcanzado aplicación autónoma o transferencia en todas las áreas valoradas.</span>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      priorityList.innerHTML = priorities.map((skill, index) => `
+        <div class="priority-row">
+          <div class="priority-number">0${index + 1}</div>
+          <div>
+            <strong>${skill.name}</strong>
+            <span>${skill.category} · Nivel actual: ${getLevel(skill.value)}</span>
+          </div>
+          <span class="priority-label">${skill.value === 1 ? "Prioridad alta" : "Por consolidar"}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderResults() {
+      const score = getGlobalScore();
+      const averages = getCategoryAverages();
+
+      document.getElementById("resultScore").textContent = score;
+      document.getElementById("resultScoreCircle").style.setProperty("--score", score);
+
+      let title = "";
+      let description = "";
+
+      if (score >= 80) {
+        title = "Perfil preparado para la práctica supervisada";
+        description = "La autoevaluación indica que cuentas con una base robusta para desarrollar proyectos de diseño instruccional de complejidad básica o media. La prioridad consiste en ampliar la autonomía, sistematizar las evidencias y transferir lo aprendido a nuevos contextos.";
+      } else if (score >= 65) {
+        title = "Profesional en transición avanzada";
+        description = "El perfil refleja preparación académica y tecnológica intermedia, con fortalezas claras en comunicación, edición, investigación, inteligencia artificial y recursos digitales. La principal brecha consiste en demostrar la integración de estas capacidades en un proyecto instruccional completo.";
+      } else {
+        title = "Perfil en consolidación";
+        description = "La autoevaluación muestra oportunidades de desarrollo que pueden atenderse mediante actividades guiadas, acompañamiento profesional y producción gradual de evidencias. Conviene priorizar la alineación, la evaluación, la accesibilidad y la gestión del proyecto.";
+      }
+
+      document.getElementById("resultTitle").textContent = title;
+      document.getElementById("resultDescription").textContent = description;
+
+      document.getElementById("resultBars").innerHTML = averages.map(item => `
+        <div class="bar-row">
+          <span>${item.name}</span>
+          <div class="bar-track">
+            <div class="bar-fill" style="width: ${item.score}%;"></div>
+          </div>
+          <div class="bar-score">${item.score}%</div>
+        </div>
+      `).join("");
+
+      const lowSkills = flattenSkills()
+        .filter(skill => skill.value < 3)
+        .sort((a, b) => a.value - b.value)
+        .slice(0, 3);
+
+      const defaultRecommendations = [
+        {
+          title: "Construir una matriz de alineación",
+          description: "Relaciona resultados de aprendizaje, nivel cognitivo, contenidos, actividades, evidencias, criterios, recursos y retroalimentación en una unidad real."
+        },
+        {
+          title: "Diseñar y validar una evaluación auténtica",
+          description: "Elabora una actividad basada en un caso, problema o proyecto; acompáñala con una rúbrica analítica y solicita revisión experta."
+        },
+        {
+          title: "Implementar una unidad accesible en Canvas",
+          description: "Configura módulos, requisitos, rúbricas y actividades; revisa la navegación desde la vista de estudiante y documenta barreras de acceso."
+        }
+      ];
+
+      const recommendations = lowSkills.length
+        ? lowSkills.map(skill => ({
+            title: skill.name,
+            description: `Nivel actual: ${getLevel(skill.value)}. Desarrolla una evidencia específica que permita avanzar hacia la aplicación autónoma y registra la retroalimentación obtenida.`
+          }))
+        : defaultRecommendations;
+
+      document.getElementById("recommendationList").innerHTML = recommendations.map(item => `
+        <article class="card recommendation">
+          <h4>${item.title}</h4>
+          <p>${item.description}</p>
+        </article>
+      `).join("");
+    }
+
+    function renderPlan() {
+      const list = document.getElementById("phaseList");
+
+      list.innerHTML = phases.map((phase, index) => {
+        const status = appState.phases[index] || phase.status;
+        const statusClass = status === "En curso" ? "current" : "";
+
+        return `
+          <article class="card phase-card">
+            <div class="phase-number">${index + 1}</div>
+
+            <div>
+              <h3>${phase.title}</h3>
+              <div class="phase-duration">${phase.duration}</div>
+              <p>${phase.description}</p>
+              <ul>
+                ${phase.actions.map(action => `<li>${action}</li>`).join("")}
+              </ul>
+            </div>
+
+            <button
+              type="button"
+              class="phase-status ${statusClass}"
+              data-phase-index="${index}"
+              title="Haz clic para actualizar el estado"
+            >
+              ${status}
+            </button>
+          </article>
+        `;
+      }).join("");
+
+      document.querySelectorAll("[data-phase-index]").forEach(button => {
+        button.addEventListener("click", () => {
+          const index = Number(button.dataset.phaseIndex);
+          const currentStatus = appState.phases[index];
+
+          if (currentStatus === "Pendiente") {
+            appState.phases[index] = "En curso";
+          } else if (currentStatus === "En curso") {
+            appState.phases[index] = "Completada";
+          } else {
+            appState.phases[index] = "Pendiente";
+          }
+
+          saveState(false);
+          renderPlan();
+          showToast("Estado de la fase actualizado.");
+        });
+      });
+    }
+
+    function renderPortfolio() {
+      const list = document.getElementById("portfolioList");
+
+      list.innerHTML = portfolioItems.map((item, index) => {
+        const done = appState.portfolio[index];
+
+        return `
+          <article class="card portfolio-item ${done ? "done" : ""}" data-portfolio-index="${index}">
+            <div class="portfolio-check">${done ? "✓" : ""}</div>
+            <div>
+              <strong>${item[0]}</strong>
+              <span>${item[1]}</span>
+            </div>
+          </article>
+        `;
+      }).join("");
+
+      document.querySelectorAll("[data-portfolio-index]").forEach(item => {
+        item.addEventListener("click", () => {
+          const index = Number(item.dataset.portfolioIndex);
+          appState.portfolio[index] = !appState.portfolio[index];
+
+          saveState(false);
+          renderPortfolio();
+          updateDashboard();
+
+          const completed = appState.portfolio.filter(Boolean).length;
+          document.getElementById("portfolioStatus").textContent = `${completed} evidencias registradas`;
+          showToast("Evidencia del portafolio actualizada.");
+        });
+      });
+
+      document.getElementById("portfolioStatus").textContent =
+        `${appState.portfolio.filter(Boolean).length} evidencias registradas`;
+    }
+
+    function updateProfile() {
+      const profile = appState.profile;
+      const name = profile.fullName || "Dalia del Rosario Zúñiga Berumen";
+      const visibleName = name.split(" ").slice(0, 3).join(" ");
+
+      const ignoredWords = ["de", "del", "la", "las", "los"];
+      const initials = name
+        .split(" ")
+        .filter(word => !ignoredWords.includes(word.toLowerCase()))
+        .slice(0, 2)
+        .map(word => word.charAt(0))
+        .join("")
+        .toUpperCase();
+
+      document.getElementById("dashboardName").textContent = name;
+      document.getElementById("sidebarName").textContent = visibleName;
+      document.getElementById("profileInitials").textContent = initials;
+
+      if (profile.fullName) document.getElementById("fullName").value = profile.fullName;
+      if (profile.currentRole) document.getElementById("currentRole").value = profile.currentRole;
+      if (profile.organization) document.getElementById("organization").value = profile.organization;
+      if (profile.professionalGoal) document.getElementById("professionalGoal").value = profile.professionalGoal;
+      if (profile.profileSummary) document.getElementById("profileSummary").value = profile.profileSummary;
+    }
+
+    document.querySelectorAll(".nav-button").forEach(button => {
+      button.addEventListener("click", () => {
+        showView(button.dataset.view);
+      });
+    });
+
+    document.getElementById("saveAssessmentButton").addEventListener("click", () => {
+      appState.reflection = document.getElementById("assessmentReflection").value;
+      saveState();
+      updateDashboard();
+      renderResults();
+    });
+
+    document.getElementById("saveAssessmentButtonBottom").addEventListener("click", () => {
+      appState.reflection = document.getElementById("assessmentReflection").value;
+      saveState();
+      updateDashboard();
+      renderResults();
+      showView("resultados");
+    });
+
+    document.getElementById("resetAssessmentButton").addEventListener("click", () => {
+      const confirmation = confirm("¿Deseas restablecer la autoevaluación a los valores iniciales?");
+
+      if (!confirmation) return;
+
+      appState.ratings = {};
+      appState.reflection = "";
+      saveState(false);
+      renderAssessment();
+      updateDashboard();
+      renderResults();
+      showToast("La autoevaluación se restableció.");
+    });
+
+    document.getElementById("profileForm").addEventListener("submit", event => {
+      event.preventDefault();
+
+      appState.profile = {
+        fullName: document.getElementById("fullName").value.trim(),
+        currentRole: document.getElementById("currentRole").value.trim(),
+        organization: document.getElementById("organization").value.trim(),
+        professionalGoal: document.getElementById("professionalGoal").value.trim(),
+        profileSummary: document.getElementById("profileSummary").value.trim()
+      };
+
+      saveState();
+      updateProfile();
+    });
+
+    renderAssessment();
+    renderPlan();
+    renderPortfolio();
+    updateDashboard();
+    renderResults();
+    updateProfile();
+  </script>
+<script>(function(){
+  document.addEventListener('click', function(e){
+    var a = e.target && e.target.closest ? e.target.closest('a') : null;
+    if (!a) return;
+    var href = a.getAttribute('href') || '';
+    if (href.charAt(0) === '#') {
+      e.preventDefault();
+      var el = document.querySelector(href.length > 1 ? href : 'body');
+      if (el && el.scrollIntoView) el.scrollIntoView({behavior:'smooth'});
+      return;
+    }
+    if (/^(https?:)?\/\//i.test(href)) { a.target = '_blank'; return; }
+    e.preventDefault();
+  }, true);
+  window.addEventListener('submit', function(e){ e.preventDefault(); }, true);
+})();</script></body>
+</html>
