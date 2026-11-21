@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teorías Educativas y su Influencia en el Diseño Instruccional</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f4ff',
+                            100: '#e0e7ff',
+                            500: '#4338ca',
+                            600: '#3730a3',
+                            900: '#1e1b4b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+
+        .connector-line {
+            stroke-dasharray: 6;
+            animation: dash 30s linear infinite;
+        }
+
+        @keyframes dash {
+            to {
+                stroke-dashoffset: -1000;
+            }
+        }
+
+        .hover-lift {
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-slate-50 text-slate-800 font-sans antialiased min-h-screen flex flex-col selection:bg-indigo-500 selection:text-white">
+
+    <!-- Header / Nav -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div
+                    class="w-10 h-10 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-xl shadow-md shadow-indigo-200">
+                    <i class="fa-solid fa-sitemap"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 leading-tight">Mapa Conceptual Interactivo</h1>
+                    <p class="text-xs text-slate-500 font-medium">Teorías Educativas y su Influencia en el Diseño
+                        Instruccional</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+                <button onclick="switchTab('mapa')" id="btn-mapa"
+                    class="tab-btn px-4 py-2 rounded-lg bg-white text-indigo-700 shadow-sm transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-diagram-project"></i> Mapa Conceptual
+                </button>
+                <button onclick="switchTab('secuencia')" id="btn-secuencia"
+                    class="tab-btn px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-route"></i> Secuencia Teórica
+                </button>
+                <button onclick="switchTab('reflexion')" id="btn-reflexion"
+                    class="tab-btn px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> Reflexión
+                </button>
+                <button onclick="switchTab('referencias')" id="btn-referencias"
+                    class="tab-btn px-4 py-2 rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-bookmark"></i> Referencias y Créditos
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- BANNER: RELACIÓN GENERAL -->
+        <section
+            class="mb-10 bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-10 text-white text-9xl">
+                <i class="fa-solid fa-graduation-cap"></i>
+            </div>
+            <div class="relative z-10 max-w-4xl">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/30 border border-indigo-400/30 text-indigo-200 text-xs font-semibold mb-3">
+                    <i class="fa-solid fa-circle-info"></i> Relación General
+                </div>
+                <h2 class="text-xl md:text-2xl font-bold mb-3 tracking-tight">Evolución de las Teorías Educativas</h2>
+                <p class="text-indigo-100 text-sm md:text-base leading-relaxed font-normal">
+                    Las teorías educativas han evolucionado desde enfoques centrados en la conducta observable hacia
+                    perspectivas que consideran los procesos mentales, la construcción social del conocimiento y el
+                    aprendizaje en entornos digitales.
+                </p>
+            </div>
+        </section>
+
+        <!-- TAB 1: MAPA CONCEPTUAL INTERACTIVO -->
+        <div id="view-mapa" class="tab-content space-y-8">
+
+            <!-- Flow Grid representation -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
+
+                <!-- CARD 1: CONDUCTISMO -->
+                <article
+                    class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-amber-500 relative flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-start justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-800">1.
+                                Enfoque Conductual</span>
+                            <div
+                                class="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid fa-bullseye"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-900">Conductismo</h3>
+
+                        <!-- SVG Illustration: Bell / Stimulus-Response -->
+                        <div
+                            class="w-full bg-amber-50/50 rounded-xl p-3 flex items-center justify-center my-2 border border-amber-100">
+                            <svg class="w-28 h-20 text-amber-600" viewBox="0 0 200 120" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <!-- Estímulo -->
+                                <circle cx="40" cy="60" r="24" fill="#FEF3C7" stroke="#F59E0B" stroke-width="3" />
+                                <path d="M40 48V60L48 68" stroke="#D97706" stroke-width="3" stroke-linecap="round" />
+                                <!-- Flecha -->
+                                <path d="M75 60H125M125 60L115 52M125 60L115 68" stroke="#F59E0B" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <!-- Respuesta -->
+                                <rect x="135" y="36" width="48" height="48" rx="8" fill="#FEF3C7" stroke="#F59E0B"
+                                    stroke-width="3" />
+                                <path d="M150 60L156 66L170 52" stroke="#D97706" stroke-width="3" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-users text-amber-500 mr-1"></i> Representantes</h4>
+                            <p
+                                class="text-xs font-medium text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                John B. Watson, Iván Pávlov, Edward Thorndike y B. F. Skinner.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Ideas principales</h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Aprendizaje basado en estímulo-respuesta.</li>
+                                <li>Refuerzo y repetición.</li>
+                                <li>Objetivos observables y medibles.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-gears text-amber-500 mr-1"></i> Aplicación en diseño
+                                instruccional</h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Definición de objetivos específicos.</li>
+                                <li>Evaluaciones de desempeño.</li>
+                                <li>Retroalimentación inmediata.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <span class="text-[11px] font-bold text-amber-700 block mb-1">Ejemplo práctico:</span>
+                        <p class="text-xs text-slate-600 italic bg-amber-50/60 p-2 rounded-lg border border-amber-100">
+                            Uso de cuestionarios automatizados con refuerzo inmediato después de cada respuesta.
+                        </p>
+                    </div>
+
+                    <!-- Transition connector badge -->
+                    <div class="mt-4 text-center">
+                        <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-[11px] font-semibold border border-amber-200">
+                            ⬇ Influye en el desarrollo del
+                        </span>
+                    </div>
+                </article>
+
+                <!-- CARD 2: COGNITIVISMO -->
+                <article
+                    class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-blue-500 relative flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-start justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-blue-100 text-blue-800">2.
+                                Procesamiento Mental</span>
+                            <div
+                                class="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid fa-brain"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-900">Cognitivismo</h3>
+
+                        <!-- SVG Illustration: Brain / Processing -->
+                        <div
+                            class="w-full bg-blue-50/50 rounded-xl p-3 flex items-center justify-center my-2 border border-blue-100">
+                            <svg class="w-28 h-20 text-blue-600" viewBox="0 0 200 120" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="40" y="30" width="120" height="60" rx="12" fill="#DBEAFE" stroke="#3B82F6"
+                                    stroke-width="3" />
+                                <path d="M70 50H130M70 60H110M70 70H120" stroke="#2563EB" stroke-width="3"
+                                    stroke-linecap="round" />
+                                <circle cx="145" cy="45" r="5" fill="#3B82F6" />
+                                <circle cx="145" cy="60" r="5" fill="#3B82F6" />
+                                <circle cx="145" cy="75" r="5" fill="#3B82F6" />
+                            </svg>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-users text-blue-500 mr-1"></i> Representantes</h4>
+                            <p
+                                class="text-xs font-medium text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                Ulric Neisser, David Ausubel, Jerome Bruner y Robert Gagné.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-lightbulb text-blue-500 mr-1"></i> Ideas principales</h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Procesamiento de la información.</li>
+                                <li>Atención, memoria y comprensión.</li>
+                                <li>Organización del conocimiento.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-gears text-blue-500 mr-1"></i> Aplicación en diseño instruccional
+                            </h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Organización secuencial de contenidos.</li>
+                                <li>Uso de mapas conceptuales.</li>
+                                <li>Activación de conocimientos previos.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <span class="text-[11px] font-bold text-blue-700 block mb-1">Ejemplo práctico:</span>
+                        <p class="text-xs text-slate-600 italic bg-blue-50/60 p-2 rounded-lg border border-blue-100">
+                            Elaboración de mapas conceptuales para relacionar nuevos conceptos con conocimientos
+                            existentes.
+                        </p>
+                    </div>
+
+                    <!-- Transition connector badge -->
+                    <div class="mt-4 text-center">
+                        <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-800 text-[11px] font-semibold border border-blue-200">
+                            ⬇ Evoluciona hacia
+                        </span>
+                    </div>
+                </article>
+
+                <!-- CARD 3: CONSTRUCTIVISMO -->
+                <article
+                    class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-emerald-500 relative flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-start justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800">3.
+                                Aprendizaje Activo</span>
+                            <div
+                                class="w-10 h-10 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid fa-cubes"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-900">Constructivismo</h3>
+
+                        <!-- SVG Illustration: Building Blocks -->
+                        <div
+                            class="w-full bg-emerald-50/50 rounded-xl p-3 flex items-center justify-center my-2 border border-emerald-100">
+                            <svg class="w-28 h-20 text-emerald-600" viewBox="0 0 200 120" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <rect x="50" y="65" width="45" height="30" rx="4" fill="#D1FAE5" stroke="#10B981"
+                                    stroke-width="3" />
+                                <rect x="105" y="65" width="45" height="30" rx="4" fill="#D1FAE5" stroke="#10B981"
+                                    stroke-width="3" />
+                                <rect x="77" y="25" width="45" height="30" rx="4" fill="#A7F3D0" stroke="#059669"
+                                    stroke-width="3" />
+                            </svg>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-user text-emerald-500 mr-1"></i> Representante</h4>
+                            <p
+                                class="text-xs font-medium text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                Jean Piaget.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-lightbulb text-emerald-500 mr-1"></i> Ideas principales</h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Aprendizaje activo.</li>
+                                <li>Construcción del conocimiento.</li>
+                                <li>Resolución de problemas.</li>
+                                <li>Integración de saberes previos.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-gears text-emerald-500 mr-1"></i> Aplicación en diseño
+                                instruccional</h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Aprendizaje basado en proyectos.</li>
+                                <li>Estudios de caso.</li>
+                                <li>Actividades de exploración y descubrimiento.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <span class="text-[11px] font-bold text-emerald-700 block mb-1">Ejemplo práctico:</span>
+                        <p
+                            class="text-xs text-slate-600 italic bg-emerald-50/60 p-2 rounded-lg border border-emerald-100">
+                            Proyecto en el que los estudiantes experimentan, registran resultados y formulan
+                            conclusiones propias.
+                        </p>
+                    </div>
+
+                    <!-- Transition connector badge -->
+                    <div class="mt-4 flex flex-col gap-1.5 text-center">
+                        <span
+                            class="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-semibold border border-emerald-200">
+                            ↔ Se complementa con T. Sociocultural
+                        </span>
+                        <span
+                            class="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-semibold border border-emerald-200">
+                            ↔ Comparte interés por el estudiante con Humanismo
+                        </span>
+                    </div>
+                </article>
+
+                <!-- CARD 4: TEORÍA SOCIOCULTURAL -->
+                <article
+                    class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-purple-500 relative flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-start justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-purple-100 text-purple-800">4.
+                                Entorno Social</span>
+                            <div
+                                class="w-10 h-10 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid fa-people-hold"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-900">Teoría Sociocultural</h3>
+
+                        <!-- SVG Illustration: Scaffolding / Social Interaction -->
+                        <div
+                            class="w-full bg-purple-50/50 rounded-xl p-3 flex items-center justify-center my-2 border border-purple-100">
+                            <svg class="w-28 h-20 text-purple-600" viewBox="0 0 200 120" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="65" cy="50" r="16" fill="#F3E8FF" stroke="#9333EA" stroke-width="3" />
+                                <circle cx="135" cy="50" r="16" fill="#F3E8FF" stroke="#9333EA" stroke-width="3" />
+                                <path d="M65 66V90M135 66V90" stroke="#9333EA" stroke-width="3" />
+                                <path d="M65 78H135" stroke="#A855F7" stroke-width="3" stroke-dasharray="4 4" />
+                            </svg>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-user text-purple-500 mr-1"></i> Representante</h4>
+                            <p
+                                class="text-xs font-medium text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                Lev Vygotsky.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-lightbulb text-purple-500 mr-1"></i> Ideas principales</h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Interacción social.</li>
+                                <li>Andamiaje.</li>
+                                <li>Zona de Desarrollo Próximo (ZDP).</li>
+                                <li>Influencia del contexto cultural.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-gears text-purple-500 mr-1"></i> Aplicación en diseño
+                                instruccional</h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Aprendizaje colaborativo.</li>
+                                <li>Tutorías entre pares.</li>
+                                <li>Trabajo en equipos.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <span class="text-[11px] font-bold text-purple-700 block mb-1">Ejemplo práctico:</span>
+                        <p
+                            class="text-xs text-slate-600 italic bg-purple-50/60 p-2 rounded-lg border border-purple-100">
+                            Actividades en parejas donde un estudiante guía a otro hasta lograr autonomía.
+                        </p>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 text-purple-800 text-[11px] font-semibold border border-purple-200">
+                            ↔ Se complementa con Constructivismo
+                        </span>
+                    </div>
+                </article>
+
+                <!-- CARD 5: HUMANISMO -->
+                <article
+                    class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-rose-500 relative flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-start justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-rose-100 text-rose-800">5.
+                                Desarrollo Integral</span>
+                            <div
+                                class="w-10 h-10 rounded-full bg-rose-50 text-rose-600 flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-900">Humanismo</h3>
+
+                        <!-- SVG Illustration: Self-Actualization / Maslow -->
+                        <div
+                            class="w-full bg-rose-50/50 rounded-xl p-3 flex items-center justify-center my-2 border border-rose-100">
+                            <svg class="w-28 h-20 text-rose-600" viewBox="0 0 200 120" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="100,20 150,95 50,95" fill="#FFE4E6" stroke="#F43F5E"
+                                    stroke-width="3" />
+                                <line x1="68" y1="70" x2="132" y2="70" stroke="#F43F5E" stroke-width="2" />
+                                <line x1="84" y1="45" x2="116" y2="45" stroke="#F43F5E" stroke-width="2" />
+                                <circle cx="100" cy="32" r="4" fill="#E11D48" />
+                            </svg>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-user text-rose-500 mr-1"></i> Representante</h4>
+                            <p
+                                class="text-xs font-medium text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                Abraham Maslow.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-lightbulb text-rose-500 mr-1"></i> Ideas principales</h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Desarrollo integral de la persona.</li>
+                                <li>Motivación.</li>
+                                <li>Autonomía.</li>
+                                <li>Autorrealización.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-gears text-rose-500 mr-1"></i> Aplicación en diseño instruccional
+                            </h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Aprendizaje personalizado.</li>
+                                <li>Elección de actividades.</li>
+                                <li>Retroalimentación centrada en el crecimiento.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <span class="text-[11px] font-bold text-rose-700 block mb-1">Ejemplo práctico:</span>
+                        <p class="text-xs text-slate-600 italic bg-rose-50/60 p-2 rounded-lg border border-rose-100">
+                            Permitir que los estudiantes seleccionen el formato de su proyecto final según sus
+                            intereses.
+                        </p>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 text-rose-800 text-[11px] font-semibold border border-rose-200">
+                            ⬇ Se adapta a entornos digitales
+                        </span>
+                    </div>
+                </article>
+
+                <!-- CARD 6: CONECTIVISMO -->
+                <article
+                    class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-cyan-500 relative flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="flex items-start justify-between">
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-md bg-cyan-100 text-cyan-800">6. Era
+                                Digital</span>
+                            <div
+                                class="w-10 h-10 rounded-full bg-cyan-50 text-cyan-600 flex items-center justify-center text-lg shadow-inner">
+                                <i class="fa-solid fa-network-wired"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-slate-900">Conectivismo</h3>
+
+                        <!-- SVG Illustration: Digital Network Nodes -->
+                        <div
+                            class="w-full bg-cyan-50/50 rounded-xl p-3 flex items-center justify-center my-2 border border-cyan-100">
+                            <svg class="w-28 h-20 text-cyan-600" viewBox="0 0 200 120" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="50" cy="40" r="10" fill="#CFFAFE" stroke="#06B6D4" stroke-width="3" />
+                                <circle cx="150" cy="40" r="10" fill="#CFFAFE" stroke="#06B6D4" stroke-width="3" />
+                                <circle cx="100" cy="85" r="12" fill="#A5F3FC" stroke="#0891B2" stroke-width="3" />
+                                <circle cx="100" cy="35" r="8" fill="#CFFAFE" stroke="#06B6D4" stroke-width="2" />
+                                <line x1="58" y1="45" x2="90" y2="78" stroke="#06B6D4" stroke-width="2" />
+                                <line x1="142" y1="45" x2="110" y2="78" stroke="#06B6D4" stroke-width="2" />
+                                <line x1="58" y1="40" x2="92" y2="36" stroke="#06B6D4" stroke-width="2" />
+                                <line x1="142" y1="40" x2="108" y2="36" stroke="#06B6D4" stroke-width="2" />
+                            </svg>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-user text-cyan-500 mr-1"></i> Representante</h4>
+                            <p
+                                class="text-xs font-medium text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-100">
+                                George Siemens.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-lightbulb text-cyan-500 mr-1"></i> Ideas principales</h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Redes de aprendizaje.</li>
+                                <li>Uso de recursos digitales.</li>
+                                <li>Colaboración en línea.</li>
+                                <li>Gestión de fuentes de información.</li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1"><i
+                                    class="fa-solid fa-gears text-cyan-500 mr-1"></i> Aplicación en diseño instruccional
+                            </h4>
+                            <ul class="text-xs text-slate-600 space-y-1 list-disc list-inside font-medium">
+                                <li>Cursos en línea.</li>
+                                <li>Comunidades virtuales de aprendizaje.</li>
+                                <li>Curación de contenidos digitales.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100">
+                        <span class="text-[11px] font-bold text-cyan-700 block mb-1">Ejemplo práctico:</span>
+                        <p class="text-xs text-slate-600 italic bg-cyan-50/60 p-2 rounded-lg border border-cyan-100">
+                            Creación colaborativa de una biblioteca digital compartida y participación en foros
+                            académicos.
+                        </p>
+                    </div>
+
+                    <div class="mt-4 text-center">
+                        <span
+                            class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-50 text-cyan-800 text-[11px] font-semibold border border-cyan-200">
+                            🌐 Síntesis del ecosistema digital
+                        </span>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- SÍNTESIS GLOBAL DE IMPACTO -->
+            <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mt-8">
+                <div class="flex flex-col md:flex-row items-center gap-6">
+                    <div
+                        class="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-3xl shrink-0">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Conclusión de
+                            Integración</span>
+                        <h3 class="text-lg font-bold text-slate-900 mb-1">Impacto en el Diseño Instruccional Moderno
+                        </h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            <strong>Todas las teorías</strong> influyen activamente en el Diseño Instruccional moderno
+                            (marcos <strong>ADDIE, Dick y Carey, ASSURE</strong>, entornos virtuales y aprendizaje
+                            híbrido).
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- TAB 2: SECUENCIA TEÓRICA -->
+        <div id="view-secuencia" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-route text-indigo-600"></i> Relación Secuencial y Complementariedad
+                </h2>
+
+                <div class="space-y-6">
+                    <!-- Item 1 -->
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                            1</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-base mb-1">Conductismo → Cognitivismo →
+                                Constructivismo</h4>
+                            <p class="text-sm text-slate-600">Evolución histórica y conceptual central desde la conducta
+                                externa hasta el procesamiento cognitivo y la construcción activa.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                            2</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-base mb-1">Constructivismo ↔ Teoría Sociocultural
+                            </h4>
+                            <p class="text-sm text-slate-600">Relación de complementariedad directa: el conocimiento se
+                                construye individualmente y a través de la interacción social y el andamiaje.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                            3</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-base mb-1">Constructivismo ↔ Humanismo</h4>
+                            <p class="text-sm text-slate-600">Convergencia en el interés por el estudiante como centro
+                                del proceso, promoviendo la autonomía y la significatividad.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                            4</div>
+                        <div>
+                            <h4 class="font-bold text-slate-900 text-base mb-1">Teoría Sociocultural + Humanismo +
+                                Cognitivismo → Conectivismo</h4>
+                            <p class="text-sm text-slate-600">Integración de la dimensión social, motivacional y
+                                procesual adaptada a las redes complejas de la era digital.</p>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="flex items-start gap-4 p-4 rounded-xl bg-indigo-50/70 border border-indigo-100">
+                        <div
+                            class="w-8 h-8 rounded-lg bg-indigo-700 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                            5</div>
+                        <div>
+                            <h4 class="font-bold text-indigo-950 text-base mb-1">Todas las teorías → Influyen en el
+                                Diseño Instruccional moderno</h4>
+                            <p class="text-sm text-indigo-900">Aplicación práctica en modelos estructurados como
+                                <strong>ADDIE, Dick y Carey, ASSURE</strong>, así como en entornos virtuales y
+                                aprendizaje híbrido.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: REFLEXIÓN -->
+        <div id="view-reflexion" class="tab-content hidden space-y-6">
+            <article
+                class="bg-white rounded-2xl p-6 md:p-10 border border-slate-200 shadow-sm max-w-4xl mx-auto font-serif text-slate-700 leading-relaxed text-base md:text-lg space-y-6">
+                <div class="font-sans border-b border-slate-100 pb-4 mb-6">
+                    <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Análisis Pedagógico</span>
+                    <h2 class="text-2xl font-bold text-slate-900 font-sans mt-1">Reflexión sobre las Teorías Educativas
+                    </h2>
+                </div>
+
+                <p>
+                    El estudio de las teorías educativas permite comprender que el aprendizaje es un fenómeno complejo
+                    que puede analizarse desde distintas perspectivas. Mientras el conductismo aporta estrategias para
+                    definir objetivos claros y evaluar resultados observables, el cognitivismo ayuda a comprender cómo
+                    las personas procesan y organizan la información. Por su parte, el constructivismo y la teoría
+                    sociocultural destacan la importancia de la participación activa, la colaboración y la construcción
+                    del conocimiento a partir de experiencias significativas. El humanismo recuerda que las necesidades,
+                    intereses y motivaciones del estudiante influyen directamente en su aprendizaje, y el conectivismo
+                    responde a los retos de la educación actual al enfatizar el aprendizaje mediante redes digitales y
+                    el acceso a múltiples fuentes de información.
+                </p>
+
+                <p>
+                    Comprender estas teorías es fundamental para el diseño instruccional porque permite seleccionar
+                    estrategias, recursos y métodos de evaluación adecuados a las características de los estudiantes y a
+                    los objetivos de aprendizaje. Ninguna teoría, por sí sola, responde a todas las necesidades
+                    educativas; por ello, los diseñadores instruccionales suelen integrar elementos de diferentes
+                    enfoques para crear experiencias de aprendizaje más efectivas, inclusivas y significativas. En un
+                    contexto donde la tecnología transforma constantemente la educación, conocer estas bases teóricas
+                    facilita la toma de decisiones pedagógicas fundamentadas y contribuye al desarrollo de ambientes de
+                    aprendizaje que favorezcan tanto el logro académico como el desarrollo integral de los estudiantes.
+                </p>
+            </article>
+        </div>
+
+        <!-- TAB 4: REFERENCIAS Y CRÉDITOS -->
+        <div id="view-referencias" class="tab-content hidden space-y-8">
+            <!-- Referencias -->
+            <section class="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm">
+                <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-bookmark text-indigo-600"></i> Referencias Consultadas
+                </h2>
+
+                <ul class="space-y-4 text-sm text-slate-700">
+                    <li class="pl-8 -indent-8 leading-relaxed border-b border-slate-100 pb-3">
+                        Barcia Salas, T. J., Meza Salvatierra, J. K., Ochoa Loor, J. R., y Macas Padilla, B. A. (2025).
+                        Efectos del diseño instruccional en entornos virtuales sobre el rendimiento académico en
+                        estudiantes de educación superior. <em>Multidisciplinary Latin American Journal</em>, 3(1),
+                        663-685.
+                    </li>
+                    <li class="pl-8 -indent-8 leading-relaxed border-b border-slate-100 pb-3">
+                        Editorial eLearning. (2025, 22 de octubre). <em>Diseño instruccional: claves para un aprendizaje
+                            efectivo</em>.
+                    </li>
+                    <li class="pl-8 -indent-8 leading-relaxed border-b border-slate-100 pb-3">
+                        Góngora Parra, Y., y Martínez Leyet, O. L. (2012). Del diseño instruccional al diseño de
+                        aprendizaje con aplicación de las tecnologías. <em>Teoría de la Educación: Educación y Cultura
+                            en la Sociedad de la Información</em>, 13(3), 342-360.
+                    </li>
+                    <li class="pl-8 -indent-8 leading-relaxed border-b border-slate-100 pb-3">
+                        Sharif, A., y Cho, S. (2015). Diseñadores instruccionales del siglo XXI: cruzando las brechas
+                        perceptuales entre la identidad, práctica, impacto y desarrollo profesional. <em>RUSC.
+                            Universities and Knowledge Society Journal</em>, 12(3), 72-86.
+                    </li>
+                    <li class="pl-8 -indent-8 leading-relaxed pb-2">
+                        Tijerina Salas, B. A. (2026, 18 de noviembre). <em>Línea del tiempo: Teorías pedagógicas</em>
+                        [Material de la clase de Diseño Instruccional]. Universidad Autónoma de Guadalajara.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Créditos del Recurso -->
+            <section class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl p-6 md:p-8 shadow-lg">
+                <div class="flex flex-col sm:flex-row items-center gap-5">
+                    <div
+                        class="w-14 h-14 rounded-full bg-indigo-500/20 border border-indigo-400/30 flex items-center justify-center text-2xl text-indigo-300 shrink-0">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-1">Créditos y Autoría</h3>
+                        <p class="text-sm text-slate-300 leading-relaxed">
+                            Recurso creado por <strong>Dalia Zúñiga Berumen</strong>, con el apoyo de la <strong>IA
+                                generativa de la UAG</strong>, y el desarrollo web de <strong>Alejandro
+                                Bañuelos</strong>.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-auto py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 font-medium">
+            Universidad Autónoma de Guadalajara — Diseño Instruccional © 2026
+        </div>
+    </footer>
+
+    <!-- Interactivity Script -->
+    <script>
+        function switchTab(tabId) {
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.tab-content').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            // Desmarcar botones
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-white', 'text-indigo-700', 'shadow-sm');
+                btn.classList.add('text-slate-600');
+            });
+
+            // Mostrar seleccionado
+            const targetView = document.getElementById('view-' + tabId);
+            if (targetView) {
+                targetView.classList.remove('hidden');
+            }
+
+            // Estilar botón activo
+            const activeBtn = document.getElementById('btn-' + tabId);
+            if (activeBtn) {
+                activeBtn.classList.add('bg-white', 'text-indigo-700', 'shadow-sm');
+                activeBtn.classList.remove('text-slate-600');
+            }
+
+            // Smooth scroll to top of section
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
