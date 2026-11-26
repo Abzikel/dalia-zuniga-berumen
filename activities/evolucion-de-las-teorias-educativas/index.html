@@ -2,9 +2,38 @@
 <html lang="es">
 
 <head>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/png" href="../../assets/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../../assets/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Dalia" />
+    <link rel="manifest" href="../../assets/favicon/site.webmanifest" />
+    <script>
+        if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+            location.replace(location.pathname + '/' + location.search + location.hash);
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teorías Educativas y su Influencia en el Diseño Instruccional</title>
+    <meta name="description" content="Mapa conceptual, secuencia histórica y reflexión sobre la evolución de las teorías educativas en el diseño instruccional." />
+    <meta name="theme-color" content="#312e81" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content="Dalia Zúñiga Berumen" />
+    <meta property="og:url" content="https://abzikel.dev/dalia-zuniga-berumen/activities/evolucion-de-las-teorias-educativas/" />
+    <meta property="og:title" content="Teorías Educativas y su Influencia en el Diseño Instruccional" />
+    <meta property="og:description" content="Mapa conceptual, secuencia histórica y reflexión sobre la evolución de las teorías educativas en el diseño instruccional." />
+    <meta property="og:image" content="https://abzikel.dev/dalia-zuniga-berumen/assets/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1198" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Actividades educativas — Dalia Zúñiga Berumen" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Teorías Educativas y su Influencia en el Diseño Instruccional" />
+    <meta name="twitter:description" content="Mapa conceptual, secuencia histórica y reflexión sobre la evolución de las teorías educativas en el diseño instruccional." />
+    <meta name="twitter:image" content="https://abzikel.dev/dalia-zuniga-berumen/assets/og-image.jpg" />
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome CDN -->
@@ -64,7 +93,7 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
-        /* Scrollbar personalizada */
+        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -129,7 +158,7 @@
     <!-- Main Content Container -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-        <!-- BANNER: RELACIÓN GENERAL -->
+        <!-- Overview banner -->
         <section
             class="mb-10 bg-gradient-to-r from-indigo-900 via-indigo-800 to-slate-900 rounded-3xl p-6 md:p-8 text-white shadow-xl relative overflow-hidden">
             <div class="absolute -right-10 -bottom-10 opacity-10 text-white text-9xl">
@@ -149,13 +178,13 @@
             </div>
         </section>
 
-        <!-- TAB 1: MAPA CONCEPTUAL INTERACTIVO -->
+        <!-- Interactive concept map tab -->
         <div id="view-mapa" class="tab-content space-y-8">
 
             <!-- Flow Grid representation -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative">
 
-                <!-- CARD 1: CONDUCTISMO -->
+                <!-- Behaviorism card -->
                 <article
                     class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-amber-500 relative flex flex-col justify-between">
                     <div class="space-y-4">
@@ -175,13 +204,13 @@
                             class="w-full bg-amber-50/50 rounded-xl p-3 flex items-center justify-center my-2 border border-amber-100">
                             <svg class="w-28 h-20 text-amber-600" viewBox="0 0 200 120" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
-                                <!-- Estímulo -->
+                                <!-- Stimulus -->
                                 <circle cx="40" cy="60" r="24" fill="#FEF3C7" stroke="#F59E0B" stroke-width="3" />
                                 <path d="M40 48V60L48 68" stroke="#D97706" stroke-width="3" stroke-linecap="round" />
-                                <!-- Flecha -->
+                                <!-- Arrow -->
                                 <path d="M75 60H125M125 60L115 52M125 60L115 68" stroke="#F59E0B" stroke-width="3"
                                     stroke-linecap="round" stroke-linejoin="round" />
-                                <!-- Respuesta -->
+                                <!-- Response -->
                                 <rect x="135" y="36" width="48" height="48" rx="8" fill="#FEF3C7" stroke="#F59E0B"
                                     stroke-width="3" />
                                 <path d="M150 60L156 66L170 52" stroke="#D97706" stroke-width="3" stroke-linecap="round"
@@ -236,7 +265,7 @@
                     </div>
                 </article>
 
-                <!-- CARD 2: COGNITIVISMO -->
+                <!-- Cognitivism card -->
                 <article
                     class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-blue-500 relative flex flex-col justify-between">
                     <div class="space-y-4">
@@ -314,7 +343,7 @@
                     </div>
                 </article>
 
-                <!-- CARD 3: CONSTRUCTIVISMO -->
+                <!-- Constructivism card -->
                 <article
                     class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-emerald-500 relative flex flex-col justify-between">
                     <div class="space-y-4">
@@ -397,7 +426,7 @@
                     </div>
                 </article>
 
-                <!-- CARD 4: TEORÍA SOCIOCULTURAL -->
+                <!-- Sociocultural theory card -->
                 <article
                     class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-purple-500 relative flex flex-col justify-between">
                     <div class="space-y-4">
@@ -472,7 +501,7 @@
                     </div>
                 </article>
 
-                <!-- CARD 5: HUMANISMO -->
+                <!-- Humanism card -->
                 <article
                     class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-rose-500 relative flex flex-col justify-between">
                     <div class="space-y-4">
@@ -548,7 +577,7 @@
                     </div>
                 </article>
 
-                <!-- CARD 6: CONECTIVISMO -->
+                <!-- Connectivism card -->
                 <article
                     class="glass-card rounded-2xl p-6 hover-lift border-t-4 border-t-cyan-500 relative flex flex-col justify-between">
                     <div class="space-y-4">
@@ -629,7 +658,7 @@
 
             </div>
 
-            <!-- SÍNTESIS GLOBAL DE IMPACTO -->
+            <!-- Overall impact summary -->
             <section class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mt-8">
                 <div class="flex flex-col md:flex-row items-center gap-6">
                     <div
@@ -652,7 +681,7 @@
 
         </div>
 
-        <!-- TAB 2: SECUENCIA TEÓRICA -->
+        <!-- Theoretical timeline tab -->
         <div id="view-secuencia" class="tab-content hidden space-y-6">
             <div class="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm">
                 <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
@@ -660,7 +689,6 @@
                 </h2>
 
                 <div class="space-y-6">
-                    <!-- Item 1 -->
                     <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
                         <div
                             class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
@@ -673,7 +701,6 @@
                         </div>
                     </div>
 
-                    <!-- Item 2 -->
                     <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
                         <div
                             class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
@@ -686,7 +713,6 @@
                         </div>
                     </div>
 
-                    <!-- Item 3 -->
                     <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
                         <div
                             class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
@@ -698,7 +724,6 @@
                         </div>
                     </div>
 
-                    <!-- Item 4 -->
                     <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-50 border border-slate-100">
                         <div
                             class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-sm shrink-0">
@@ -711,7 +736,6 @@
                         </div>
                     </div>
 
-                    <!-- Item 5 -->
                     <div class="flex items-start gap-4 p-4 rounded-xl bg-indigo-50/70 border border-indigo-100">
                         <div
                             class="w-8 h-8 rounded-lg bg-indigo-700 text-white flex items-center justify-center font-bold text-sm shrink-0">
@@ -721,14 +745,15 @@
                                 Diseño Instruccional moderno</h4>
                             <p class="text-sm text-indigo-900">Aplicación práctica en modelos estructurados como
                                 <strong>ADDIE, Dick y Carey, ASSURE</strong>, así como en entornos virtuales y
-                                aprendizaje híbrido.</p>
+                                aprendizaje híbrido.
+                            </p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- TAB 3: REFLEXIÓN -->
+        <!-- Reflection tab -->
         <div id="view-reflexion" class="tab-content hidden space-y-6">
             <article
                 class="bg-white rounded-2xl p-6 md:p-10 border border-slate-200 shadow-sm max-w-4xl mx-auto font-serif text-slate-700 leading-relaxed text-base md:text-lg space-y-6">
@@ -785,9 +810,9 @@
             </article>
         </div>
 
-        <!-- TAB 4: REFERENCIAS Y CRÉDITOS -->
+        <!-- References and credits tab -->
         <div id="view-referencias" class="tab-content hidden space-y-8">
-            <!-- Referencias -->
+            <!-- References -->
             <section class="bg-white rounded-2xl p-6 md:p-8 border border-slate-200 shadow-sm">
                 <h2 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                     <i class="fa-solid fa-bookmark text-indigo-600"></i> Referencias Consultadas
@@ -821,7 +846,7 @@
                 </ul>
             </section>
 
-            <!-- Créditos del Recurso -->
+            <!-- Credits -->
             <section class="bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl p-6 md:p-8 shadow-lg">
                 <div class="flex flex-col sm:flex-row items-center gap-5">
                     <div
@@ -852,24 +877,24 @@
     <!-- Interactivity Script -->
     <script>
         function switchTab(tabId) {
-            // Ocultar todos los contenidos
+            // Hide all tab panels
             document.querySelectorAll('.tab-content').forEach(el => {
                 el.classList.add('hidden');
             });
 
-            // Desmarcar botones
+            // Reset tab buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('bg-white', 'text-indigo-700', 'shadow-sm');
                 btn.classList.add('text-slate-600');
             });
 
-            // Mostrar seleccionado
+            // Show active tab panel
             const targetView = document.getElementById('view-' + tabId);
             if (targetView) {
                 targetView.classList.remove('hidden');
             }
 
-            // Estilar botón activo
+            // Highlight active tab button
             const activeBtn = document.getElementById('btn-' + tabId);
             if (activeBtn) {
                 activeBtn.classList.add('bg-white', 'text-indigo-700', 'shadow-sm');

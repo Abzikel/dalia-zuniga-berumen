@@ -1,9 +1,39 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/png" href="../../assets/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../../assets/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Dalia" />
+    <link rel="manifest" href="../../assets/favicon/site.webmanifest" />
+    <script>
+        if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+            location.replace(location.pathname + '/' + location.search + location.hash);
+        }
+    </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ruta DI | Autoevaluación y desarrollo profesional</title>
+    <meta name="description" content="Herramienta interactiva de autoevaluación, resultados, plan de acción y portafolio para el diseño instruccional." />
+    <meta name="theme-color" content="#312e81" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content="Dalia Zúñiga Berumen" />
+    <meta property="og:url" content="https://abzikel.dev/dalia-zuniga-berumen/activities/desarrollo-profesional/" />
+    <meta property="og:title" content="Ruta DI | Autoevaluación y desarrollo profesional" />
+    <meta property="og:description" content="Herramienta interactiva de autoevaluación, resultados, plan de acción y portafolio para el diseño instruccional." />
+    <meta property="og:image" content="https://abzikel.dev/dalia-zuniga-berumen/assets/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1198" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Actividades educativas — Dalia Zúñiga Berumen" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ruta DI | Autoevaluación y desarrollo profesional" />
+    <meta name="twitter:description" content="Herramienta interactiva de autoevaluación, resultados, plan de acción y portafolio para el diseño instruccional." />
+    <meta name="twitter:image" content="https://abzikel.dev/dalia-zuniga-berumen/assets/og-image.jpg" />
   <style>
     :root {
       --azul-oscuro: #132b45;
@@ -56,7 +86,7 @@
       grid-template-columns: 270px 1fr;
     }
 
-    /* Barra lateral */
+    /* Sidebar */
 
     .sidebar {
       position: sticky;
@@ -167,7 +197,7 @@
       line-height: 1.4;
     }
 
-    /* Contenido */
+    /* Main content */
 
     main {
       width: 100%;
@@ -285,7 +315,7 @@
       border-color: #e6b6b6;
     }
 
-    /* Panorama */
+    /* Overview */
 
     .hero-grid {
       display: grid;
@@ -519,7 +549,7 @@
       border-radius: 100px;
     }
 
-    /* Autoevaluación */
+    /* Self-assessment */
 
     .scale-guide {
       display: grid;
@@ -745,7 +775,7 @@
       margin-top: 18px;
     }
 
-    /* Resultados */
+    /* Results */
 
     .result-summary {
       display: grid;
@@ -836,7 +866,7 @@
       line-height: 1.55;
     }
 
-    /* Plan */
+    /* Action plan */
 
     .goal-card {
       display: grid;
@@ -939,7 +969,7 @@
       background: #fff0d6;
     }
 
-    /* Portafolio */
+    /* Portfolio */
 
     .portfolio-grid {
       display: grid;
@@ -1011,7 +1041,7 @@
       border-left: 4px solid var(--dorado);
     }
 
-    /* Perfil */
+    /* Profile */
 
     .profile-form {
       display: grid;
@@ -1058,7 +1088,7 @@
       color: var(--azul-oscuro);
     }
 
-    /* Mensajes */
+    /* Messages */
 
     .toast {
       position: fixed;
@@ -1271,7 +1301,7 @@
     </aside>
 
     <main>
-      <!-- PANORAMA -->
+      <!-- Overview -->
       <section class="view active" id="inicio">
         <header class="top-header">
           <div>
@@ -1398,7 +1428,7 @@
         <div class="card priority-list" id="priorityList"></div>
       </section>
 
-      <!-- AUTOEVALUACIÓN -->
+      <!-- Self-assessment -->
       <section class="view" id="autoevaluacion">
         <header class="top-header">
           <div>
@@ -1448,7 +1478,8 @@
 
         <article class="card reflection-card">
           <label for="assessmentReflection">Reflexión sobre mi proceso de desarrollo</label>
-          <textarea id="assessmentReflection" placeholder="Registra evidencias, logros, dificultades, dudas o condiciones que deban considerarse en tu plan de desarrollo."></textarea>
+          <textarea id="assessmentReflection"
+            placeholder="Registra evidencias, logros, dificultades, dudas o condiciones que deban considerarse en tu plan de desarrollo."></textarea>
 
           <div class="assessment-actions">
             <button class="button danger" type="button" id="resetAssessmentButton">
@@ -1461,7 +1492,7 @@
         </article>
       </section>
 
-      <!-- RESULTADOS -->
+      <!-- Results -->
       <section class="view" id="resultados">
         <header class="top-header">
           <div>
@@ -1511,7 +1542,7 @@
         <div class="recommendations" id="recommendationList"></div>
       </section>
 
-      <!-- PLAN -->
+      <!-- Action plan -->
       <section class="view" id="plan">
         <header class="top-header">
           <div>
@@ -1552,7 +1583,7 @@
         <div id="phaseList"></div>
       </section>
 
-      <!-- PORTAFOLIO -->
+      <!-- Portfolio -->
       <section class="view" id="portafolio">
         <header class="top-header">
           <div>
@@ -1578,7 +1609,7 @@
         </article>
       </section>
 
-      <!-- PERFIL -->
+      <!-- Profile -->
       <section class="view" id="perfil">
         <header class="top-header">
           <div>
@@ -1614,7 +1645,8 @@
 
           <div class="field full">
             <label for="profileSummary">Síntesis del perfil</label>
-            <textarea id="profileSummary">Profesional de la comunicación y la edición, con formación de posgrado en Tecnología Educativa, experiencia en recursos digitales, plataformas LMS e inteligencia artificial y conocimiento inicial del flujo institucional de diseño instruccional.</textarea>
+            <textarea
+              id="profileSummary">Profesional de la comunicación y la edición, con formación de posgrado en Tecnología Educativa, experiencia en recursos digitales, plataformas LMS e inteligencia artificial y conocimiento inicial del flujo institucional de diseño instruccional.</textarea>
           </div>
 
           <div class="field full">
@@ -1625,11 +1657,15 @@
         <article class="card method-card">
           <h3>Cómo utilizar la aplicación</h3>
           <ol>
-            <li><strong>Valora las competencias</strong> a partir de evidencias reales, no solo del conocimiento teórico.</li>
+            <li><strong>Valora las competencias</strong> a partir de evidencias reales, no solo del conocimiento
+              teórico.</li>
             <li><strong>Identifica las prioridades</strong> que aparecen en el panorama y los resultados.</li>
-            <li><strong>Desarrolla productos verificables</strong>: matrices, actividades, rúbricas, storyboards, configuraciones e informes.</li>
-            <li><strong>Solicita retroalimentación profesional</strong> a una diseñadora instruccional o persona responsable del área.</li>
-            <li><strong>Actualiza la autoevaluación</strong> al concluir cada fase para registrar avances y redefinir necesidades.</li>
+            <li><strong>Desarrolla productos verificables</strong>: matrices, actividades, rúbricas, storyboards,
+              configuraciones e informes.</li>
+            <li><strong>Solicita retroalimentación profesional</strong> a una diseñadora instruccional o persona
+              responsable del área.</li>
+            <li><strong>Actualiza la autoevaluación</strong> al concluir cada fase para registrar avances y redefinir
+              necesidades.</li>
           </ol>
         </article>
       </section>
@@ -2136,9 +2172,9 @@
 
       const recommendations = lowSkills.length
         ? lowSkills.map(skill => ({
-            title: skill.name,
-            description: `Nivel actual: ${getLevel(skill.value)}. Desarrolla una evidencia específica que permita avanzar hacia la aplicación autónoma y registra la retroalimentación obtenida.`
-          }))
+          title: skill.name,
+          description: `Nivel actual: ${getLevel(skill.value)}. Desarrolla una evidencia específica que permita avanzar hacia la aplicación autónoma y registra la retroalimentación obtenida.`
+        }))
         : defaultRecommendations;
 
       document.getElementById("recommendationList").innerHTML = recommendations.map(item => `
@@ -2319,20 +2355,22 @@
     renderResults();
     updateProfile();
   </script>
-<script>(function(){
-  document.addEventListener('click', function(e){
-    var a = e.target && e.target.closest ? e.target.closest('a') : null;
-    if (!a) return;
-    var href = a.getAttribute('href') || '';
-    if (href.charAt(0) === '#') {
-      e.preventDefault();
-      var el = document.querySelector(href.length > 1 ? href : 'body');
-      if (el && el.scrollIntoView) el.scrollIntoView({behavior:'smooth'});
-      return;
-    }
-    if (/^(https?:)?\/\//i.test(href)) { a.target = '_blank'; return; }
-    e.preventDefault();
-  }, true);
-  window.addEventListener('submit', function(e){ e.preventDefault(); }, true);
-})();</script></body>
+  <script>(function () {
+      document.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('a') : null;
+        if (!a) return;
+        var href = a.getAttribute('href') || '';
+        if (href.charAt(0) === '#') {
+          e.preventDefault();
+          var el = document.querySelector(href.length > 1 ? href : 'body');
+          if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+        if (/^(https?:)?\/\//i.test(href)) { a.target = '_blank'; return; }
+        e.preventDefault();
+      }, true);
+      window.addEventListener('submit', function (e) { e.preventDefault(); }, true);
+    })();</script>
+</body>
+
 </html>

@@ -2,9 +2,38 @@
 <html lang="es">
 
 <head>
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/png" href="../../assets/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../../assets/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Dalia" />
+    <link rel="manifest" href="../../assets/favicon/site.webmanifest" />
+    <script>
+        if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+            location.replace(location.pathname + '/' + location.search + location.hash);
+        }
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa Conceptual — Tipos de Aprendizaje</title>
+    <meta name="description" content="Mapa conceptual interactivo con relaciones entre teorías, ecología del aprendizaje y matriz de evaluación." />
+    <meta name="theme-color" content="#312e81" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content="Dalia Zúñiga Berumen" />
+    <meta property="og:url" content="https://abzikel.dev/dalia-zuniga-berumen/activities/mapa-conceptual-tipos-de-aprendizaje/" />
+    <meta property="og:title" content="Mapa Conceptual — Tipos de Aprendizaje" />
+    <meta property="og:description" content="Mapa conceptual interactivo con relaciones entre teorías, ecología del aprendizaje y matriz de evaluación." />
+    <meta property="og:image" content="https://abzikel.dev/dalia-zuniga-berumen/assets/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1198" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Actividades educativas — Dalia Zúñiga Berumen" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mapa Conceptual — Tipos de Aprendizaje" />
+    <meta name="twitter:description" content="Mapa conceptual interactivo con relaciones entre teorías, ecología del aprendizaje y matriz de evaluación." />
+    <meta name="twitter:image" content="https://abzikel.dev/dalia-zuniga-berumen/assets/og-image.jpg" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
 
@@ -51,7 +80,7 @@
             margin-top: 6px;
         }
 
-        /* —— Nodo central —— */
+        /* Central node */
         .mapa {
             max-width: 1180px;
             margin: 0 auto;
@@ -81,7 +110,7 @@
             opacity: .85;
         }
 
-        /* —— Conector vertical desde el centro —— */
+        /* Vertical connector from center */
         .eje {
             width: 3px;
             height: 28px;
@@ -89,7 +118,7 @@
             margin: -12px auto 0;
         }
 
-        /* —— Sección de teorías —— */
+        /* Theories section */
         .seccion-titulo {
             text-align: center;
             margin: 18px 0 16px;
@@ -279,7 +308,7 @@
             background: var(--conectivista);
         }
 
-        /* —— Flechas de relación entre bloques —— */
+        /* Relationship arrows between blocks */
         .relacion {
             display: flex;
             align-items: center;
@@ -311,7 +340,7 @@
             color: var(--linea);
         }
 
-        /* —— Evolución histórica (línea de tiempo) —— */
+        /* Historical timeline */
         .timeline {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -405,7 +434,7 @@
             line-height: 1.4;
         }
 
-        /* —— Ecología del aprendizaje —— */
+        /* Learning ecology */
         .ecologia {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -453,7 +482,7 @@
             color: var(--central);
         }
 
-        /* —— Matriz de evaluación —— */
+        /* Assessment matrix */
         .matriz {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -494,7 +523,7 @@
             color: #fff;
         }
 
-        /* —— Conclusión —— */
+        /* Conclusion */
         .conclusion {
             background: linear-gradient(135deg, #2c3e50, #3d566e);
             color: #fff;
@@ -533,7 +562,7 @@
             font-weight: 600;
         }
 
-        /* -- Bibliografía -- */
+        /* Bibliography */
         .bibliografia {
             max-width: 800px;
             margin: -8px auto 0;
@@ -555,7 +584,7 @@
             border-bottom: 1px solid #ecf0f1;
         }
 
-        /* —— Leyenda de conectores —— */
+        /* Connector legend */
         .leyenda {
             max-width: 700px;
             margin: 28px auto 0;
@@ -620,21 +649,21 @@
 
     <div class="mapa">
 
-        <!-- NODO CENTRAL -->
+        <!-- Central node -->
         <div class="nodo-central">
             <h2>APRENDIZAJE</h2>
             <span>Proceso de adquisición de conocimientos, habilidades,<br>valores y actitudes mediante la experiencia y
                 el entorno</span>
         </div>
 
-        <!-- ========== TEORÍAS ========== -->
+        <!-- Theories -->
         <div class="seccion-titulo">
             <h3>1 · Teorías del aprendizaje</h3>
         </div>
 
         <div class="teorias">
 
-            <!-- Conductista -->
+            <!-- Behaviorism -->
             <div class="tarjeta conductista">
                 <div class="tarjeta-header">
                     <div class="icono">🎯</div>
@@ -656,7 +685,7 @@
                 </div>
             </div>
 
-            <!-- Cognitivista -->
+            <!-- Cognitivism -->
             <div class="tarjeta cognitivista">
                 <div class="tarjeta-header">
                     <div class="icono">🧠</div>
@@ -682,7 +711,7 @@
                 </div>
             </div>
 
-            <!-- Constructivista -->
+            <!-- Constructivism -->
             <div class="tarjeta constructivista">
                 <div class="tarjeta-header">
                     <div class="icono">🔧</div>
@@ -734,7 +763,7 @@
                 </div>
             </div>
 
-            <!-- Significativo -->
+            <!-- Meaningful learning -->
             <div class="tarjeta significativo">
                 <div class="tarjeta-header">
                     <div class="icono">🔗</div>
@@ -760,7 +789,7 @@
                 </div>
             </div>
 
-            <!-- Conectivista -->
+            <!-- Connectivism -->
             <div class="tarjeta conectivista">
                 <div class="tarjeta-header">
                     <div class="icono">🌐</div>
@@ -787,7 +816,7 @@
             </div>
         </div>
 
-        <!-- Relaciones transversales -->
+        <!-- Cross-cutting relationships -->
         <div class="relacion">
             <div class="flecha-box">
                 <strong>Conductismo → Cognitivismo</strong>
@@ -810,7 +839,7 @@
             </div>
         </div>
 
-        <!-- ========== EVOLUCIÓN HISTÓRICA ========== -->
+        <!-- Historical timeline -->
         <div class="seccion-titulo">
             <h3>2 · Evolución histórica e influencia social</h3>
         </div>
@@ -842,7 +871,7 @@
             </div>
         </div>
 
-        <!-- ========== ECOLOGÍA / FUNDAMENTOS ========== -->
+        <!-- Learning ecology and foundations -->
         <div class="seccion-titulo">
             <h3>3 · Fundamentos: ecología del aprendizaje</h3>
         </div>
@@ -907,7 +936,7 @@
             </div>
         </div>
 
-        <!-- ========== MATRIZ DE EVALUACIÓN ========== -->
+        <!-- Assessment matrix -->
         <div class="seccion-titulo">
             <h3>4 · Matriz de aplicación integral</h3>
         </div>
@@ -939,7 +968,7 @@
             </div>
         </div>
 
-        <!-- ========== CONCLUSIÓN ========== -->
+        <!-- Conclusion -->
         <div class="conclusion">
             <h3>💡 Idea integradora</h3>
             <p>
@@ -958,7 +987,7 @@
             </div>
         </div>
 
-        <!-- Leyenda -->
+        <!-- Legend -->
         <div class="leyenda">
             <h4>Leyenda de conectores estratégicos</h4>
             <div class="leyenda-grid">
@@ -971,7 +1000,7 @@
             </div>
         </div>
 
-        <!-- ========== BIBLIOGRAFÍA ========== -->
+        <!-- Bibliography -->
         <div class="seccion-titulo" style="margin-top: 36px;">
             <h3>Fuentes consultadas</h3>
         </div>
@@ -988,7 +1017,8 @@
                 <li>Revista de Estilos de Aprendizaje. (2024). Educación, Innovación y Estilos de Enseñanza-Aprendizaje.
                     <i>Vol. 17</i>, Núm. 33. <a
                         href="https://revistaestilosdeaprendizaje.com/estilosdeaprendizaje/es/issue/view/590"
-                        target="_blank" rel="noopener noreferrer">Ver revista</a></li>
+                        target="_blank" rel="noopener noreferrer">Ver revista</a>
+                </li>
             </ul>
         </div>
 

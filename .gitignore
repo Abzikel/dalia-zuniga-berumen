@@ -1,0 +1,30 @@
+# AI & Local Context Documentation
+GEMINI.md
+PROJECT_CONTEXT.md
+
+# macOS
+.DS_Store
+**/.DS_Store
+._*
+.AppleDouble
+.LSOverride
+
+# Windows & Linux
+Thumbs.db
+ehthumbs.db
+desktop.ini
+*~
+
+# Editors & IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs, Temp & Environment
+*.log
+*.tmp
+tmp/
+.env
+.env.*
+node_modules/

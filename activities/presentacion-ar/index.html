@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/png" href="../../assets/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="../../assets/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../../assets/favicon/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Dalia" />
+    <link rel="manifest" href="../../assets/favicon/site.webmanifest" />
+    <title>Presentación AR</title>
+    <meta name="description" content="Experiencia de realidad aumentada (WebAR) para la presentación 5 momentos del Español, con acceso al PDF." />
+    <meta name="theme-color" content="#312e81" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content="Dalia Zúñiga Berumen" />
+    <meta property="og:url" content="https://abzikel.dev/dalia-zuniga-berumen/activities/presentacion-ar/" />
+    <meta property="og:title" content="Presentación AR — 5 momentos del Español" />
+    <meta property="og:description" content="Experiencia de realidad aumentada (WebAR) para la presentación 5 momentos del Español, con acceso al PDF." />
+    <meta property="og:image" content="https://abzikel.dev/dalia-zuniga-berumen/assets/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1198" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Actividades educativas — Dalia Zúñiga Berumen" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Presentación AR — 5 momentos del Español" />
+    <meta name="twitter:description" content="Experiencia de realidad aumentada (WebAR) para la presentación 5 momentos del Español, con acceso al PDF." />
+    <meta name="twitter:image" content="https://abzikel.dev/dalia-zuniga-berumen/assets/og-image.jpg" />
+    <script>
+        if (!location.pathname.endsWith('/') && !location.pathname.endsWith('.html')) {
+            location.replace(location.pathname + '/' + location.search + location.hash);
+        }
+    </script>
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="start-screen">
+        <p>Apunta tu cámara a los personajes de la presentación</p>
+        <button id="start-btn">COMENZAR EXPERIENCIA</button>
+        <a id="pdf-btn" href="assets/documents/presentation.pdf" target="_blank" rel="noopener noreferrer">
+            Ver presentación (PDF)
+        </a>
+    </div>
+
+    <a-scene mindar-image="imageTargetSrc: assets/targets.mind; filterMinCF:0.0001; filterBeta: 0.001;"
+        color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false">
+
+        <a-assets>
+            <video id="vid0" src="assets/videos/aldrica.mp4" preload="auto" response-type="arraybuffer" loop crossorigin
+                webkit-playsinline playsinline muted></video>
+
+            <video id="vid1" src="assets/videos/alfonso.mp4" preload="auto" response-type="arraybuffer" loop crossorigin
+                webkit-playsinline playsinline muted></video>
+
+            <video id="vid2" src="assets/videos/ixchel.mp4" preload="auto" response-type="arraybuffer" loop crossorigin
+                webkit-playsinline playsinline muted></video>
+
+            <video id="vid3" src="assets/videos/lucio.mp4" preload="auto" response-type="arraybuffer" loop crossorigin
+                webkit-playsinline playsinline muted></video>
+
+            <video id="vid4" src="assets/videos/you.mp4" preload="auto" response-type="arraybuffer" loop crossorigin
+                webkit-playsinline playsinline muted></video>
+
+            <video id="vid5" src="assets/videos/zahira.mp4" preload="auto" response-type="arraybuffer" loop crossorigin
+                webkit-playsinline playsinline muted></video>
+        </a-assets>
+
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+        <a-entity mindar-image-target="targetIndex: 0" id="target-0">
+            <a-video src="#vid0" position="0 0 0" height="0.55" width="1"></a-video>
+        </a-entity>
+
+        <a-entity mindar-image-target="targetIndex: 1" id="target-1">
+            <a-video src="#vid1" position="0 0 0" height="1" width="1"></a-video>
+        </a-entity>
+
+        <a-entity mindar-image-target="targetIndex: 2" id="target-2">
+            <a-video src="#vid2" position="0 0 0" height="1.48" width="1"></a-video>
+        </a-entity>
+
+        <a-entity mindar-image-target="targetIndex: 3" id="target-3">
+            <a-video src="#vid3" position="0 0 0" height="1.33" width="1"></a-video>
+        </a-entity>
+
+        <a-entity mindar-image-target="targetIndex: 4" id="target-4">
+            <a-video src="#vid4" position="0 0 0" height="0.75" width="1"></a-video>
+        </a-entity>
+
+        <a-entity mindar-image-target="targetIndex: 5" id="target-5">
+            <a-video src="#vid5" position="0 0 0" height="1" width="1"></a-video>
+        </a-entity>
+
+    </a-scene>
+
+    <script>
+        // DOM Elements
+        const startBtn = document.getElementById('start-btn');
+        const startScreen = document.getElementById('start-screen');
+
+        const videoCount = 6;
+
+        // State flag to prevent background tracking from playing videos
+        let isExperienceStarted = false;
+
+        startBtn.addEventListener('click', () => {
+            // Hide the start screen overlay
+            startScreen.style.display = 'none';
+
+            // Update state flag to allow playback
+            isExperienceStarted = true;
+
+            // Initialize videos, remove mute, and unlock audio context
+            for (let i = 0; i < videoCount; i++) {
+                const v = document.getElementById(`vid${i}`);
+                if (v) {
+                    v.muted = false;
+                    v.play().then(() => {
+                        v.pause();
+                        v.currentTime = 0;
+                    }).catch(e => console.log("Audio initialization error:", e));
+                }
+            }
+        });
+
+        // Loop to automatically assign events (Found/Lost) to all targets
+        for (let i = 0; i < videoCount; i++) {
+            const target = document.querySelector(`#target-${i}`);
+            const video = document.getElementById(`vid${i}`);
+
+            if (target && video) {
+                target.addEventListener("targetFound", () => {
+                    // Only play the video if the user has clicked the start button
+                    if (isExperienceStarted) {
+                        console.log(`Character ${i} found`);
+                        video.play();
+                    }
+                });
+
+                target.addEventListener("targetLost", () => {
+                    console.log(`Character ${i} lost`);
+                    video.pause();
+                    video.currentTime = 0;
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>
